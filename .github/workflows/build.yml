@@ -15,11 +15,11 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
-        
+
       - name: Node环境
         uses: actions/setup-node@v2
         with:
-          node-version: 19
+          node-version: 19.9.0
 
       - uses: pnpm/action-setup@v2
         name: 安装pnpm
@@ -27,7 +27,7 @@ jobs:
         with:
           version: 8
           run_install: false
-          
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-          
+
       - name: 安装依赖
         if: steps.cache-hit.outputs.cache-hit != 'true'
         run: pnpm install
@@ -51,7 +51,7 @@ jobs:
 
       - name: 上传
         uses: actions/upload-artifact@v4
-        with: 
+        with:
             name: build
             path: |
               client.zip
