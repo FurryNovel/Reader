@@ -1,7 +1,8 @@
 {
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"dev": "node ./server.mjs"
+		"dev": "node server.js"
 	},
 	"dependencies": {
 		"vue": "^3.3.12",
