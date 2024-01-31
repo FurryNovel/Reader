@@ -2,7 +2,7 @@ import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
 import {basename} from 'path';
 
-export async function render(url, manifest) {
+export async function render(url, manifest = {}) {
     const {app, router} = createApp();
     
     // noinspection ES6MissingAwait
@@ -12,7 +12,7 @@ export async function render(url, manifest) {
     const ctx = {};
     const html = await renderToString(app, ctx);
     
-    const preloadLinks = renderPreloadLinks(ctx.modules, manifest ?? {})
+    const preloadLinks = renderPreloadLinks(ctx.modules, manifest)
     return {html, preloadLinks}
 }
 

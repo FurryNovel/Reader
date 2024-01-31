@@ -3,7 +3,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node server.js",
-		"build:client": "vite build --outDir dist/client",
+		"build:client": "vite build --outDir dist/client --ssrManifest",
 		"build:server": "vite build --outDir dist/server --ssr src/entry-server.js"
 	},
 	"dependencies": {
@@ -25,6 +25,8 @@
 		"workbox-window": "^7.0.0"
 	},
 	"devDependencies": {
+		"compression": "^1.7.4",
+		"serve-static": "^1.15.0",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@vitejs/plugin-vue": "latest",
 		"@vitejs/plugin-vue-jsx": "latest",
