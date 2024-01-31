@@ -1,6 +1,5 @@
 <template>
-	<div>
-		<router-link to="/">Home</router-link>
+	<Main>
 		<router-view v-slot="{ Component }">
 			<Suspense>
 				<component :is="Component"/>
@@ -13,11 +12,12 @@
 				</template>
 			</Suspense>
 		</router-view>
-	</div>
+	</Main>
 </template>
 
 <style>
 
 </style>
 <script setup>
+import Navbar from "@/components/layout/Navbar.vue";
 </script>

@@ -177,7 +177,9 @@ export default {
             'transition duration-200 ease-in-out',
 
             // Misc
-            'cursor-pointer overflow-hidden select-none'
+            'cursor-pointer overflow-hidden select-none',
+            
+            'focus:ring-0',
         ]
     }),
     label: ({ props }) => ({

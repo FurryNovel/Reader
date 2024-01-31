@@ -1,5 +1,5 @@
 <template>
-	<div class="flex justify-center items-center h-screen w-screen">
+	<div class="flex justify-center items-center h-max w-max">
 		<Button label="primary">
 			重试
 		</Button>
