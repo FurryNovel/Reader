@@ -33,8 +33,6 @@ app.use('*', async (req, res) => {
         
         const renderRes = await render(url);
         
-        console.log()
-        
         const html = template
             .replace(`<!--app-html-->`, renderRes.html);
         
