@@ -2,6 +2,8 @@ import vuePlugin from '@vitejs/plugin-vue'
 import {defineConfig} from "vite";
 import path from "path";
 
+import inject from '@rollup/plugin-inject';
+import {VitePWA} from 'vite-plugin-pwa'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
@@ -76,6 +78,42 @@ export default defineConfig({
                 PrimeVueResolver()
             ]
         }),
+        inject({
+            $: 'jquery',  // 这里会自动载入 node_modules 中的 jquery   jquery全局变量
+            jQuery: 'jquery',
+            'windows.jQuery': 'jquery'
+        }),
+        VitePWA({
+            registerType: 'autoUpdate',
+            workbox: {
+                globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+                navigateFallbackDenylist: [
+                    /^\/api/,
+                    /^\/cdn-cgi/,
+                ],
+            },
+            manifest: {
+                'name': '兽人控小说站',
+                'short_name': '兽人控小说站',
+                'theme_color': '#008AFF',
+                'background_color': '#f7f7fc',
+                'display': 'standalone',
+                'orientation': 'portrait',
+                'lang': 'zh-CN',
+                'icons': [
+                    {
+                        'sizes': '192x192',
+                        'src': 'static/android-chrome-192x192.png',
+                        'type': 'image/png'
+                    },
+                    {
+                        'sizes': '512x512',
+                        'src': 'static/android-chrome-512x512.png',
+                        'type': 'image/png'
+                    }
+                ]
+            }
+        })
     ],
     build: {
         minify: false,

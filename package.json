@@ -7,13 +7,25 @@
 		"build:server": "vite build --outDir dist/server --ssr src/entry-server.js"
 	},
 	"dependencies": {
+		"@duannx/vue-client-only": "^1.0.3",
+		"@rollup/plugin-inject": "^5.0.5",
+		"@unhead/vue": "^1.8.9",
 		"axios": "^1.6.7",
 		"fontawesome-6-pro": "^6.4.0",
+		"jquery": "^3.7.1",
+		"localforage": "^1.10.0",
+		"misans": "^4.0.0",
+		"mitt": "^3.0.1",
+		"noto-sans-sc": "^36.0.1",
+		"pinia": "^2.1.7",
 		"primevue": "^3.47.2",
+		"swiper": "^11.0.5",
 		"vue": "^3.3.12",
-		"vue-router": "^4.2.5"
+		"vue-router": "^4.2.5",
+		"workbox-window": "^7.0.0"
 	},
 	"devDependencies": {
+		"@rollup/plugin-alias": "^5.1.0",
 		"@vitejs/plugin-vue": "latest",
 		"@vitejs/plugin-vue-jsx": "latest",
 		"autoprefixer": "^10.4.17",
@@ -22,6 +34,7 @@
 		"tailwindcss": "^3.4.1",
 		"unplugin-auto-import": "^0.17.5",
 		"unplugin-vue-components": "^0.26.0",
-		"vite": "latest"
+		"vite": "latest",
+		"vite-plugin-pwa": "^0.17.5"
 	}
 }
