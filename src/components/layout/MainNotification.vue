@@ -1,9 +1,9 @@
 <template>
-	<Dialog v-model:visible="data.dialog.show" :header="data.dialog.title" modal>
-		<span class="p-text-secondary block mb-5">
+	<Dialog v-model:visible="data.dialog.show" :header="data.dialog.title" modal :style="{ width: '25rem' }">
+		<span class="p-text-secondary block mb-5 select-none">
 			{{ data.dialog.content }}
 		</span>
-		<div class="flex justify-content-end gap-2">
+		<div class="flex justify-end gap-2">
 			<Button v-if="data.dialog.cancelBtn" :label="data.dialog.cancelBtn" severity="secondary" type="button"
 			        @click="clickBtn('cancel')"></Button>
 			<Button v-if="data.dialog.confirmBtn" :label="data.dialog.confirmBtn" type="button"
