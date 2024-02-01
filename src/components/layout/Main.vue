@@ -1,18 +1,24 @@
 <template>
-	<div class="bg-gray-50" style="min-height: calc(100vh - 64px)">
-		<Navbar v-if="props.hasNavbar"></Navbar>
+	<div class="bg-gray-50 min-h-[calc(100vh)-64px]">
+		<NavBar />
 		<div>
-			<div v-if="props.hasNavbar" class="mt-[64px]"></div>
+			<div class="mt-[64px]"></div>
 			<slot/>
+		</div>
+		<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent">
+			<TabBar />
 		</div>
 	</div>
 	<MainNotification/>
+	<ChallengeModal/>
 	
 </template>
 
 <script setup>
-import Navbar from "@/components/layout/Navbar.vue";
-import MainNotification from "@/components/layout/MainNotification.vue";
+import NavBar from "@/components/layout/NavBar.vue";
+import MainNotification from "@/components/global/MainNotification.vue";
+import ChallengeModal from "@/components/global/ChallengeModal.vue";
+import TabBar from "@/components/layout/TabBar.vue";
 
 const props = defineProps({
     hasNavbar: {

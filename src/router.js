@@ -15,9 +15,6 @@ const items = [
             icon: {
                 "text": "\uf3ce",
                 "selectedText": "\uf3ce",
-                "fontSize": "18px",
-                "color": "#2B2E3D",
-                "selectedColor": "#008AFF",
             },
         },
     },
@@ -31,9 +28,6 @@ const items = [
             icon: {
                 "text": "\ue0bb",
                 "selectedText": "\ue0bb",
-                "fontSize": "18px",
-                "color": "#2B2E3D",
-                "selectedColor": "#008AFF",
             },
         },
     },
@@ -47,9 +41,6 @@ const items = [
             icon: {
                 "text": "\uf05a",
                 "selectedText": "\uf05a",
-                "fontSize": "18px",
-                "color": "#2B2E3D",
-                "selectedColor": "#008AFF",
             },
         },
     },
@@ -66,7 +57,10 @@ const items = [
     return Object.assign(item, {
         isActive (router){
             return router?.currentRoute?.value?.path === item?.path;
-        }
+        },
+        meta:{
+            ...item.meta,
+        },
     });
 });
 
