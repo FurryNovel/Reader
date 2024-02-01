@@ -12,5 +12,8 @@ export default {
             });
             eventbus.emit('showDialog', {title, content, cancelBtn, confirmBtn});
         });
+    },
+    toast({type, content, title = '提示'}) {
+        eventbus.emit('showToast', {type, content, title});
     }
 }

@@ -6,13 +6,13 @@
 			<slot/>
 		</div>
 	</div>
-	<MainAlert/>
+	<MainNotification/>
 	
 </template>
 
 <script setup>
 import Navbar from "@/components/layout/Navbar.vue";
-import MainAlert from "@/components/layout/MainAlert.vue";
+import MainNotification from "@/components/layout/MainNotification.vue";
 
 const props = defineProps({
     hasNavbar: {

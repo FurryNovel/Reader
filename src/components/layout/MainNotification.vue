@@ -10,10 +10,14 @@
 			        @click="clickBtn('confirm')"></Button>
 		</div>
 	</Dialog>
+	<Toast />
 </template>
 <script setup>
 import eventbus from "@/utils/eventbus.js";
+import Toast from 'primevue/toast';
+import {useToast} from "primevue/usetoast";
 
+const toast = useToast();
 const data = reactive({
     dialog: {
         show: false,
@@ -30,6 +34,15 @@ eventbus.on('showDialog', ({title, content, cancelBtn, confirmBtn}) => {
 	data.dialog.cancelBtn = cancelBtn;
 	data.dialog.confirmBtn = confirmBtn;
 	data.dialog.show = true;
+});
+
+
+eventbus.on('showToast', ({title, content, type}) => {
+    toast.add({
+        severity:type,
+        summary: title,
+        detail: content,
+    });
 });
 
 function clickBtn(type){
