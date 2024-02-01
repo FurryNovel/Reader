@@ -26,7 +26,8 @@
 			<div class="flex flex-row align-items-center gap-2">
 				<InputText class="max-sm:hidden sm:w-auto" placeholder="Search" type="text"/>
 				<router-link v-slot="{ href, navigate }" :to="{name:'settings'}" custom>
-					<Button v-ripple :focusable="false" href="/settings" outlined rounded severity="secondary" size="small"
+					<Button v-ripple href="/settings" outlined rounded severity="secondary" size="small"
+					        class="w-[45px] h-[45px]"
 					        text @click="navigate">
 						<span class="fa-regular">&#xf013;</span>
 					</Button>
@@ -34,7 +35,10 @@
 			</div>
 		</template>
 	</Menubar>
-
+	<div v-if="showWrapper">
+		<div class="mt-[64px]"></div>
+	</div>
+	<slot/>
 </template>
 
 <script setup>
@@ -47,7 +51,7 @@ const wrapperClass = computed(() => {
     return {
         'backdrop-blur-sm': true,
         'bg-white/70': true,
-        'fixed': true,
+        '!fixed': true,
         'w-screen': true,
         'z-50': true,
         'top-0': true,

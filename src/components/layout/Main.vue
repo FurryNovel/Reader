@@ -1,13 +1,9 @@
 <template>
 	<div class="bg-gray-50 min-h-[calc(100vh)-64px]">
-		<NavBar />
-		<div>
-			<div class="mt-[64px]"></div>
-			<slot/>
-		</div>
-		<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent">
-			<TabBar />
-		</div>
+		<NavBar>
+			<slot />
+		</NavBar>
+		<TabBar />
 	</div>
 	<MainNotification/>
 	<ChallengeModal/>
