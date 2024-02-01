@@ -15,5 +15,14 @@ export default {
     },
     toast({type, content, title = '提示'}) {
         eventbus.emit('showToast', {type, content, title});
+    },
+    challenge() {
+        eventbus.emit('showChallenge', {});
+        return new Promise((resolve, reject) => {
+            eventbus.once('onChallenged', function (e) {
+                resolve(e);
+            });
+        });
+      
     }
 }
