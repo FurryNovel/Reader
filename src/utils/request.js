@@ -28,7 +28,6 @@ service.interceptors.response.use(res => {
     const data = res.data || {code: res.status, msg: '未知错误', data: {}}
     const code = data.code || res.status;
     const msg = data.msg ?? '未知错误';
-    const router = useRouter();
     if (code === 401 || code === 403 || code === 503) {
         return dialog.challenge().then(() => {
             //重播
