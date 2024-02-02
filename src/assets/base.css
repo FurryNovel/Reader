@@ -25,13 +25,13 @@
 }
 
 :root{
-    height: fill-available;
+    height: stretch;
 }
 
 body{
-    height: fill-available;
+    height: stretch;
 }
 
 #app{
-    height: fill-available;
+    height: stretch;
 }
