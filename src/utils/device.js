@@ -4,7 +4,6 @@ export function initDeviceEvent() {
     const media = window.matchMedia('not all and (min-width: 640px)');
     media.removeEventListener('change', onSize);
     media.addEventListener('change', onSize);
-    console.log('media', media?.addEventListener);
     onSize(media);
 }
 
