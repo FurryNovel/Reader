@@ -23,3 +23,15 @@
     --surface-900: 15 23 42;
     --surface-950: 3 6 23;
 }
+
+:root{
+    height: fill-available;
+}
+
+body{
+    height: fill-available;
+}
+
+#app{
+    height: fill-available;
+}

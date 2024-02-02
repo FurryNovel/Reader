@@ -1,6 +1,6 @@
 <template>
-	<div class="bg-gray-50 min-h-[calc(100vh)-64px]">
-		<div class="w-full max-w-screen-xl flex flex-col mx-auto">
+	<div class="bg-gray-50 min-h-[calc(100vh-64px)] h-full">
+		<div class="h-full w-full max-w-screen-xl flex flex-col mx-auto">
 			<NavBar>
 				<slot/>
 			</NavBar>
