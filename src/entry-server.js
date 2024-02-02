@@ -4,7 +4,7 @@ import {basename} from 'path';
 import { renderSSRHead } from '@unhead/ssr'
 
 export async function render(url, manifest = {}) {
-    const {app, router, head} = createApp();
+    const {app, router, head} = await createApp();
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
