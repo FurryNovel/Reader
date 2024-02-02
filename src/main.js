@@ -37,7 +37,7 @@ function directivePlugin() {
     return {
         install(app) {
             app.directive('ripple', Ripple);
-            app.directive('animateonscroll', AnimateOnScroll);
+            app.directive('animate-on-scroll', AnimateOnScroll);
         }
     }
 }
