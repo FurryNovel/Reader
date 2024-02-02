@@ -1,7 +1,7 @@
 import localForage from "localforage";
 
-import {useNovelStore} from "@/stores/novels.js";
-import {useSettingStore} from "@/stores/settings.js";
+import useNovelStore from "@/stores/novels.js";
+import useSettingStore from "@/stores/settings.js";
 
 
 export async function indexDbPlugin({store}) {

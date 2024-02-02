@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia';
 
-export default {
-    useSettingStore: () => defineStore({
+export default function useSettingStore(){
+    return defineStore({
         id: 'settings',
         state: () => {
             return {
@@ -82,5 +82,6 @@ export default {
                 return tags;
             },
         }
-    }),
+    });
 }
+
