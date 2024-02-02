@@ -11,13 +11,14 @@ export default {
 
             // Spacing
             'p-2',
+            'ml-[-0.8px]',
 
             // Shape
-            'rounded-md',
+            'sm:rounded-md max-sm:rounded-bl-md max-sm:rounded-br-md',
 
             // Color
             'bg-surface-50 dark:bg-surface-700',
-            'border border-surface-200 dark:border-surface-700'
+            'sm:border max-sm:border-b border-surface-200 dark:border-surface-700'
         ]
     },
     menu: ({ props }) => ({
