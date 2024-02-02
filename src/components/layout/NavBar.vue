@@ -2,7 +2,6 @@
 	<Menubar v-if="showWrapper" :class="wrapperClass" :model="items">
 		<template #start>
 			<Avatar class="mr-4 max-sm:hidden bg-transparent" image="/static/icon.png" shape="circle"/>
-			<InputText class="max-sm:w-full sm:hidden" placeholder="Search" type="text"/>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -24,7 +23,13 @@
 		</template>
 		<template #end>
 			<div class="flex flex-row align-items-center gap-2">
-				<InputText class="max-sm:hidden sm:w-auto" placeholder="Search" type="text"/>
+				<router-link v-slot="{ href, navigate }" :to="{name:'search'}" custom>
+					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
+					        size="small"
+					        text @click="navigate">
+						<span class="fa-regular fa-search"></span>
+					</Button>
+				</router-link>
 				<router-link v-slot="{ href, navigate }" :to="{name:'settings'}" custom>
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"

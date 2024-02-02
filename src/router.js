@@ -47,10 +47,19 @@ const items = [
     {
         path: '/settings',
         name: 'settings',
-        component: () => import('./pages/about.vue'),
+        component: () => import('./pages/settings.vue'),
         showNav: false,
         meta: {
             title: '设置',
+        },
+    },
+    {
+        path: '/search',
+        name: 'search',
+        component: () => import('./pages/search.vue'),
+        showNav: false,
+        meta: {
+            title: '搜索',
         },
     },
 ].map((item) => {
