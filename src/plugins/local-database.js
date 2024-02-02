@@ -1,10 +1,10 @@
 import localForage from "localforage";
 
-import useNovelStore from "@/stores/novels.js";
-import useSettingStore from "@/stores/settings.js";
+import {useNovelStore} from "@/stores/novels.js";
+import {useSettingStore} from "@/stores/settings.js";
 
 
-export async function indexDbPlugin({store}) {
+export async function localDatabase({store}) {
     const instance = localForage.createInstance({
         name: store.$id,
         driver: localForage.INDEXEDDB,

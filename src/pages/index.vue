@@ -8,12 +8,12 @@
 
 <script setup>
 import dialog from "@/utils/dialog.js";
-import useSettingStore from "@/stores/settings.js";
-import useNovelStore from "@/stores/novels.js";
+import {useSettingStore} from "@/stores/settings.js";
+import {useNovelStore} from "@/stores/novels.js";
 
 function show(){
-    const store =
-        useNovelStore();
+    const store = useNovelStore();
+    console.log(store)
     store.save('test',1);
     dialog.challenge();
 }

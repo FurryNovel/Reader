@@ -12,7 +12,7 @@ import AnimateOnScroll from 'primevue/animateonscroll';
 import ToastService from 'primevue/toastservice';
 import { createPinia } from 'pinia'
 import {createHead} from "@unhead/vue";
-import {createRecoveryStorePlugin} from "@/plugins/local-database.js";
+import {createRecoveryStorePlugin, localDatabase} from "@/plugins/local-database.js";
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -34,6 +34,8 @@ export function createApp() {
     app.use(router);
     app.use(pinia);
     app.use(directivePlugin());
+    pinia.use(localDatabase);
+    
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
        asyncPlugins.push(createRecoveryStorePlugin());
