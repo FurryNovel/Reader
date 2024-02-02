@@ -1,7 +1,7 @@
 <template>
 	<Menubar v-if="showWrapper" :class="wrapperClass" :model="items">
 		<template #start>
-			<Avatar class="mr-4 max-sm:hidden bg-transparent" image="/static/icon.png" shape="circle"/>
+			<Avatar v-if="!isMobile" class="mr-4 bg-transparent" image="/static/icon.png" shape="circle"/>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
