@@ -1,7 +1,7 @@
 <template>
 	<Menubar v-if="showWrapper" :class="wrapperClass" :model="items">
 		<template #start>
-			<Avatar v-if="!isMobile" class="mr-4 bg-transparent" image="/static/icon.png" shape="circle"/>
+			<Avatar v-if="!deviceInfo.isMobile" class="mx-4 bg-transparent flex justify-center align-middle" image="/static/icon.png" shape="circle"/>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -48,9 +48,10 @@
 
 <script setup>
 import {routes} from "@/router.js";
-import {isMobile} from "@/utils/mobile.js";
+import {useDeviceInfo} from "@/utils/device.js";
 
 const router = useRouter();
+const deviceInfo = useDeviceInfo();
 
 const wrapperClass = computed(() => {
     return {
@@ -60,14 +61,15 @@ const wrapperClass = computed(() => {
         'w-screen': true,
         'z-50': true,
         'top-0': true,
-        'left-0': true,
         'h-[64px]': true,
+	    //
+	    'w-full max-w-screen-xl mx-auto':true,
     };
 });
 
 
 const items = computed(() => {
-    return isMobile.value ? [] : (routes.filter(route => route.showNav).map(route => {
+    return deviceInfo.value.isMobile ? [] : (routes.filter(route => route.showNav).map(route => {
         return {
             label: route.meta.title,
             icon: route.meta.icon,
@@ -78,7 +80,7 @@ const items = computed(() => {
 });
 
 const showWrapper = computed(() => {
-    return !(isMobile.value && routes.filter(route => route.showNav && route.isActive(router)).length === 0);
+    return !(deviceInfo.value.isMobile && routes.filter(route => route.showNav && route.isActive(router)).length === 0);
 });
 </script>
 <style scoped>

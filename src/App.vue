@@ -19,12 +19,12 @@
 
 </style>
 <script setup>
-import {initMobileSizeEvent} from "@/utils/mobile.js";
+import {initDeviceEvent} from "@/utils/device.js";
 import {initRouter} from "@/utils/meta.js";
 
 
 initRouter(useRouter());
 onMounted(() => {
-    initMobileSizeEvent();
+    initDeviceEvent();
 });
 </script>

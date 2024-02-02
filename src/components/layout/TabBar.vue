@@ -21,7 +21,7 @@
 
 <script setup>
 import {routes} from "@/router.js";
-import {isMobile} from "@/utils/mobile.js";
+import {isMobile} from "@/utils/device.js";
 
 const router = useRouter();
 

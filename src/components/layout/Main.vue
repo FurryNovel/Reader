@@ -1,13 +1,14 @@
 <template>
 	<div class="bg-gray-50 min-h-[calc(100vh)-64px]">
-		<NavBar>
-			<slot />
-		</NavBar>
-		<TabBar />
+		<div class="w-full max-w-screen-xl flex flex-col mx-auto">
+			<NavBar>
+				<slot/>
+			</NavBar>
+			<TabBar/>
+		</div>
 	</div>
 	<MainNotification/>
 	<ChallengeModal/>
-	
 </template>
 
 <script setup>
