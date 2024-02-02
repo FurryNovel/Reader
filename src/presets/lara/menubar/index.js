@@ -1,3 +1,5 @@
+// noinspection JSAnnotator
+
 export default {
     root: {
         class: [
