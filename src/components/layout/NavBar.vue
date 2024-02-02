@@ -26,8 +26,8 @@
 			<div class="flex flex-row align-items-center gap-2">
 				<InputText class="max-sm:hidden sm:w-auto" placeholder="Search" type="text"/>
 				<router-link v-slot="{ href, navigate }" :to="{name:'settings'}" custom>
-					<Button v-ripple href="/settings" outlined rounded severity="secondary" size="small"
-					        class="w-[45px] h-[45px]"
+					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
+					        size="small"
 					        text @click="navigate">
 						<span class="fa-regular">&#xf013;</span>
 					</Button>
@@ -43,9 +43,9 @@
 
 <script setup>
 import {routes} from "@/router.js";
+import {isMobile} from "@/utils/mobile.js";
 
 const router = useRouter();
-let items = ref([]);
 
 const wrapperClass = computed(() => {
     return {
@@ -60,34 +60,21 @@ const wrapperClass = computed(() => {
     };
 });
 
+
+const items = computed(() => {
+    return isMobile.value ? [] : (routes.filter(route => route.showNav).map(route => {
+        return {
+            label: route.meta.title,
+            icon: route.meta.icon,
+            route: route.path,
+            isActive: route.isActive(router),
+        }
+    }));
+});
+
 const showWrapper = computed(() => {
-    return !(items.value.length === 0 && routes.filter(route => route.showNav && route.isActive(router)).length === 0);
+    return !(isMobile.value && routes.filter(route => route.showNav && route.isActive(router)).length === 0);
 });
-
-
-onMounted(() => {
-    const media = window.matchMedia('not all and (min-width: 640px)');
-    media.addEventListener('change', onSize);
-    onSize(media);
-});
-onUnmounted(() => {
-    const media = window.matchMedia('not all and (min-width: 640px)');
-    media.removeEventListener('change', onSize);
-});
-const onSize = (e) => {
-    if (e.matches) {
-        items.value = [];
-    } else {
-        items.value = routes.filter(route => route.showNav).map(route => {
-            return {
-                label: route.meta.title,
-                icon: route.meta.icon,
-                route: route.path,
-                isActive: computed(() => route.isActive(router)),
-            }
-        });
-    }
-};
 </script>
 <style scoped>
 

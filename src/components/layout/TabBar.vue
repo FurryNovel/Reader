@@ -21,9 +21,9 @@
 
 <script setup>
 import {routes} from "@/router.js";
+import {isMobile} from "@/utils/mobile.js";
 
 const router = useRouter();
-const isMobile = ref(false);
 
 const wrapperClass = computed(() => {
     return {
@@ -51,21 +51,6 @@ let items = ref(routes.filter(route => route.showNav).map(route => {
         isActive: computed(() => route.isActive(router)),
     }
 }));
-
-
-onMounted(() => {
-    const media = window.matchMedia('not all and (min-width: 640px)');
-    media.addEventListener('change', onSize);
-    onSize(media);
-});
-onUnmounted(() => {
-    const media = window.matchMedia('not all and (min-width: 640px)');
-    media.removeEventListener('change', onSize);
-});
-
-const onSize = (e) => {
-    isMobile.value = e.matches;
-};
 </script>
 <style scoped>
 

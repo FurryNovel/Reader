@@ -19,5 +19,9 @@
 
 </style>
 <script setup>
-import Navbar from "@/components/layout/NavBar.vue";
+import {initMobileSizeEvent} from "@/utils/mobile.js";
+
+onMounted(() => {
+    initMobileSizeEvent();
+});
 </script>
