@@ -20,7 +20,10 @@
 </style>
 <script setup>
 import {initMobileSizeEvent} from "@/utils/mobile.js";
+import {initRouter} from "@/utils/meta.js";
 
+
+initRouter(useRouter());
 onMounted(() => {
     initMobileSizeEvent();
 });

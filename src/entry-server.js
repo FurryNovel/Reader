@@ -1,19 +1,19 @@
 import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
 import {basename} from 'path';
+import { renderSSRHead } from '@unhead/ssr'
 
 export async function render(url, manifest = {}) {
-    const {app, router} = createApp();
-    
+    const {app, router, head} = createApp();
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
     
     const ctx = {};
     const html = await renderToString(app, ctx);
-    
-    const preloadLinks = renderPreloadLinks(ctx.modules, manifest)
-    return {html, preloadLinks}
+    const preloadLinks = renderPreloadLinks(ctx.modules, manifest);
+    const {headTags} = await renderSSRHead(head);
+    return {html, preloadLinks, headTags}
 }
 
 function renderPreloadLinks(modules, manifest) {

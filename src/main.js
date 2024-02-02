@@ -10,9 +10,11 @@ import ToastService from 'primevue/toastservice';
 import "fontawesome-6-pro/css/all.css";
 import "./assets/main.css";
 import "./assets/base.css";
+import {createHead} from "@unhead/vue";
 
 export function createApp() {
     const app = createSSRApp(App);
+    const head = createHead();
     const router = createRouter();
     const primeVueOptions = {
         ripple: true,
@@ -23,11 +25,12 @@ export function createApp() {
             mergeProps: false,
         },
     }
+    app.use(head);
     app.use(PrimeVue?.default || PrimeVue, primeVueOptions);
     app.use(ToastService?.default || ToastService);
     app.use(router);
     app.use(directivePlugin());
-    return {app, router};
+    return {app, router, head};
 }
 
 function directivePlugin() {

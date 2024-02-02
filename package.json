@@ -9,6 +9,7 @@
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",
 		"@rollup/plugin-inject": "^5.0.5",
+		"@unhead/ssr": "^1.8.10",
 		"@unhead/vue": "^1.8.9",
 		"axios": "^1.6.7",
 		"fontawesome-6-pro": "^6.4.0",
@@ -25,14 +26,14 @@
 		"workbox-window": "^7.0.0"
 	},
 	"devDependencies": {
-		"compression": "^1.7.4",
-		"serve-static": "^1.15.0",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@vitejs/plugin-vue": "latest",
 		"@vitejs/plugin-vue-jsx": "latest",
 		"autoprefixer": "^10.4.17",
+		"compression": "^1.7.4",
 		"express": "^4.18.2",
 		"postcss": "^8.4.33",
+		"serve-static": "^1.15.0",
 		"tailwindcss": "^3.4.1",
 		"unplugin-auto-import": "^0.17.5",
 		"unplugin-vue-components": "^0.26.0",
