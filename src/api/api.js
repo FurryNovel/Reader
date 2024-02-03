@@ -6,6 +6,7 @@ const nil = (args) => args;
  * @description 定义一个api
  * @param api {string} 接口地址
  * @param store {Object} 存储Store
+ * @param pk {string} 主键
  * @param data {Object} 请求参数
  * @param ignoreReq {boolean} 有缓存时是否忽略请求
  * @param onCache {function} 有缓存时的回调
@@ -16,7 +17,8 @@ const nil = (args) => args;
 export function defineApi({
                               api,
                               store = null,
-                              data = {pk: 'id',},
+                              data = {},
+                              pk = 'id',
                               ignoreReq = false,
                               onCache = nil,
                               onError = nil,
@@ -26,7 +28,7 @@ export function defineApi({
         api = api.replace(/:(\w+)/g, (match, key) => {
             return data[key];
         });
-        let id = data[data.pk] ?? data.id ?? data.pk ?? data;
+        let id = data[pk] ?? data.id ?? data.pk ?? data;
         let cacheData = await store.find(id);
         if (cacheData) {
             onCache(cacheData);

@@ -6,8 +6,8 @@ export function loadNovel({id, onCache}) {
     return defineApi({
         api: `/novel/:id`,
         store: useNovelStore(),
+        pk: 'id',
         data: {
-            pk: 'id',
             id: id,
         },
         ignoreReq: false,
