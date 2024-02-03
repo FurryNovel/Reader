@@ -9,6 +9,7 @@ export async function localDatabase({store}) {
         name: store.$id,
         driver: localForage.INDEXEDDB,
     })
+    store.driver = instance;
     let patches = {};
     const task = instance.keys().then((keys) => {
         return Promise.all(keys.map(key => instance.getItem(key).then((value) => {
@@ -17,6 +18,9 @@ export async function localDatabase({store}) {
     });
     
     return task.then(() => {
+        if (store.isLazy()) {
+            return;
+        }
         if ('expire' in patches) {
             if (patches.expire && patches.expire < Date.now()) {
                 patches = {};

@@ -2,6 +2,8 @@ export function defineBaseStore() {
     return {
         id: 'abstract',
         persist: true,
+        lazy: false,
+        driver: null,
         state: () => {
             return {
                 prefix: 'pk-',
@@ -9,7 +11,12 @@ export function defineBaseStore() {
             }
         },
         actions: {
-            find(id) {
+            async find(id) {
+                if (this.isLazy()) {
+                    this.$state[this.prefix + id] = await this.driver.getItem(this.prefix + id).then((value) => {
+                        return value.value;
+                    });
+                }
                 return this.$state?.[this.prefix + id] || this?.[this.prefix + id];
             },
             save(id, data) {
@@ -24,6 +31,9 @@ export function defineBaseStore() {
             },
             getExpire() {
                 return this.$state?.expire || this?.expire;
+            },
+            isLazy() {
+                return false;
             },
         },
     }
