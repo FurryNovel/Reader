@@ -69,6 +69,9 @@ export async function localDatabase({store}) {
             }
             if (saveMode) {
                 for (const key of Object.keys(state)) {
+                    if (state[key] === undefined ||  typeof state[key] === 'function') {
+                        continue;
+                    }
                     instance.setItem(
                         key,
                         {
