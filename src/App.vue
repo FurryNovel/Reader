@@ -21,10 +21,12 @@
 <script setup>
 import {initDeviceEvent} from "@/utils/device.js";
 import {initRouter} from "@/utils/meta.js";
+import {initCookieManager} from "@/utils/cookie.js";
 
 
 initRouter(useRouter());
 onMounted(() => {
     initDeviceEvent();
+    initCookieManager();
 });
 </script>
