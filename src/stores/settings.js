@@ -45,22 +45,22 @@ export const useSettingStore = defineStore({
     actions: {},
     getters: {
         showLanguages(state) {
-            return state.global.accaptedLanguages.filter((lang) => {
-                return !state.global.hideLanguaues.includes(lang.value);
+            return state.global.acceptedLanguages.filter((lang) => {
+                return !state.global.hideLanguages.includes(lang.value);
             });
         },
         computedHateTags(state) {
             let tags = [];
-            let showLanguages = state.global.accaptedLanguages.filter((lang) => {
-                return !state.global.hideLanguaues.includes(lang.value);
+            let showLanguages = state.global.acceptedLanguages.filter((lang) => {
+                return !state.global.hideLanguages.includes(lang.value);
             });
             if (state.global.safeMode) {
                 tags.push('r-18');
                 tags.push('R18');
             }
             if (showLanguages.length > 1 || showLanguages.length === 0) {
-                if (state.global.hideLanguaues.length > 1) {
-                    tags = tags.concat(state.global.hideLanguaues.map((lang) => {
+                if (state.global.hideLanguages.length > 1) {
+                    tags = tags.concat(state.global.hideLanguages.map((lang) => {
                         return lang;
                     }));
                 }
@@ -72,8 +72,8 @@ export const useSettingStore = defineStore({
         },
         computedTags(state) {
             let tags = [];
-            let showLanguages = state.global.accaptedLanguages.filter((lang) => {
-                return !state.global.hideLanguaues.includes(lang.value);
+            let showLanguages = state.global.acceptedLanguages.filter((lang) => {
+                return !state.global.hideLanguages.includes(lang.value);
             });
             if (showLanguages.length === 1) {
                 tags.push(showLanguages[0].value);
