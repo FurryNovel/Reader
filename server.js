@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import express from 'express'
+import cookieParser from "cookie-parser";
 
 const isProd = (process.env.NODE_ENV === 'production');
 
@@ -18,6 +19,7 @@ const manifest = isProd
     : {};
 
 let vite = {};
+app.use(cookieParser())
 if (isProd) {
     const compression = await import('compression');
     const serveStatic = await import('serve-static');
@@ -57,8 +59,10 @@ app.use('*', async (req, res) => {
         const url = req.originalUrl || req.url;
         const template = isProd ? fs.readFileSync(resolve('./dist/client/index.html'), 'utf-8') : await vite.transformIndexHtml(url, fs.readFileSync(resolve('index.html'), 'utf-8'));
         const render = (isProd ? (await import('./dist/server/entry-server.js')).render : await vite.ssrLoadModule('/src/entry-server')).render;
-
-        const renderRes = await render(url, manifest);
+        
+        const renderRes = await render(url, manifest, {
+            cookies: req.cookies,
+        });
         
         const html = template
             .replace(`<!--app-html-->`, renderRes.html)
@@ -67,7 +71,7 @@ app.use('*', async (req, res) => {
         
         res.status(200).set({'Content-Type': 'text/html'}).end(html);
     } catch (e) {
-        if (!isProd){
+        if (!isProd) {
             vite && vite.ssrFixStacktrace(e);
             console.error(e.stack);
         }

@@ -1,15 +1,16 @@
 import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
 import {basename} from 'path';
-import { renderSSRHead } from '@unhead/ssr'
+import {renderSSRHead} from '@unhead/ssr'
 
-export async function render(url, manifest = {}) {
+export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head} = await createApp();
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
-    
-    const ctx = {};
+    const ctx = {
+        ...request,
+    };
     const html = await renderToString(app, ctx);
     const preloadLinks = renderPreloadLinks(ctx.modules, manifest);
     const {headTags} = await renderSSRHead(head);

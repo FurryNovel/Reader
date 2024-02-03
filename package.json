@@ -12,6 +12,7 @@
 		"@unhead/ssr": "^1.8.10",
 		"@unhead/vue": "^1.8.9",
 		"axios": "^1.6.7",
+		"cookie-parser": "^1.4.6",
 		"fontawesome-6-pro": "^6.4.0",
 		"jquery": "^3.7.1",
 		"localforage": "^1.10.0",
