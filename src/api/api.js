@@ -22,12 +22,12 @@ export function defineApi({
                               onError = nil,
                               onSuccess = nil
                           }) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) =>  {
         api = api.replace(/:(\w+)/g, (match, key) => {
             return data[key];
         });
         let id = data[data.pk] ?? data.id ?? data.pk ?? data;
-        let cacheData = store.find(id);
+        let cacheData = await store.find(id);
         if (cacheData) {
             onCache(cacheData);
             if (ignoreReq) {
