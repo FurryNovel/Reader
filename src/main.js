@@ -13,6 +13,7 @@ import ToastService from 'primevue/toastservice';
 import { createPinia } from 'pinia'
 import {createHead} from "@unhead/vue";
 import {createRecoveryStorePlugin, localDatabase} from "@/plugins/local-database.js";
+import VueCookies from 'vue-cookies'
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -39,6 +40,13 @@ export function createApp() {
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
        asyncPlugins.push(createRecoveryStorePlugin());
+       app.use(VueCookies,{
+           expireTimes: '360d',
+           path: '/',
+           domain: '',
+           secure: true,
+           sameSite: 'Lax'
+       });
     }
     return Promise.all(asyncPlugins).then(() => ({
         app,
