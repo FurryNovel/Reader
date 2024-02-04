@@ -95,6 +95,8 @@ export function defineApi({
         let id = data[pk] ?? data.id ?? data.pk ?? data;
         if (store) {
             store = store();
+        }
+        if (store) {
             let cacheData = await store.find(id);
             if (cacheData) {
                 onCache(cacheData);
@@ -112,8 +114,10 @@ export function defineApi({
             params: params,
         }).then(res => {
             let responseData = onSuccess(res?.data) ?? res?.data;
-            if (store && responseData) {
-                store.save(id, responseData);
+            if (responseData) {
+                if (store) {
+                    store.save(id, responseData);
+                }
                 return responseData;
             }
             return Promise.reject();

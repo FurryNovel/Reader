@@ -10,10 +10,11 @@ import Lara from '@/presets/lara';
 import Ripple from 'primevue/ripple';
 import AnimateOnScroll from 'primevue/animateonscroll';
 import ToastService from 'primevue/toastservice';
-import { createPinia } from 'pinia'
+import {createPinia} from 'pinia'
 import {createHead} from "@unhead/vue";
 import {createRecoveryStorePlugin, localDatabase} from "@/plugins/local-database.js";
 import VueCookies from 'vue-cookies'
+import {initialPinia} from "@/plugins/initial-pinia.js";
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -39,14 +40,15 @@ export function createApp() {
     
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
-       asyncPlugins.push(createRecoveryStorePlugin());
-       app.use(VueCookies,{
-           expireTimes: '360d',
-           path: '/',
-           domain: '',
-           secure: true,
-           sameSite: 'Lax'
-       });
+        asyncPlugins.push(createRecoveryStorePlugin());
+        app.use(VueCookies, {
+            expireTimes: '360d',
+            path: '/',
+            domain: '',
+            secure: true,
+            sameSite: 'Lax'
+        });
+        pinia.use(initialPinia)
     }
     return Promise.all(asyncPlugins).then(() => ({
         app,
