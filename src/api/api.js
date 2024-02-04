@@ -1,12 +1,66 @@
 import request from "@/utils/request.js";
 
+import { LRUCache } from 'lru-cache';
+
 const nil = (args) => args;
+
+export class CacheStore {
+    constructor(store = null) {
+    
+    }
+    async find(id) {
+        throw new Error('Please initialize the store first');
+    }
+    save(id, data) {
+        throw new Error('Please initialize the store first');
+    }
+}
+
+export class LRUCacheStore extends CacheStore {
+    constructor(store = null) {
+        super(store);
+        if (this.store instanceof LRUCache) {
+            throw new Error('store must be a LRUCache')
+        }else{
+            this.store = new LRUCache({
+                max: 500,
+                ttl: 1000 * 60,
+            });
+        }
+    }
+    async find(id) {
+        return this.store.get(id);
+    }
+    save(id, data) {
+        this.store.set(id, data);
+    }
+}
+
+export class PiniaCacheStore extends CacheStore {
+    constructor(store = null) {
+        super(store);
+        if (this.store === null) {
+            throw new Error('store must be a Pinia store')
+        }
+    }
+    
+    async find(id) {
+        return this.store.find(id);
+    }
+    
+    save(id, data) {
+        this.store.save(id, data);
+    }
+}
+
+export const defaultCacheStore = new CacheStore();
+
 
 /**
  * @description 定义一个api
  * @param method {string} 请求方法
  * @param api {string} 接口地址
- * @param store {Object} 存储Store
+ * @param store {Function?} 存储Store的获取方法
  * @param pk {string} 主键
  * @param data {Object} 请求参数
  * @param params {Object} 请求参数
@@ -30,18 +84,24 @@ export function defineApi({
                           }) {
     return new Promise(async (resolve, reject) => {
         api = api.replace(/:(\w+)/g, (match, key) => {
-            return data[key];
+            return params[key] ?? data[key] ?? match;
         });
         let id = data[pk] ?? data.id ?? data.pk ?? data;
-        let cacheData = await store.find(id);
-        if (cacheData) {
-            onCache(cacheData);
-            if (ignoreReq) {
-                reject();
-                return;
+        if (store) {
+            store = store();
+            let cacheData = await store.find(id);
+            if (cacheData) {
+                onCache(cacheData);
+                if (ignoreReq) {
+                    resolve({
+                        ...cacheData,
+                        fromCache: true,
+                    });
+                    return;
+                }
             }
         }
-        resolve(request.get(api, {
+        resolve(request[method](api, {
             data: data,
             params: params,
         }).then(res => {

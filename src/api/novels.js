@@ -1,17 +1,21 @@
 import request from "@/utils/request.js";
 import {useNovelStore} from "@/stores/novels.js";
-import {defineApi} from "@/api/api.js";
+import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
 
-export function loadNovel({id, onCache}) {
+const defaultCacheStore = new LRUCacheStore();
+
+export function loadNovel({id, onCache, ignoreReq}) {
     return defineApi({
         method: 'get',
         api: `/novel/:id`,
-        store: useNovelStore(),
+        store: () => {
+            return import.meta.env.SSR ? defaultCacheStore : new PiniaCacheStore(useNovelStore());
+        },
         pk: 'id',
         data: {
             id: id,
         },
-        ignoreReq: false,
+        ignoreReq: ignoreReq,
         onCache: onCache
     });
 }

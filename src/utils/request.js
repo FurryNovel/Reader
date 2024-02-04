@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedReference
 
 import axios, {AxiosError} from 'axios';
-import eventbus from "@/utils/eventbus.js";
+import config from "@/config.js";
 
 const toJson = (data) => {
     if (typeof data === 'string') {
@@ -15,7 +15,7 @@ const toJson = (data) => {
 }
 
 const service = axios.create({
-    baseURL: '/api',
+    baseURL: (import.meta.env.SSR ? config.base : '') + `/api`,
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',

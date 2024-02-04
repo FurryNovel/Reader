@@ -16,6 +16,7 @@
 		"fontawesome-6-pro": "^6.4.0",
 		"jquery": "^3.7.1",
 		"localforage": "^1.10.0",
+		"lru-cache": "^10.2.0",
 		"misans": "^4.0.0",
 		"mitt": "^3.0.1",
 		"noto-sans-sc": "^36.0.1",
