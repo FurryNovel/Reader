@@ -24,7 +24,7 @@ export class LRUCacheStore extends CacheStore {
         }else{
             this.store = new LRUCache({
                 max: 500,
-                ttl: 1000 * 60,
+                ttl: 1000 * 60 * 8,
             });
         }
     }
