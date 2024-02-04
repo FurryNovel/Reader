@@ -35,9 +35,6 @@ export function defineBaseStore() {
             getExpire() {
                 return this.$state?.expire || this?.expire;
             },
-            isLazy() {
-                return false;
-            },
         },
     }
 }

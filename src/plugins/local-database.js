@@ -4,7 +4,10 @@ import {useNovelStore} from "@/stores/novels.js";
 import {useSettingStore} from "@/stores/settings.js";
 
 
-export async function localDatabase({store}) {
+export async function localDatabase({options, store}) {
+    if (!(options?.persist)){
+        return;
+    }
     const instance = localForage.createInstance({
         name: store.$id,
         driver: localForage.INDEXEDDB,
@@ -18,7 +21,7 @@ export async function localDatabase({store}) {
     });
     
     return task.then(() => {
-        if (store.isLazy()) {
+        if (options.lazy) {
             return;
         }
         if ('expire' in patches) {

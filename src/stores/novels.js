@@ -5,12 +5,7 @@ const abstract = defineBaseStore();
 
 export const useNovelStore = defineStore(Object.assign(abstract, {
     id: 'novels',
-    actions: {
-        ...abstract.actions,
-        isLazy() {
-            return true;
-        }
-    }
+    lazy: true,
 }));
 
 export default {
