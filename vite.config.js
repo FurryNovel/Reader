@@ -115,6 +115,15 @@ export default defineConfig({
             }
         })
     ],
+    server: {
+        proxy: {
+            '/api': {
+                target: 'https://novel.tigerkk.me/api',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            },
+        }
+    },
     build: {
         minify: false,
     },

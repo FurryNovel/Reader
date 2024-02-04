@@ -15,7 +15,7 @@ const toJson = (data) => {
 }
 
 const service = axios.create({
-    baseURL: 'https://novel.tigerkk.me/api',
+    baseURL: '/api',
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
