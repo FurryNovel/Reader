@@ -1,10 +1,11 @@
 <template>
-	<VirtualScroller :itemSize="50" :items="data.items" :pt="{ content: 'flex flex-row' }"
-	                 class="border-1 surface-border border-round" orientation="horizontal"
-	                 style="width: 200px; height: 200px">
+	<VirtualScroller :itemSize="25" :items="data.items" :pt="{content: 'flex flex-col'}" showLoader
+	                 class="border-1 surface-border border-round flex-col h-full w-full" orientation="vertical">
 		<template v-slot:item="{ item, options }">
-			<div :class="['flex align-items-center p-2', { 'surface-hover': options.odd }]"
-			     style="width: 50px; writing-mode: vertical-lr;">{{ item }}
+			<!--options.odd-->
+			<div :class="['flex flex-col align-items-center p-2']" style="height:25px">
+				
+				{{ item.name }}
 			</div>
 		</template>
 	</VirtualScroller>
