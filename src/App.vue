@@ -25,7 +25,7 @@ import {initCookieManager} from "@/utils/cookie.js";
 
 
 initRouter(useRouter());
-onMounted(() => {
+onBeforeMount(() => {
     initDeviceEvent();
     initCookieManager();
 });
