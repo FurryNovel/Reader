@@ -67,7 +67,8 @@ app.use('*', async (req, res) => {
         const html = template
             .replace(`<!--app-html-->`, renderRes.html)
             .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-            .replace(`<!--head-tags-->`, renderRes.headTags);
+            .replace(`<!--head-tags-->`, renderRes.headTags)
+            .replace(`'<!--ssr-state-->'`, renderRes.state);
         
         res.status(200).set({'Content-Type': 'text/html'}).end(html);
     } catch (e) {

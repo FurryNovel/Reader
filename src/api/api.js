@@ -1,6 +1,7 @@
 import request from "@/utils/request.js";
 
-import { LRUCache } from 'lru-cache';
+import {LRUCache} from 'lru-cache';
+import {crc32} from "hash-wasm";
 
 const nil = (args) => args;
 
@@ -8,29 +9,34 @@ export class CacheStore {
     constructor(store = null) {
     
     }
+    
     async find(id) {
         throw new Error('Please initialize the store first');
     }
+    
     save(id, data) {
         throw new Error('Please initialize the store first');
     }
 }
 
 export class LRUCacheStore extends CacheStore {
-    constructor(store = null) {
+    constructor(store = null, params = {}) {
         super(store);
         if (this.store instanceof LRUCache) {
             throw new Error('store must be a LRUCache')
-        }else{
+        } else {
             this.store = new LRUCache({
                 max: 500,
                 ttl: 1000 * 60 * 8,
+                ...params,
             });
         }
     }
+    
     async find(id) {
         return this.store.get(id);
     }
+    
     save(id, data) {
         this.store.set(id, data);
     }
@@ -115,4 +121,8 @@ export function defineApi({
             return Promise.reject(onError(err) ?? err);
         }));
     });
+}
+
+export async function getReqId(params) {
+    return await crc32(JSON.stringify(params))
 }
