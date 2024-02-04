@@ -1,5 +1,6 @@
 import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
+import {useSSRContext} from "vue";
 
 export const baseConfig = {
     guildVersion: 0,
@@ -82,20 +83,32 @@ export const baseConfig = {
     },
 }
 
-export function useConfig() {
-    const settingStore = useSettingStore();
+export function useConfigProvider() {
     let base = baseConfig;
     base = Object.fromEntries(Object.entries(base).filter(([key, value]) => {
         return !['showLanguages', 'hateTags', 'tags'].includes(key);
     }));
-    let state = Object.assign(base, settingStore.$state);
+    let state = null;
+    if (!import.meta.env.SSR) {
+        const settingStore = useSettingStore();
+        state = Object.assign(base, settingStore.$state);
+    }else{
+        const ctx = useSSRContext();
+        state = JSON.parse(ctx.cookies?.settings ?? '{}');
+        state = Object.assign(base, state);
+    }
     // noinspection JSUnresolvedReference
     state.chapter = Object.assign(base.chapter, state.chapter);
     // noinspection JSUnresolvedReference
     state.global = Object.assign(base.global, state.global);
-    watchEffect(() => {
-        state.saveToCookie();
-        settingStore.$patch(state);
-    });
+    if (!import.meta.env.SSR) {
+        (() => {
+            const settingStore = useSettingStore();
+            watchEffect(() => {
+                state.saveToCookie();
+                settingStore.$patch(state);
+            });
+        })();
+    }
     return state;
 }
