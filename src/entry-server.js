@@ -7,7 +7,7 @@ import {useServerSideRenderStore} from "@/stores/ssr.js";
 
 export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head, pinia} = await createApp();
-    const ssrStore = useServerSideRenderStore();
+    const ssrStore = useServerSideRenderStore(pinia);
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
