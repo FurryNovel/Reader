@@ -1,6 +1,8 @@
 import request from "@/utils/request.js";
 import {useNovelStore} from "@/stores/novels.js";
 import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
+import {crc32} from 'hash-wasm';
+
 
 const defaultCacheStore = new LRUCacheStore();
 
@@ -20,13 +22,18 @@ export function loadNovel({id, onCache, ignoreReq}) {
     });
 }
 
-export function loadNovels({params}) {
+export async function loadNovels({params}) {
     return defineApi({
         method: 'get',
         api: `/novel/`,
-        store: null,
-        data: {},
-        params: data,
+        store: () => {
+            return import.meta.env.SSR ? defaultCacheStore : null;
+        },
+        pk: 'req-id',
+        data: {
+            'req-id': await crc32(JSON.stringify(params)),
+        },
+        params: params,
         ignoreReq: false,
     });
 }
