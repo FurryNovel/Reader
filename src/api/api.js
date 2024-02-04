@@ -123,6 +123,6 @@ export function defineApi({
     });
 }
 
-export async function getReqId(params) {
+export async function getReqId(params = {}) {
     return await crc32(JSON.stringify(params))
 }
