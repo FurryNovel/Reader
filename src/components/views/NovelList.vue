@@ -1,10 +1,23 @@
 <template>
-
+	<VirtualScroller :itemSize="50" :items="data.items" :pt="{ content: 'flex flex-row' }"
+	                 class="border-1 surface-border border-round" orientation="horizontal"
+	                 style="width: 200px; height: 200px">
+		<template v-slot:item="{ item, options }">
+			<div :class="['flex align-items-center p-2', { 'surface-hover': options.odd }]"
+			     style="width: 50px; writing-mode: vertical-lr;">{{ item }}
+			</div>
+		</template>
+	</VirtualScroller>
 </template>
 
 <script setup>
+import {getReqId} from "@/api/api.js";
 import {loadNovels} from "@/api/novels.js";
-import {useSettingStore} from "@/stores/settings.js";
+import {useConfigProvider} from "@/provider/config.js";
+import {useServerSideRenderStore} from "@/stores/ssr.js";
+
+const ssrStore = useServerSideRenderStore();
+const configProvider = useConfigProvider();
 
 const props = defineProps({
     type: {
@@ -61,14 +74,31 @@ const props = defineProps({
     }
 });
 
-let setting = null;
-// const hateTags = computed(() => settingStore.computedHateTags);
-// const tags = computed(() => settingStore.computedTags.concat(props.tags || []));
+const hateTags = computed(() => configProvider.hateTags);
+const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []));
 
+const data = reactive({
+    page: 1,
+    items: [],
+    loading: false,
+    hasMore: true,
+    reqId: '',
+});
 
 onServerPrefetch(async () => {
-    //settingStore = useSettingStore();
-    let data = await loadNovels({
+    data.page = 1;
+    data.items = await loadData();
+    ssrStore.$patch({
+        [data.reqId]: data.items
+    });
+});
+
+onBeforeMount(async () => {
+	data.items = await loadData();
+});
+
+async function loadData() {
+    const params = {
         page: data.page,
         order_by: props.type,
         order: props.order,
@@ -76,12 +106,16 @@ onServerPrefetch(async () => {
         keyword: props.keyword,
         ids: props.ids,
         with_chapters: props.withChapters,
-        tags: props.applyFilter ? data.tags : props.tags,
-        hate_tags: props.applyFilter ? data.hateTags : null,
-    });
-    
-});
-
+        tags: props.applyFilter ? tags.value : props.tags,
+        hate_tags: props.applyFilter ? hateTags.value : null,
+    };
+    data.reqId = ('novel-list-' + await getReqId(params));
+    if(!import.meta.env.SSR){
+        console.log(ssrStore)
+        return ssrStore[data.reqId] || loadNovels(params);
+    }
+    return loadNovels({params})
+}
 
 </script>
 
