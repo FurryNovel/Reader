@@ -7,6 +7,11 @@ export const useServerSideRenderStore = defineStore({
     state: () => {
         return {};
     },
+    actions: {
+        find(id) {
+            return this.$state[id] ?? null;
+        }
+    },
 });
 export default {
     useServerSideRenderStore,

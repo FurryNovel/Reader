@@ -94,7 +94,7 @@ onServerPrefetch(async () => {
 });
 
 onBeforeMount(async () => {
-	data.items = await loadData();
+    data.items = await loadData();
 });
 
 async function loadData() {
@@ -110,9 +110,8 @@ async function loadData() {
         hate_tags: props.applyFilter ? hateTags.value : null,
     };
     data.reqId = ('novel-list-' + await getReqId(params));
-    if(!import.meta.env.SSR){
-        console.log(ssrStore)
-        return ssrStore[data.reqId] || loadNovels(params);
+    if (!import.meta.env.SSR) {
+        return ssrStore.find(data.reqId) || loadNovels(params);
     }
     return loadNovels({params})
 }
