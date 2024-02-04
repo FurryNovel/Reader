@@ -13,9 +13,12 @@ export function defineBaseStore() {
         actions: {
             async find(id) {
                 if (this.isLazy()) {
-                    this.$state[this.prefix + id] = await this.driver.getItem(this.prefix + id).then((value) => {
-                        return value.value;
+                    let res = await this.driver.getItem(this.prefix + id).then((value) => {
+                        return value?.value;
                     });
+                    if (res) {
+                        this.$state[this.prefix + id] = res;
+                    }
                 }
                 return this.$state?.[this.prefix + id] || this?.[this.prefix + id];
             },
