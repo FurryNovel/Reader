@@ -22,11 +22,10 @@
 </template>
 
 <script setup>
-import {getReqId, unWrapper} from "@/api/api.js";
+import {getReqId, unWrapper, wrapper} from "@/api/api.js";
 import {loadNovels} from "@/api/novels.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {useServerSideRenderStore} from "@/stores/ssr.js";
-import {useDeviceInfo} from "@/utils/device.js";
 
 const vm = getCurrentInstance();
 
@@ -106,10 +105,10 @@ const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []
 
 onServerPrefetch(() => new Promise((resolve) => {
     data.page = 1;
-    loadData().then((items) => {
-        // noinspection JSValidateTypes
+    loadData().then((res) => {
+        const items = res.data;
         data.items = props.limit ? items.slice(0, props.limit) : items;
-        ssrStore.save(vm.id, data.items);
+        ssrStore.save(data.reqId, data.items);
     }).finally(() => {
         resolve();
     });
@@ -117,7 +116,7 @@ onServerPrefetch(() => new Promise((resolve) => {
 
 onBeforeMount(() => {
     unWrapper(loadData(), data, 'items').then(() => {
-        data.items = props.limit ? data.items.slice(0, props.limit) : items;
+        data.items = props.limit ? data.items.slice(0, props.limit) : data.items;
     });
 });
 
@@ -137,14 +136,19 @@ function loadData() {
         tags: props.applyFilter ? tags.value : props.tags,
         hate_tags: props.applyFilter ? hateTags.value : null,
     };
-    data.reqId = vm.id;
-    if (!import.meta.env.SSR) {
-        const prefetch = ssrStore.find(data.reqId);
-        if (prefetch) {
-            return prefetch;
-        }
+    data.reqId = Int8Array.from(getReqId(params)).join('');
+    console.log(data.reqId)
+    const prefetch = ssrStore.find(data.reqId);
+    if (prefetch) {
+        return wrapper({
+            data: prefetch,
+            reqId: data.reqId,
+        });
     }
-    return loadNovels({params, ignoreReq: import.meta.env.SSR})
+    return wrapper({
+        reqId: data.reqId,
+        data: loadNovels({params, ignoreReq: import.meta.env.SSR}),
+    });
 }
 
 </script>
