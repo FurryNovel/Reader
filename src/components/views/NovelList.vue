@@ -1,18 +1,19 @@
 <template>
 	<template v-if="props.listStyle === 'style1'">
 		<div class="border-1 surface-border border-round flex-col h-full w-full">
-			<div v-for="line in perLineItems" :key="line.map(item => item.id).join()">
+			<div v-for="line in perLineItems" :key="(line || []).map(item => item?.id).join()">
 				<div :style="{height: `${itemHeight}px`}" class="flex max-sm:block flex-row items-center mb-4">
 					<div v-for="item in line"
-					     class="flex flex-row align-items-center m-2 mb-0 h-52 rounded bg-gray-50 transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110">
-						<div class="flex flex-1 flex-col justify-between items-center h-full w-32 rounded-xl relative overflow-hidden">
-							<img :alt="`${item.name}(cover)`" :src="item.cover"
-							     class="object-cover absolute h-full w-full"></img>
-						</div>
-						<div class="flex flex-col">
-							
-							{{ item.name }}
-						</div>
+					     class="flex w-1/4 group flex-row align-items-center m-2 mb-0 h-52 rounded bg-gray-50 transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110 hover:z-50">
+						<template v-if="item">
+							<div class="flex flex-col justify-between items-center h-full w-32 aspect-[16/9] rounded-xl relative overflow-hidden">
+								<img :alt="`${item.name}(cover)`" :src="item.cover"
+								     class="object-cover absolute h-full w-full"/>
+							</div>
+							<div class="flex flex-1 flex-col p-5 transition duration-300 group-hover:w-1/2 group-hover:h-1/2 ">
+								{{ item.name }}
+							</div>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -104,7 +105,7 @@ const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []
 
 const perLineCount = computed(() => {
     return {
-        style1: 5,
+        style1: 4,
         style2: 10,
     }[props.listStyle] || 4;
 });
@@ -115,9 +116,9 @@ const perLineItems = computed(() => {
             break;
         }
         const line = data.items.slice(i, i + perLineCount.value);
-        // if (line.length < perLineCount.value) {
-        // 	line.push(...Array(perLineCount.value - line.length).fill(null));
-        // }
+        if (line.length < perLineCount.value) {
+            line.push(...Array(perLineCount.value - line.length).fill(null));
+        }
         result.push(line);
     }
     return result;
