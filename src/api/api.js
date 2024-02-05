@@ -134,24 +134,47 @@ export function getReqId(params = {}) {
 
 export function unWrapper(wrapper, ref, key = null) {
     const setRef = (value) => {
-        if (!key){
-            if (ref.value){
+        if (!key) {
+            if (ref.value) {
                 ref.value = value;
             }
-        }else{
-            if(ref[key].value){
+        } else {
+            if (ref[key].value) {
                 ref[key].value = value;
-            }else{
+            } else {
                 ref[key] = value;
             }
         }
     }
     if (wrapper instanceof Promise) {
-        return wrapper.then(data => {
-            setRef(data);
+        return wrapper.then(res => {
+            setRef(res.data);
         });
     } else {
-        setRef(wrapper);
+        if (wrapper.data !== undefined) {
+            setRef(wrapper.data);
+        }
     }
     return Promise.resolve(wrapper);
+}
+
+export function wrapper({data, reqId}) {
+    if (data instanceof Promise) {
+        return data.then(data => {
+            return {
+                reqId: reqId,
+                data: data,
+            }
+        });
+    }
+    if (import.meta.env.SSR) {
+        return Promise.resolve({
+            reqId: reqId,
+            data: data,
+        });
+    }
+    return {
+        reqId: reqId,
+        data: data,
+    };
 }
