@@ -1,21 +1,21 @@
 <template>
 	<template v-if="props.listStyle === 'style1'">
-		<div class="border-1 surface-border border-round flex-col h-full w-full">
-			<div v-for="line in perLineItems" :key="(line || []).map(item => item?.id).join()">
-				<div :style="{height: `${itemHeight}px`}" class="flex max-sm:block flex-row items-center mb-4">
-					<div v-for="item in line"
-					     class="flex w-1/4 group flex-row align-items-center m-2 mb-0 h-52 rounded bg-gray-50 transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110 hover:z-50">
-						<template v-if="item">
-							<div class="flex flex-col justify-between items-center h-full w-32 aspect-[16/9] rounded-xl relative overflow-hidden">
-								<img :alt="`${item.name}(cover)`" :src="item.cover"
-								     class="object-cover absolute h-full w-full"/>
-							</div>
-							<div class="flex flex-1 flex-col p-5 transition duration-300 group-hover:w-1/2 group-hover:h-1/2 ">
-								{{ item.name }}
-							</div>
-						</template>
+		<div class="h-full w-full flex-col border-1 surface-border border-round">
+			<div class="mb-4 flex flex-row flex-wrap items-center">
+				<template v-for="item in data.items">
+					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center hover:-translate-y-2 hover:scale-110 hover:shadow-2xl">
+						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+							<img :alt="`${item.name}(cover)`" :src="item.cover" :draggable="false"
+							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
+						</div>
+						<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
+							{{ item.name }}
+						</div>
+						<div class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+							{{ item.author.nickname }}
+						</div>
 					</div>
-				</div>
+				</template>
 			</div>
 		</div>
 	</template>
@@ -86,7 +86,7 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    maxLine: {
+    limit: {
         default: null,
     }
 });
@@ -103,45 +103,22 @@ const isMounted = ref(false);
 const hateTags = computed(() => configProvider.hateTags);
 const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []));
 
-const perLineCount = computed(() => {
-    return {
-        style1: 4,
-        style2: 10,
-    }[props.listStyle] || 4;
-});
-const perLineItems = computed(() => {
-    let result = [];
-    for (let i = 0; i < data.items.length; i += perLineCount.value) {
-        if (props.maxLine && result.length >= props.maxLine) {
-            break;
-        }
-        const line = data.items.slice(i, i + perLineCount.value);
-        if (line.length < perLineCount.value) {
-            line.push(...Array(perLineCount.value - line.length).fill(null));
-        }
-        result.push(line);
-    }
-    return result;
-});
-
-const itemHeight = computed(() => {
-    const rem = 13;
-    return (isMounted && useDeviceInfo().value.isMobile) ? rem * 16 * perLineCount : rem * 16;
-});
 
 onServerPrefetch(() => new Promise((resolve) => {
     data.page = 1;
     loadData().then((items) => {
         // noinspection JSValidateTypes
-        data.items = items;
-        ssrStore.save(vm.id, items);
+        data.items = props.limit ? items.slice(0, props.limit) : items;
+        ssrStore.save(vm.id, data.items);
     }).finally(() => {
         resolve();
     });
 }));
 
 onBeforeMount(() => {
-    unWrapper(loadData(), data, 'items');
+    unWrapper(loadData(), data, 'items').then(() => {
+        data.items = props.limit ? data.items.slice(0, props.limit) : items;
+    });
 });
 
 onMounted(() => {
