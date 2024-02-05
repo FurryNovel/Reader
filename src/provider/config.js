@@ -93,11 +93,11 @@ export function useConfigProvider() {
     } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
-        state = Object.assign(base, state);
         delete state.showLanguages;
         delete state.hateTags;
         delete state.tags;
         delete state.saveToCookie;
+        state = Object.assign(base, state,);
     }
     // noinspection JSUnresolvedReference
     state.chapter = Object.assign(base.chapter, state.chapter);
