@@ -34,11 +34,12 @@ export class LRUCacheStore extends CacheStore {
     }
     
     async find(id) {
-        return this.store.get(id);
+        let data = this.store.get(id);
+        return data ? JSON.parse(data) : null;
     }
     
     save(id, data) {
-        this.store.set(id, data);
+        this.store.set(id, JSON.stringify(data));
     }
 }
 
@@ -101,10 +102,7 @@ export function defineApi({
             if (cacheData) {
                 onCache(cacheData);
                 if (ignoreReq) {
-                    resolve({
-                        ...cacheData,
-                        fromCache: true,
-                    });
+                    resolve(cacheData);
                     return;
                 }
             }

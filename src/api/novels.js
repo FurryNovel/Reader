@@ -22,7 +22,7 @@ export function loadNovel({id, onCache, ignoreReq}) {
     });
 }
 
-export async function loadNovels({params}) {
+export async function loadNovels({params, ignoreReq}) {
     return defineApi({
         method: 'get',
         api: `/novel`,
@@ -34,6 +34,6 @@ export async function loadNovels({params}) {
             'req-id': getReqId(params),
         },
         params: params,
-        ignoreReq: false,
+        ignoreReq: ignoreReq,
     });
 }
