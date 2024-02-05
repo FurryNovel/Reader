@@ -86,6 +86,9 @@ export const baseConfig = {
 export function useConfigProvider() {
     let base = baseConfig;
     base = Object.fromEntries(Object.entries(base).filter(([key, value]) => {
+        if (import.meta.env.SSR) {
+            return ![].includes(key);
+        }
         return !['showLanguages', 'hateTags', 'tags'].includes(key);
     }));
     let state = null;

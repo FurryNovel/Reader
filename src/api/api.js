@@ -1,7 +1,7 @@
 import request from "@/utils/request.js";
 
 import {LRUCache} from 'lru-cache';
-import {crc32} from "hash-wasm";
+import {createCRC32} from "hash-wasm";
 
 const nil = (args) => args;
 
@@ -127,6 +127,32 @@ export function defineApi({
     });
 }
 
-export async function getReqId(params = {}) {
-    return await crc32(JSON.stringify(params))
+const crc32Instance = (await createCRC32());
+
+export function getReqId(params = {}) {
+    // noinspection JSCheckFunctionSignatures
+    return crc32Instance.init().update(JSON.stringify(params)).digest('hex', null);
+}
+
+export function unWrapper(wrapper, ref, key = null) {
+    const setRef = (value) => {
+        if (!key){
+            if (ref.value){
+                ref.value = value;
+            }
+        }else{
+            if(ref[key].value){
+                ref[key].value = value;
+            }else{
+                ref[key] = value;
+            }
+        }
+    }
+    if (wrapper instanceof Promise) {
+        wrapper.then(data => {
+            setRef(data);
+        });
+    } else {
+        setRef(wrapper);
+    }
 }
