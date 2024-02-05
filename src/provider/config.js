@@ -85,20 +85,19 @@ export const baseConfig = {
 
 export function useConfigProvider() {
     let base = baseConfig;
-    base = Object.fromEntries(Object.entries(base).filter(([key, value]) => {
-        if (import.meta.env.SSR) {
-            return ![].includes(key);
-        }
-        return !['showLanguages', 'hateTags', 'tags'].includes(key);
-    }));
+    base = Object.fromEntries(Object.entries(base));
     let state = null;
     if (!import.meta.env.SSR) {
         const settingStore = useSettingStore();
         state = Object.assign(base, settingStore.$state);
-    }else{
+    } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
         state = Object.assign(base, state);
+        delete state.showLanguages;
+        delete state.hateTags;
+        delete state.tags;
+        delete state.saveToCookie;
     }
     // noinspection JSUnresolvedReference
     state.chapter = Object.assign(base.chapter, state.chapter);

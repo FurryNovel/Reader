@@ -147,10 +147,11 @@ export function unWrapper(wrapper, ref, key = null) {
         }
     }
     if (wrapper instanceof Promise) {
-        wrapper.then(data => {
+        return wrapper.then(data => {
             setRef(data);
         });
     } else {
         setRef(wrapper);
     }
+    return Promise.resolve(wrapper);
 }
