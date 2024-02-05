@@ -1,7 +1,8 @@
 <template>
 	<Menubar v-if="showWrapper" :class="wrapperClass" :model="items">
 		<template #start>
-			<Avatar v-if="!deviceInfo.isMobile" class="mx-4 bg-transparent flex justify-center align-middle" image="/static/icon.png" shape="circle"/>
+			<Avatar v-if="showIcon" class="mx-4 bg-transparent flex justify-center align-middle"
+			        image="/static/icon.png" shape="circle"/>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -62,14 +63,16 @@ const wrapperClass = computed(() => {
         'z-50': true,
         'top-0': true,
         'h-[64px]': true,
-	    //
-	    'w-full max-w-screen-xl mx-auto':true,
+        //
+        'w-full max-w-screen-xl mx-auto': true,
     };
 });
 
+const isMounted = ref(false);
+
 
 const items = computed(() => {
-    return deviceInfo.value.isMobile ? [] : (routes.filter(route => route.showNav).map(route => {
+    return (deviceInfo.value.isMobile && isMounted.value) ? [] : (routes.filter(route => route.showNav).map(route => {
         return {
             label: route.meta.title,
             icon: route.meta.icon,
@@ -80,7 +83,17 @@ const items = computed(() => {
 });
 
 const showWrapper = computed(() => {
+    if (!isMounted.value) return true;
     return !(deviceInfo.value.isMobile && routes.filter(route => route.showNav && route.isActive(router)).length === 0);
+});
+
+const showIcon = computed(() => {
+    if (!isMounted.value) return true;
+	return !deviceInfo.value.isMobile;
+});
+
+onMounted(() => {
+   isMounted.value = true;
 });
 </script>
 <style scoped>
