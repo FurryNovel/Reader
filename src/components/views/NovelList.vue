@@ -27,7 +27,6 @@ import {loadNovels} from "@/api/novels.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {useServerSideRenderStore} from "@/stores/ssr.js";
 
-const vm = getCurrentInstance();
 
 const ssrStore = useServerSideRenderStore();
 const configProvider = useConfigProvider();
@@ -94,7 +93,7 @@ const data = reactive({
     items: [],
     loading: false,
     hasMore: true,
-    reqId: '',
+    reqId: useId(),
 });
 
 const isMounted = ref(false);
@@ -136,8 +135,6 @@ function loadData() {
         tags: props.applyFilter ? tags.value : props.tags,
         hate_tags: props.applyFilter ? hateTags.value : null,
     };
-    data.reqId = Int8Array.from(getReqId(params)).join('');
-    console.log(data.reqId)
     const prefetch = ssrStore.find(data.reqId);
     if (prefetch) {
         return wrapper({

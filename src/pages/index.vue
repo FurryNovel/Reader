@@ -12,7 +12,7 @@
 			
 			</div>
 			<NovelList class="" type="random" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
-			           :limit="8"
+			           :limit="8" v-ssr
 			           :userId="null" :keyword="null" :ids="null" :showLoadingComponent="false" :useSlot="false"/>
 		</div>
 		<div class="flex p-10 flex-1 flex-col rounded bg-white dark:bg-surface-600 text-black dark:text-white">
@@ -27,7 +27,7 @@
 			
 			</div>
 			<NovelList class="" type="random" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
-			           :limit="8"
+			           :limit="8" v-ssr
 			           :userId="null" :keyword="null" :ids="null" :showLoadingComponent="false" :useSlot="false"/>
 		</div>
 	</div>

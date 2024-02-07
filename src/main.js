@@ -15,6 +15,7 @@ import {createHead} from "@unhead/vue";
 import {createRecoveryStorePlugin, localDatabase} from "@/plugins/local-database.js";
 import VueCookies from 'vue-cookies'
 import {initialPinia} from "@/plugins/initial-pinia.js";
+import {vueBindSSRPlugin, vueSSRMarker} from "vue-unique-ssr-id";
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -37,6 +38,7 @@ export function createApp() {
     app.use(pinia);
     app.use(directivePlugin());
     pinia.use(localDatabase);
+    app.use(vueBindSSRPlugin);
     
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
@@ -63,6 +65,7 @@ function directivePlugin() {
         install(app) {
             app.directive('ripple', Ripple);
             app.directive('animate-on-scroll', AnimateOnScroll);
+            app.directive('ssr', vueSSRMarker);
         }
     }
 }
