@@ -42,6 +42,49 @@
 			</div>
 		</div>
 	</template>
+	<template v-if="props.listStyle === 'style2'">
+		<div ref="parent" v-if="!data.loading" class="h-full w-full flex-col border-1 surface-border border-round">
+			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
+				<template v-for="(item,idx) in data.items">
+					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
+						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
+							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
+						</div>
+						<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
+							{{ item.name }}
+						</div>
+						<div class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+							{{ item.author.nickname }}
+						</div>
+						<div :class="{
+                            'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl':true,
+                            'group-hover:ml-[128px]':perLine !== idx + 1,
+                            'group-hover:-ml-[256px]':perLine === idx + 1,
+						}" :data-idx="idx">
+							<div class="mb-1">
+								<div class="mb-1 font-bold">简介</div>
+								<div v-if="item.desc.length > 0"
+								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
+								     v-html="item.desc">
+								</div>
+								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无</div>
+							</div>
+							<div class="overflow-hidden flex1">
+								<div class="mb-1 font-bold">标签</div>
+								<div class="flex flex-wrap overflow-hidden max-h-[65px]">
+									<div v-for="tag in item.tags"
+									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+										{{ tag }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
+	</template>
 </template>
 
 <script setup>
