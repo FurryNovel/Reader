@@ -1,7 +1,7 @@
 <template>
 	<template v-if="props.listStyle === 'style1'">
 		<div ref="parent" v-if="!data.loading" class="h-full w-full flex-col border-1 surface-border border-round">
-			<div class="mb-4 flex flex-row flex-wrap items-center">
+			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
@@ -21,7 +21,8 @@
 						}" :data-idx="idx">
 							<div class="mb-1">
 								<div class="mb-1 font-bold">简介</div>
-								<div v-if="item.desc.length > 0" class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
+								<div v-if="item.desc.length > 0"
+								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
 								     v-html="item.desc">
 								</div>
 								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无</div>
@@ -140,8 +141,8 @@ onBeforeMount(() => {
     unWrapper(loadData(), data, 'items').then(() => {
         data.items = props.limit ? data.items.slice(0, props.limit) : data.items;
     }).finally(() => {
-		data.loading = false;
-	});
+        data.loading = false;
+    });
 });
 
 onMounted(() => {
