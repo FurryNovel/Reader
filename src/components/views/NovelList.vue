@@ -21,9 +21,10 @@
 						}" :data-idx="idx">
 							<div class="mb-1">
 								<div class="mb-1 font-bold">简介</div>
-								<div class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
+								<div v-if="item.desc.length > 0" class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
 								     v-html="item.desc">
 								</div>
+								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无</div>
 							</div>
 							<div class="overflow-hidden flex1">
 								<div class="mb-1 font-bold">标签</div>
