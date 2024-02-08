@@ -11,9 +11,11 @@ export function getReqId(params = {}) {
 
 
 export function useServerData({reqId = null}) {
+    const ssrStore = useServerSideRenderStore();
     if (!reqId) {
         reqId = useId();
     }
+    return ssrStore.find(reqId);
 }
 
 export function onServerData(hook, reqId = null) {
@@ -24,7 +26,6 @@ export function onServerData(hook, reqId = null) {
     if (!reqId) {
         reqId = useId();
     }
-    console.log(reqId)
     let prefetch = ssrStore.find(reqId);
     if (prefetch){
         prefetch = hook(prefetch) ?? prefetch;
