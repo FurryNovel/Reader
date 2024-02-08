@@ -1,5 +1,6 @@
 <template>
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
+		<NavBar v-if="data.keyword === ''" :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white sm:p-10 text-black dark:bg-surface-600 dark:text-white">
 			<template v-if="data.keyword !== ''">
 				<div class="m-2 flex items-center justify-between">
@@ -45,6 +46,7 @@
 import NovelList from "@/components/views/NovelList.vue";
 import InputGroup from "primevue/inputgroup";
 import InputGroupAddon from "primevue/inputgroupaddon";
+import NavBar from "@/components/layout/NavBar.vue";
 
 const router = useRouter();
 const data = reactive({
