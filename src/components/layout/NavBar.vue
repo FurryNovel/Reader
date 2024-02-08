@@ -14,14 +14,13 @@
 			<template v-if="props.showButtons.includes('home')">
 				<router-link v-if="props.showButtons.includes('settings')" :to="{name:'index'}">
 					<Button v-ripple class="w-[45px] h-[45px]" href="/" outlined rounded severity="secondary"
-					        size="small"
-					        text @click="navigate">
+					        size="small" text>
 						<span class="fa-regular fa-home"></span>
 					</Button>
 				</router-link>
 			</template>
 			<template v-if="props.showButtons.includes('startSlot')">
-				<slot name="start" />
+				<slot name="start"/>
 			</template>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
@@ -61,7 +60,7 @@
 					</Button>
 				</router-link>
 				<template v-if="props.showButtons.includes('endSlot')">
-					<slot name="end" />
+					<slot name="end"/>
 				</template>
 			</div>
 		</template>
@@ -155,7 +154,7 @@ const showIcon = computed(() => {
 
 const canBack = computed(() => {
     if (!isMounted.value) return true;
-	return window.history.state.back !== null;
+    return window.history.state.back !== null;
 });
 
 
