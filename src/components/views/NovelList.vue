@@ -12,12 +12,12 @@
 							{{ item.name }}
 						</div>
 						<div class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
-							{{ item.author.nickname }}
+							{{ item.author.nickname }}5
 						</div>
 						<div :class="{
                             'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl':true,
-                            'group-hover:ml-[128px]':perLine !== idx + 1,
-                            'group-hover:-ml-[256px]':perLine === idx + 1,
+                            'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
+                            'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
 							<div class="mb-1">
 								<div class="mb-1 font-bold">简介</div>
@@ -46,8 +46,8 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col border-1 surface-border border-round">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
-					<div class="m-2 flex h-auto select-none flex-row rounded-xl bg-gray-50 transition duration-300 w-full group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
-						<div class="relative max-sm:hidden flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
+						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
@@ -60,7 +60,7 @@
 									作者：{{ item.author.nickname }}
 								</div>
 							</div>
-							<div class="flex-1 flex flex-col justify-between p-2">
+							<div class="flex flex-1 flex-col justify-between p-2">
 								<div class="mb-1">
 									<div v-if="item.desc.length > 0"
 									     class="overflow-hidden whitespace-pre-line line-clamp-[2]"
@@ -156,7 +156,10 @@ const data = reactive({
     page: 1,
     maxPage: 1,
     items: [],
+    //status
     loading: false,
+    //device
+    clientWidth: 0,
 });
 
 const isMounted = ref(false);
@@ -164,10 +167,23 @@ const isMounted = ref(false);
 const hateTags = computed(() => configProvider.hateTags);
 const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []));
 
-const perLine = computed(() => {
-    const width = parent.value?.clientWidth;
+
+const perLineCount = computed(() => {
+    const width = data.clientWidth;
     if (width) {
-        return Math.floor((width - 80) / 128);
+        let count = Math.floor((width - 80) / 128);
+        return count;
+    }
+    return 8;
+});
+const dialogRightPerLineCount = computed(() => {
+    const width = data.clientWidth;
+    if (width) {
+        let count = Math.floor((width - 80) / 128);
+        if (width % 128 < 256){
+            count -= 1;
+        }
+        return count;
     }
     return 8;
 });
@@ -198,8 +214,17 @@ onServerPrefetch(() => {
     });
 });
 
+const resize = () => {
+    data.clientWidth = parent.value?.clientWidth;
+};
+
 onMounted(() => {
     isMounted.value = true;
+    window.addEventListener('resize', resize);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', resize);
 });
 
 function loadData() {
