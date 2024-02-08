@@ -92,6 +92,7 @@
 </template>
 
 <script setup>
+import Skeleton from 'primevue/skeleton';
 import {loadNovels} from "@/api/novels.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
