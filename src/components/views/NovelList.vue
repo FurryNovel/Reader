@@ -47,26 +47,26 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<div class="m-2 flex h-auto select-none flex-row rounded-xl bg-gray-50 transition duration-300 w-full group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
-						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+						<div class="relative max-sm:hidden flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-1 flex-col p-2">
-							<div class="flex">
+							<div class="flex max-sm:flex-col">
 								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[16px] leading-[16px]">
 									{{ item.name }}
 								</div>
-								<div class="flex m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
-									{{ item.author.nickname }}
+								<div class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+									作者：{{ item.author.nickname }}
 								</div>
 							</div>
 							<div class="flex-1 flex flex-col justify-between p-2">
 								<div class="mb-1">
 									<div v-if="item.desc.length > 0"
-									     class="overflow-hidden whitespace-pre-line h-[40px] line-clamp-[2]"
+									     class="overflow-hidden whitespace-pre-line line-clamp-[2]"
 									     v-html="item.desc">
 									</div>
-									<div v-else class="overflow-hidden whitespace-pre-line h-[40px] line-clamp-[2]">
+									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
 										无
 									</div>
 								</div>

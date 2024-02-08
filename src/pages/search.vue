@@ -1,6 +1,6 @@
 <template>
-	<div class="flex h-full w-full flex-col">
-		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black dark:bg-surface-600 dark:text-white">
+	<div class="flex h-full w-full flex-col max-sm:h-screen">
+		<div class="flex flex-1 flex-col rounded bg-white sm:p-10 text-black dark:bg-surface-600 dark:text-white">
 			<template v-if="data.keyword !== ''">
 				<div class="m-2 flex items-center justify-between">
 					<div class="text-2xl font-bold">
@@ -25,7 +25,7 @@
 				           listStyle="style2" order="desc" type="popular"/>
 			</template>
 			<template v-else>
-				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] w-full">
+				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] max-sm:h-full w-full">
 					<InputGroup class="flex w-full flex-row items-center justify-center duration-200 group">
 						<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500">
 							<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
