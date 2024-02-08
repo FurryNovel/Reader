@@ -7,16 +7,16 @@
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
 				<a v-if="item.isActive" v-ripple :href="href" class="text-primary-500" v-bind="props.action"
-				   @click="navigate">
+				   @click="navigate" :draggable="false">
 					<span v-if="item.icon" class="fa-regular">{{ item.icon.text }}</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
-				<a v-else v-ripple :href="href" v-bind="props.action" @click="navigate">
+				<a v-else v-ripple :href="href" v-bind="props.action" @click="navigate" :draggable="false">
 					<span v-if="item.icon" class="fa-regular">{{ item.icon.text }}</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
 			</router-link>
-			<a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+			<a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action" :draggable="false">
 				<span v-if="item.icon" class="fa-regular">{{ item.icon.text }}</span>
 				<span class="ml-2">{{ item.label }}</span>
 				<span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2"/>
@@ -89,11 +89,11 @@ const showWrapper = computed(() => {
 
 const showIcon = computed(() => {
     if (!isMounted.value) return true;
-	return !deviceInfo.value.isMobile;
+    return !deviceInfo.value.isMobile;
 });
 
 onMounted(() => {
-   isMounted.value = true;
+    isMounted.value = true;
 });
 </script>
 <style scoped>
