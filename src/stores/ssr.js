@@ -15,6 +15,10 @@ export const useServerSideRenderStore = defineStore({
             this.$state[id] = data;
             this.$patch(this.$state);
         },
+        delete(id) {
+            delete this.$state[id];
+            this.$patch(this.$state);
+        }
     },
 });
 export default {

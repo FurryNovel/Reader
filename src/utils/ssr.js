@@ -27,8 +27,9 @@ export function onServerData(hook, reqId = null) {
         reqId = useId();
     }
     let prefetch = ssrStore.find(reqId);
-    if (prefetch){
+    if (prefetch) {
         prefetch = hook(prefetch) ?? prefetch;
+        ssrStore.delete(reqId);
         return Promise.resolve(prefetch);
     }
     return Promise.reject();
