@@ -12,8 +12,7 @@
 				</Button>
 			</template>
 			<template v-if="props.showButtons.includes('home')">
-				<router-link v-if="props.showButtons.includes('settings')" v-slot="{ href, navigate }"
-				             :to="{name:'index'}" custom>
+				<router-link v-if="props.showButtons.includes('settings')" :to="{name:'index'}">
 					<Button v-ripple class="w-[45px] h-[45px]" href="/" outlined rounded severity="secondary"
 					        size="small"
 					        text @click="navigate">
