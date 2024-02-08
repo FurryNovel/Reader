@@ -1,6 +1,7 @@
-import request from "@/utils/request.js";
 import {useNovelStore} from "@/stores/novels.js";
-import {defineApi, getReqId, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
+import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
+import {getReqId} from "@/utils/ssr.js";
+
 
 
 const defaultLongCacheStore = new LRUCacheStore();
@@ -35,5 +36,6 @@ export async function loadNovels({params, ignoreReq}) {
         },
         params: params,
         ignoreReq: ignoreReq,
+        type: 'list',
     });
 }

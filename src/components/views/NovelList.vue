@@ -88,15 +88,14 @@
 </template>
 
 <script setup>
-import {getReqId, unWrapper, wrapper} from "@/api/api.js";
 import {loadNovels} from "@/api/novels.js";
 import {useConfigProvider} from "@/provider/config.js";
-import {useServerSideRenderStore} from "@/stores/ssr.js";
+import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useId} from "vue-unique-ssr-id";
 
+const ssrId = useId();
 const parent = ref(null);
 
-const ssrStore = useServerSideRenderStore();
 const configProvider = useConfigProvider();
 
 const props = defineProps({
@@ -146,14 +145,18 @@ const props = defineProps({
     },
     limit: {
         default: null,
-    }
+    },
+    showPagination: {
+        type: Boolean,
+        default: false,
+    },
 });
+
 const data = reactive({
     page: 1,
+    maxPage: 1,
     items: [],
     loading: false,
-    hasMore: true,
-    reqId: useId(),
 });
 
 const isMounted = ref(false);
@@ -169,29 +172,34 @@ const perLine = computed(() => {
     return 8;
 });
 
-onServerPrefetch(() => new Promise((resolve) => {
-    data.page = 1;
-    loadData().then((res) => {
-        const items = res.data;
-        data.items = props.limit ? items.slice(0, props.limit) : items;
-        ssrStore.save(data.reqId, data.items);
-    }).finally(() => {
-        resolve();
+onServerData((res) => {
+    data.items = res.data;
+    data.page = res.page;
+    data.maxPage = res.maxPage;
+}).catch(() => {
+    return loadData().then((res) => {
+        data.items = res.data;
+        data.page = res.page;
+        data.maxPage = res.maxPage;
     });
-}));
+});
 
-onBeforeMount(() => {
-    unWrapper(loadData(), data, 'items').then(() => {
-        data.items = props.limit ? data.items.slice(0, props.limit) : data.items;
-    }).finally(() => {
-        data.loading = false;
+onServerPrefetch(() => {
+    return loadData().then((res) => {
+        provideServerData({
+            reqId: ssrId,
+            data: res,
+        });
+        data.items = res.data;
+        data.page = res.page;
+        data.maxPage = res.maxPage;
+    }).catch(err => {
+        console.log(err)
     });
 });
 
 onMounted(() => {
     isMounted.value = true;
-    
-    data.loading = true;
 });
 
 function loadData() {
@@ -206,16 +214,12 @@ function loadData() {
         tags: props.applyFilter ? tags.value : props.tags,
         hate_tags: props.applyFilter ? hateTags.value : null,
     };
-    const prefetch = ssrStore.find(data.reqId);
-    if (prefetch) {
-        return wrapper({
-            data: prefetch,
-            reqId: data.reqId,
-        });
-    }
-    return wrapper({
-        reqId: data.reqId,
-        data: loadNovels({params, ignoreReq: import.meta.env.SSR}),
+    return loadNovels({params, ignoreReq: import.meta.env.SSR}).then((res) => {
+        return {
+            data: res.data,
+            page: res.page,
+            maxPage: Math.ceil(res.total / res.pageSize),
+        };
     });
 }
 

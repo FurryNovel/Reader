@@ -75,6 +75,7 @@ export const defaultCacheStore = new CacheStore();
  * @param onCache {function} 有缓存时的回调
  * @param onError {function} 请求失败时的回调
  * @param onSuccess {function} 请求成功时的回调
+ * @param type
  * @returns {Promise<unknown>}
  */
 export function defineApi({
@@ -87,7 +88,8 @@ export function defineApi({
                               ignoreReq = false,
                               onCache = nil,
                               onError = nil,
-                              onSuccess = nil
+                              onSuccess = nil,
+                              type = 'data',
                           }) {
     return new Promise(async (resolve, reject) => {
         api = api.replace(/:(\w+)/g, (match, key) => {
@@ -111,7 +113,12 @@ export function defineApi({
             data: data,
             params: params,
         }).then(res => {
-            let responseData = onSuccess(res?.data) ?? res?.data;
+            let responseData;
+            if (type === 'data') {
+                responseData = onSuccess(res?.data) ?? res?.data;
+            } else {
+                responseData = onSuccess(res) ?? res;
+            }
             if (responseData) {
                 if (store) {
                     store.save(id, responseData);
@@ -123,58 +130,4 @@ export function defineApi({
             return Promise.reject(onError(err) ?? err);
         }));
     });
-}
-
-const crc32Instance = (await createCRC32());
-
-export function getReqId(params = {}) {
-    // noinspection JSCheckFunctionSignatures
-    return crc32Instance.init().update(JSON.stringify(params)).digest('hex', null);
-}
-
-export function unWrapper(wrapper, ref, key = null) {
-    const setRef = (value) => {
-        if (!key) {
-            if (ref.value) {
-                ref.value = value;
-            }
-        } else {
-            if (ref[key].value) {
-                ref[key].value = value;
-            } else {
-                ref[key] = value;
-            }
-        }
-    }
-    if (wrapper instanceof Promise) {
-        return wrapper.then(res => {
-            setRef(res.data);
-        });
-    } else {
-        if (wrapper.data !== undefined) {
-            setRef(wrapper.data);
-        }
-    }
-    return Promise.resolve(wrapper);
-}
-
-export function wrapper({data, reqId}) {
-    if (data instanceof Promise) {
-        return data.then(data => {
-            return {
-                reqId: reqId,
-                data: data,
-            }
-        });
-    }
-    if (import.meta.env.SSR) {
-        return Promise.resolve({
-            reqId: reqId,
-            data: data,
-        });
-    }
-    return {
-        reqId: reqId,
-        data: data,
-    };
 }
