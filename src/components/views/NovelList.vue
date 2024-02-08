@@ -1,7 +1,7 @@
 <template>
 	<template v-if="props.listStyle === 'style1'">
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col border-1 surface-border border-round">
-			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
+			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
