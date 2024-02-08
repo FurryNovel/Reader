@@ -85,6 +85,10 @@
 			</div>
 		</div>
 	</template>
+	<template v-if="props.showPagination">
+		<Paginator :rows="15" :totalRecords="data.maxPage * 15" @page="onChangePage"
+		           :rowsPerPageOptions="null"></Paginator>
+	</template>
 </template>
 
 <script setup>
@@ -171,8 +175,7 @@ const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []
 const perLineCount = computed(() => {
     const width = data.clientWidth;
     if (width) {
-        let count = Math.floor((width - 80) / 128);
-        return count;
+        return Math.floor((width - 80) / 128);
     }
     return 8;
 });
@@ -180,7 +183,7 @@ const dialogRightPerLineCount = computed(() => {
     const width = data.clientWidth;
     if (width) {
         let count = Math.floor((width - 80) / 128);
-        if (width % 128 < 256){
+        if (width % 128 < 256) {
             count -= 1;
         }
         return count;
@@ -221,6 +224,7 @@ const resize = () => {
 onMounted(() => {
     isMounted.value = true;
     window.addEventListener('resize', resize);
+    resize();
 });
 
 onUnmounted(() => {
@@ -245,6 +249,15 @@ function loadData() {
             page: res.page,
             maxPage: Math.ceil(res.total / res.pageSize),
         };
+    });
+}
+
+function onChangePage({page}) {
+    data.page = page + 1;
+    loadData().then((res) => {
+        data.items = res.data;
+        data.page = res.page;
+        data.maxPage = res.maxPage;
     });
 }
 
