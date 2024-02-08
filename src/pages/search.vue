@@ -1,11 +1,12 @@
 <template>
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
-		<NavBar v-if="data.keyword === ''" :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
+		<NavBar v-if="data.keyword === ''" :show-in="['mobile']"
+		        :show-buttons="['search', 'settings', 'back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white sm:p-10 text-black dark:bg-surface-600 dark:text-white">
 			<template v-if="data.keyword !== ''">
 				<div class="m-2 flex items-center justify-between">
 					<div class="text-2xl font-bold">
-						<Button class="text-sm text-primary-500" label="条件筛选" outlined
+						<Button class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
 						        @click="data.keyword = ''">
 							<div class="fa-regular fa-chevron-left"></div>
@@ -22,7 +23,7 @@
 				</div>
 				<NovelList v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
 				           :limit="8" :tags="null"
-				           :userId="null"
+				           :userId="null" :show-pagination="true"
 				           listStyle="style2" order="desc" type="popular"/>
 			</template>
 			<template v-else>
