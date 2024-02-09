@@ -66,11 +66,11 @@ const props = defineProps({
     },
 });
 
-if (router.currentRoute.value.query.keyword) {
-    data.keyword = router.currentRoute.value.query.keyword;
+if (router.currentRoute.value.params.keyword) {
+    data.keyword = router.currentRoute.value.params.keyword;
 }
-if (router.currentRoute.value.query.mode) {
-    data.mode = router.currentRoute.value.query.mode;
+if (router.currentRoute.value.params.mode) {
+    data.mode = router.currentRoute.value.params.mode;
 } else {
     data.mode = props.mode;
 }
