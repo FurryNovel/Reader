@@ -1,6 +1,6 @@
 <template>
 	<template v-if="props.listStyle === 'style1'">
-		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col border-1 surface-border border-round">
+		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
@@ -43,7 +43,7 @@
 		</div>
 	</template>
 	<template v-if="props.listStyle === 'style2'">
-		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col border-1 surface-border border-round">
+		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
@@ -76,6 +76,36 @@
 										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
 											{{ tag }}
 										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
+		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
+			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
+				<template v-for="idx in 20">
+					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white border-gray-50 border-2 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
+						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
+							<Skeleton width="100%" height="100%" class="absolute h-full w-full object-cover aspect-[140/186]" borderRadius="10px"></Skeleton>
+						</div>
+						<div class="flex flex-1 flex-col p-2">
+							<div class="flex max-sm:flex-col">
+								<Skeleton width="60px" class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[16px] leading-[16px]" borderRadius="10px"></Skeleton>
+								<Skeleton width="60px" class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]"></Skeleton>
+							</div>
+							<div class="flex flex-1 flex-col justify-between p-2">
+								<div class="mb-1">
+									<Skeleton width="200px" class="overflow-hidden whitespace-pre-line line-clamp-[2]"></Skeleton>
+								</div>
+								<div class="overflow-hidden flex1">
+									<div class="flex flex-wrap overflow-hidden max-h-[65px]">
+										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
+										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
+										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
+										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
 									</div>
 								</div>
 							</div>
@@ -197,6 +227,7 @@ onServerData((res) => {
     data.page = res.page;
     data.maxPage = res.maxPage;
 }).catch(() => {
+    data.loading = true;
     return loadData().then((res) => {
         data.items = res.data;
         data.page = res.page;
@@ -245,6 +276,7 @@ function loadData() {
         hate_tags: props.applyFilter ? hateTags.value : null,
     };
     return loadNovels({params, ignoreReq: import.meta.env.SSR}).then((res) => {
+        data.loading = false;
         return {
             data: res.data,
             page: res.page,
@@ -254,6 +286,7 @@ function loadData() {
 }
 
 function onChangePage({page}) {
+    data.loading = true;
     data.page = page + 1;
     loadData().then((res) => {
         data.items = res.data;
