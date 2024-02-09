@@ -89,23 +89,38 @@
 				<template v-for="idx in 20">
 					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white border-gray-50 border-2 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
 						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
-							<Skeleton width="100%" height="100%" class="absolute h-full w-full object-cover aspect-[140/186]" borderRadius="10px"></Skeleton>
+							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
+							          height="100%"
+							          width="100%"></Skeleton>
 						</div>
 						<div class="flex flex-1 flex-col p-2">
 							<div class="flex max-sm:flex-col">
-								<Skeleton width="60px" class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[16px] leading-[16px]" borderRadius="10px"></Skeleton>
-								<Skeleton width="60px" class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]"></Skeleton>
+								<Skeleton borderRadius="10px"
+								          class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[16px] leading-[16px]"
+								          width="60px"></Skeleton>
+								<Skeleton
+										class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]"
+										width="60px"></Skeleton>
 							</div>
 							<div class="flex flex-1 flex-col justify-between p-2">
 								<div class="mb-1">
-									<Skeleton width="200px" class="overflow-hidden whitespace-pre-line line-clamp-[2]"></Skeleton>
+									<Skeleton class="overflow-hidden whitespace-pre-line line-clamp-[2]"
+									          width="200px"></Skeleton>
 								</div>
 								<div class="overflow-hidden flex1">
 									<div class="flex flex-wrap overflow-hidden max-h-[65px]">
-										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
-										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
-										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
-										<Skeleton width="40px" class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"></Skeleton>
+										<Skeleton
+												class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"
+												width="40px"></Skeleton>
+										<Skeleton
+												class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"
+												width="40px"></Skeleton>
+										<Skeleton
+												class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"
+												width="40px"></Skeleton>
+										<Skeleton
+												class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5"
+												width="40px"></Skeleton>
 									</div>
 								</div>
 							</div>
@@ -116,8 +131,8 @@
 		</div>
 	</template>
 	<template v-if="props.showPagination">
-		<Paginator :rows="15" :totalRecords="data.maxPage * 15" @page="onChangePage"
-		           :rowsPerPageOptions="null"></Paginator>
+		<Paginator :rows="15" :rowsPerPageOptions="null" :totalRecords="data.maxPage * 15"
+		           @page="onChangePage"></Paginator>
 	</template>
 </template>
 
@@ -288,6 +303,7 @@ function loadData() {
 function onChangePage({page}) {
     data.loading = true;
     data.page = page + 1;
+    scrollToTop();
     loadData().then((res) => {
         data.items = res.data;
         data.page = res.page;
@@ -295,6 +311,12 @@ function onChangePage({page}) {
     });
 }
 
+function scrollToTop() {
+    window.scroll({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
 </script>
 
 <style scoped>
