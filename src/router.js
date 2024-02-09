@@ -78,6 +78,16 @@ const items = [
             title: '所有小说',
         },
     },
+    {
+        path: '/novel/:id',
+        name: 'info',
+        component: () => import('./pages/info.vue'),
+        showNav: false,
+        props: {},
+        meta: {
+            title: '小说详情',
+        },
+    },
 ].map((item) => {
     return Object.assign(item, {
         isActive(router) {
