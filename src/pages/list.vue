@@ -2,16 +2,16 @@
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
 		<NavBar v-if="data.keyword === ''" :show-in="['mobile']"
 		        :show-buttons="['search', 'settings', 'back', 'home']"/>
-		<div class="flex flex-1 flex-col rounded bg-white sm:p-10 text-black dark:bg-surface-600 dark:text-white">
-			<template v-if="data.keyword !== ''">
-				<div class="m-2 flex items-center justify-between">
+		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
+			<template v-if="data.mode === 'list' || data.keyword !== ''">
+				<div class="m-2 pl-2 flex items-center justify-between">
 					<div class="text-2xl font-bold">
-						<Button class="text-sm text-primary-500" label="返回" outlined
+						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
 						        @click="data.keyword = ''">
 							<div class="fa-regular fa-chevron-left"></div>
 						</Button>
-						搜索
+						{{ data.mode === 'search' ? '搜索' : '所有小说' }}
 					</div>
 					<router-link :draggable="false" :to="{name:'search'}">
 						<Button class="mr-2 text-sm text-primary-500" label="条件筛选"
@@ -56,16 +56,45 @@ const data = reactive({
     tags: [],
     type: 'popular',
     order: 'desc',
+    mode: 'list',//search/list
+});
+
+const props = defineProps({
+    mode: {
+        type: String,
+        default: 'list',
+    },
 });
 
 if (router.currentRoute.value.query.keyword) {
     data.keyword = router.currentRoute.value.query.keyword;
 }
+if (router.currentRoute.value.query.mode) {
+    data.mode = router.currentRoute.value.query.mode;
+} else {
+    data.mode = props.mode;
+}
 
 watchEffect(() => {
+    let next = {};
     if (data.keyword !== '') {
-        router.replace({query: {keyword: data.keyword}});
+        next.keyword = data.keyword;
     }
+    if (props.mode) {
+        next.mode = props.mode;
+        switch (next.mode) {
+            case 'list':
+                next.keyword = '';
+                break;
+            default:
+                break;
+        }
+    }
+    data.keyword = next?.keyword || '';
+    data.mode = next.mode;
+    router.replace({
+        query: next,
+    });
 });
 </script>
 

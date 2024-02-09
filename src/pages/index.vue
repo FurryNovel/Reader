@@ -3,7 +3,7 @@
 		<div class="flex flex-1 flex-col rounded bg-white p-10 max-sm:p-3 text-black dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between">
 				<div class="text-2xl font-bold">热门精选</div>
-				<router-link :to="{name:'search'}" :draggable="false">
+				<router-link :to="{name:'list'}" :draggable="false">
 					<Button class="mr-2 text-sm text-primary-500" label="查看更多" size="small">
 						查看更多
 						<div class="ml-2 fa-regular fa-chevron-right"></div>
@@ -17,7 +17,7 @@
 		<div class="flex flex-1 flex-col rounded bg-white p-10 max-sm:p-3 text-black dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between">
 				<div class="text-2xl font-bold">最新小说</div>
-				<router-link :to="{name:'search'}" :draggable="false">
+				<router-link :to="{name:'list'}" :draggable="false">
 					<Button class="mr-2 text-sm text-primary-500" label="查看更多" size="small">
 						查看更多
 						<div class="ml-2 fa-regular fa-chevron-right"></div>

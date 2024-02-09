@@ -3,6 +3,7 @@ import {
     createRouter as _createRouter,
     createWebHistory,
 } from 'vue-router';
+
 const items = [
     {
         path: '/',
@@ -56,18 +57,33 @@ const items = [
     {
         path: '/search',
         name: 'search',
-        component: () => import('./pages/search.vue'),
+        component: () => import('./pages/list.vue'),
         showNav: false,
+        props: {
+            mode: 'search'
+        },
         meta: {
             title: '搜索',
         },
     },
+    {
+        path: '/novel',
+        name: 'list',
+        component: () => import('./pages/list.vue'),
+        showNav: false,
+        props: {
+            mode: 'list'
+        },
+        meta: {
+            title: '所有小说',
+        },
+    },
 ].map((item) => {
     return Object.assign(item, {
-        isActive (router){
+        isActive(router) {
             return router?.currentRoute?.value?.path === item?.path;
         },
-        meta:{
+        meta: {
             ...item.meta,
         },
     });
