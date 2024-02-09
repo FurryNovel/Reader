@@ -41,6 +41,27 @@
 				</template>
 			</div>
 		</div>
+		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
+			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
+				<template v-for="idx in 20">
+					<div class="m-2 flex h-auto select-none flex-col rounded-xl border-gray-50 border-2 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
+						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
+							          height="100%"
+							          width="100%"></Skeleton>
+						</div>
+						<Skeleton
+								class="flex flex-col ml-1 mt-2 transition duration-300 text-xs !line-clamp-1"
+								height="16px"
+								width="50%"></Skeleton>
+						<Skeleton height="16px"
+						          width="70%"
+						          class="flex flex-col ml-1 mt-2 mb-2 transition duration-300 text-xs !line-clamp-1">
+						</Skeleton>
+					</div>
+				</template>
+			</div>
+		</div>
 	</template>
 	<template v-if="props.listStyle === 'style2'">
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
