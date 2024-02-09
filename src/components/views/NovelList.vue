@@ -12,7 +12,7 @@
 							{{ item.name }}
 						</div>
 						<div class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
-							{{ item.author.nickname }}5
+							{{ item.author.nickname }}
 						</div>
 						<div :class="{
                             'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl':true,
