@@ -79,7 +79,7 @@ const items = [
         },
     },
     {
-        path: '/novel/:id',
+        path: '/novel/:id(\\d+)',
         name: 'info',
         component: () => import('./pages/info.vue'),
         showNav: false,
