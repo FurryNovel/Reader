@@ -6,8 +6,10 @@ import {createCRC32} from "hash-wasm";
 const nil = (args) => args;
 
 export class CacheStore {
-    constructor(store = null) {
+    store = null;
     
+    constructor(store = null) {
+        this.store = store;
     }
     
     async find(id) {
