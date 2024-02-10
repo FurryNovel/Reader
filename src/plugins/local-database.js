@@ -5,7 +5,7 @@ import {useSettingStore} from "@/stores/settings.js";
 
 
 export async function localDatabase({options, store}) {
-    if (!(options?.persist)){
+    if (!(options?.persist)) {
         return;
     }
     const instance = localForage.createInstance({
@@ -13,17 +13,18 @@ export async function localDatabase({options, store}) {
         driver: localForage.INDEXEDDB,
     })
     store.driver = instance;
+    store.options = options;
     let patches = {};
     const task = instance.keys().then((keys) => {
+        if (options.lazy) {
+            return;
+        }
         return Promise.all(keys.map(key => instance.getItem(key).then((value) => {
             patches[key] = value.value;
         })));
     });
     
     return task.then(() => {
-        if (options.lazy) {
-            return;
-        }
         if ('expire' in patches) {
             if (patches.expire && patches.expire < Date.now()) {
                 patches = {};
@@ -72,7 +73,7 @@ export async function localDatabase({options, store}) {
             }
             if (saveMode) {
                 for (const key of Object.keys(state)) {
-                    if (state[key] === undefined ||  typeof state[key] === 'function') {
+                    if (state[key] === undefined || typeof state[key] === 'function') {
                         continue;
                     }
                     instance.setItem(

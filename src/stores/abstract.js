@@ -12,7 +12,7 @@ export function defineBaseStore() {
         },
         actions: {
             async find(id) {
-                if (this.isLazy()) {
+                if (this.options.lazy) {
                     let res = await this.driver.getItem(this.prefix + id).then((value) => {
                         return value?.value;
                     });
