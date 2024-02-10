@@ -69,6 +69,9 @@ export function initRouter(router) {
 }
 
 export function useMeta(params) {
+    if (params === undefined) {
+        return;
+    }
     if (isRef(params)) {
         watchEffect(() => {
             useMeta(params.value);
