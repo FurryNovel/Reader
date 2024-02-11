@@ -30,14 +30,20 @@
 							</div>
 						</div>
 						<div class="">
-							<Button class="mr-2 text-sm text-primary-500" label="加入书架" size="small">
-								<div class="mr-2 fa-regular fa-chevron-right"></div>
+							<Button v-if="!isBookmarked" class="mr-2 text-sm text-primary-500" label="加入书架"
+							        size="small"
+							        @click="toggleBookmark">
+								<div class="mr-2 fa-regular fa-book-bookmark"></div>
 								加入书架
 							</Button>
-							
-							<Button class="mr-2 text-sm text-primary-500" label="加入书架" size="small">
-								<div class="mr-2 fa-regular fa-chevron-right"></div>
+							<Button v-else class="mr-2 text-sm text-primary-500" label="加入书架" size="small"
+							        @click="toggleBookmark">
+								<div class="mr-2 fa-regular fa-book-bookmark"></div>
+								从书架移除
+							</Button>
+							<Button class="mr-2 text-sm text-primary-500" label="立即阅读" size="small">
 								立即阅读
+								<div class="ml-2 fa-regular fa-chevron-right"></div>
 							</Button>
 						</div>
 					</div>
@@ -93,7 +99,11 @@ import {loadNovel} from "@/api/novels.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {loadChapter, loadChapters} from "@/api/chapters.js";
 import {useMeta} from "@/utils/meta.js";
+import {useBookmarkStore} from "@/stores/bookmarks.js";
 
+const bookmarkStore = useBookmarkStore();
+
+const isMounted = ref(false);
 const router = useRouter();
 const data = reactive({
     id: null,
@@ -102,6 +112,14 @@ const data = reactive({
     
     loading: false,
 });
+
+const isBookmarked = computed(() => {
+    if (!isMounted.value) {
+        return false;
+    }
+    return bookmarkStore.has(data.id);
+});
+
 
 if (router.currentRoute.value.params.id) {
     data.id = router.currentRoute.value.params.id;
@@ -144,6 +162,10 @@ onServerPrefetch(() => {
             });
         }
     });
+});
+
+onMounted(() => {
+    isMounted.value = true;
 });
 
 watchEffect(() => {
@@ -190,7 +212,15 @@ function loadData() {
     });
 }
 
-
+function toggleBookmark() {
+    bookmarkStore.find(data.id).then((bookmark) => {
+        if (bookmark) {
+            bookmarkStore.remove(data.id);
+        } else {
+            bookmarkStore.save(data.id, true);
+        }
+    });
+}
 </script>
 
 <style scoped>
