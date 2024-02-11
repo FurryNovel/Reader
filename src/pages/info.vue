@@ -6,7 +6,7 @@
 				<div class="flex w-full">
 					<div class="rounded-xl">
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
-						     class="h-full w-full rounded-xl object-cover aspect-[140/186]"/>
+						     class="h-full w-full rounded-xl object-cover aspect-[140/186] max-h-[213px]"/>
 					</div>
 					<div class="ml-5 flex w-full flex-1 flex-col justify-between">
 						<div>
@@ -63,7 +63,7 @@
 						<TabPanel header="目录">
 							<div class="flex flex-wrap ">
 								<div v-for="chapter in data.chapters"
-								     class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full">
+								     class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full border-b">
 									<div class="flex-1 flex flex-col gap-2">
 										<span class="font-bold">{{ chapter.name }}</span>
 										<div class="flex flex-wrap overflow-hidden max-h-[65px]">
