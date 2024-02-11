@@ -3,8 +3,6 @@ import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
 import {getReqId} from "@/utils/ssr.js";
 
 
-
-const defaultLongCacheStore = new LRUCacheStore();
 const defaultCacheStore = new LRUCacheStore(null, {ttl: 10000});
 
 export function loadNovel({id, onCache, ignoreReq}) {
@@ -12,7 +10,7 @@ export function loadNovel({id, onCache, ignoreReq}) {
         method: 'get',
         api: `/novel/:id`,
         store: () => {
-            return import.meta.env.SSR ? defaultLongCacheStore : new PiniaCacheStore(useNovelStore());
+            return import.meta.env.SSR ? defaultCacheStore : new PiniaCacheStore(useNovelStore());
         },
         pk: 'id',
         data: {
