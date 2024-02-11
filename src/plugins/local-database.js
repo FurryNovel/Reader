@@ -2,6 +2,8 @@ import localForage from "localforage";
 
 import {useNovelStore} from "@/stores/novels.js";
 import {useSettingStore} from "@/stores/settings.js";
+import {useBookmarkStore} from "@/stores/bookmarks.js";
+import {useHistoryStore} from "@/stores/histories.js";
 
 
 export async function localDatabase({options, store}) {
@@ -92,6 +94,8 @@ export async function localDatabase({options, store}) {
 const globalInstall = [
     {sync: true, install: useSettingStore},
     {sync: false, install: useNovelStore},
+    {sync: false, install: useBookmarkStore},
+    {sync: false, install: useHistoryStore},
 ];
 
 export function createRecoveryStorePlugin() {
