@@ -333,11 +333,23 @@ function onChangePage({page}) {
 }
 
 function scrollToTop() {
+    if (import.meta.env.SSR) return;
     window.scroll({
         top: 0,
         behavior: 'smooth'
     });
 }
+
+defineExpose({
+    reload() {
+        data.loading = true;
+        loadData().then((res) => {
+            data.items = res.data;
+            data.page = res.page;
+            data.maxPage = res.maxPage;
+        });
+    },
+});
 </script>
 
 <style scoped>

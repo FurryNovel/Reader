@@ -16,6 +16,7 @@ import {createRecoveryStorePlugin, localDatabase} from "@/plugins/local-database
 import VueCookies from 'vue-cookies'
 import {initialPinia} from "@/plugins/initial-pinia.js";
 import {vueBindSSRPlugin, vueSSRMarker} from "vue-unique-ssr-id";
+import ConfirmationService from 'primevue/confirmationservice';
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -34,6 +35,7 @@ export function createApp() {
     app.use(head);
     app.use(PrimeVue?.default || PrimeVue, primeVueOptions);
     app.use(ToastService?.default || ToastService);
+    app.use(ConfirmationService?.default || ConfirmationService);
     app.use(router);
     app.use(pinia);
     app.use(directivePlugin());

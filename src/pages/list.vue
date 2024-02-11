@@ -9,20 +9,18 @@
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
 						        @click="data.keyword = ''">
-							<div class="fa-regular fa-chevron-left"></div>
+							<i class="fa-regular fa-chevron-left"></i>
 						</Button>
 						{{ data.mode === 'search' ? '搜索' : '所有小说' }}
 					</div>
-					<router-link :draggable="false" :to="{name:'search'}">
-						<Button class="mr-2 text-sm text-primary-500" label="条件筛选"
-						        size="small">
-							条件筛选
-							<div class="ml-2 fa-regular fa-chevron-right"></div>
-						</Button>
-					</router-link>
+					<Button class="mr-2 text-sm text-primary-500" label="条件筛选" @click="showFilter"
+					        size="small">
+						<i class="fa-regular fa-filter mr-2"></i>
+						条件筛选
+					</Button>
 				</div>
-				<NovelList v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
-				           :limit="8" :tags="null"
+				<NovelList ref="novelList" v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
+				           :limit="8" :tags="data.tags"
 				           :userId="null" :show-pagination="true"
 				           listStyle="style2" order="desc" type="popular"/>
 			</template>
@@ -41,6 +39,29 @@
 			</template>
 		</div>
 	</div>
+	<ConfirmPopup group="filters">
+		<template #container="{ message, acceptCallback, rejectCallback }">
+			<div class="rounded-xl p-3 w-[300px]">
+				<div class="flex flex-col mb-2">
+					<span class="font-bold">名称</span>
+					<InputText id="keyword" v-model="data.preKeyword" size="small"
+					           class="text-sm"
+					           placeholder="请输入关键字：小说名、作者名、简介等"/>
+				</div>
+				<div class="flex flex-col mb-2">
+					<span class="font-bold">标签</span>
+					<InputText id="keyword" v-model="data.preTags" size="small"
+					           class="text-sm"
+					           placeholder="使用半角逗号间隔多个标签"/>
+				</div>
+				<div class="flex items-center justify-end gap-2 mt-3">
+					<Button label="确定" @click="acceptCallback" size="small"></Button>
+					<Button label="清除" outlined @click="rejectCallback" severity="secondary" size="small"
+					        text></Button>
+				</div>
+			</div>
+		</template>
+	</ConfirmPopup>
 </template>
 
 <script setup>
@@ -48,15 +69,20 @@ import NovelList from "@/components/views/NovelList.vue";
 import InputGroup from "primevue/inputgroup";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import NavBar from "@/components/layout/NavBar.vue";
+import ConfirmPopup from "primevue/confirmpopup";
+import {useConfirm} from "primevue/useconfirm";
 
+const confirm = useConfirm();
+const novelList = ref(null);
 const router = useRouter();
 const data = reactive({
     preKeyword: '',
+    preTags: '',
     keyword: '',
     tags: [],
     type: 'popular',
     order: 'desc',
-    mode: 'list',//search/list
+    mode: 'list',
 });
 
 const props = defineProps({
@@ -66,15 +92,6 @@ const props = defineProps({
     },
 });
 
-if (router.currentRoute.value.params.keyword) {
-    data.keyword = router.currentRoute.value.params.keyword;
-}
-if (router.currentRoute.value.params.mode) {
-    data.mode = router.currentRoute.value.params.mode;
-} else {
-    data.mode = props.mode;
-}
-
 watchEffect(() => {
     let next = {};
     if (data.keyword !== '') {
@@ -82,13 +99,9 @@ watchEffect(() => {
     }
     if (props.mode) {
         next.mode = props.mode;
-        switch (next.mode) {
-            case 'list':
-                next.keyword = '';
-                break;
-            default:
-                break;
-        }
+    }
+    if (data.tags && data.tags.length > 0) {
+        next.tags = data.tags;
     }
     data.keyword = next?.keyword || '';
     data.mode = next.mode;
@@ -96,6 +109,61 @@ watchEffect(() => {
         query: next,
     });
 });
+
+function onInit() {
+    if (router.currentRoute.value.query.keyword) {
+        data.keyword = router.currentRoute.value.query.keyword;
+        data.preKeyword = data.keyword;
+    }
+    if (router.currentRoute.value.query.mode) {
+        data.mode = router.currentRoute.value.query.mode;
+    } else {
+        data.mode = props.mode;
+    }
+    if (router.currentRoute.value.query.tags) {
+        data.tags = router.currentRoute.value.query.tags.filter(tag => tag !== '');
+        data.preTags = data.tags.join(',');
+    }
+}
+
+onInit();
+
+onBeforeRouteLeave((to, from, next) => {
+    next();
+    if (to.name !== from.name && ['list', 'search'].includes(to.name)) {
+        onInit();
+    }
+});
+
+function showFilter(event) {
+    confirm.require({
+        target: event.currentTarget,
+        group: 'filters',
+        position: 'bottomleft',
+        accept: () => {
+            let tags = data.preTags.split(',');
+            if (tags && tags.length > 0) {
+                tags = tags.map(tag => tag.trim());
+            } else {
+                tags = [];
+            }
+            data.keyword = data.preKeyword;
+            data.tags = tags;
+            nextTick(() => {
+                novelList.value?.reload();
+            });
+        },
+        reject: () => {
+            data.preKeyword = '';
+            data.preTags = '';
+            data.keyword = '';
+            data.tags = [];
+            nextTick(() => {
+                novelList.value?.reload();
+            });
+        }
+    });
+}
 </script>
 
 <style scoped>
