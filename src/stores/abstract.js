@@ -35,6 +35,10 @@ export function defineBaseStore() {
             getExpire() {
                 return this.$state?.expire || this?.expire;
             },
+            remove(id) {
+                delete this.$state[this.prefix + id];
+                this.driver.removeItem(this.prefix + id);
+            }
         },
     }
 }
