@@ -20,6 +20,22 @@ const items = [
         },
     },
     {
+        path: '/novel',
+        name: 'list',
+        component: () => import('./pages/list.vue'),
+        showNav: true,
+        props: {
+            mode: 'list'
+        },
+        meta: {
+            title: '书库',
+            icon: {
+                "text": "\ue0bb",
+                "selectedText": "\ue0bb",
+            },
+        },
+    },
+    {
         path: '/bookmark',
         name: 'bookmark',
         component: () => import('./pages/bookmark.vue'),
@@ -27,8 +43,8 @@ const items = [
         meta: {
             title: '书架',
             icon: {
-                "text": "\ue0bb",
-                "selectedText": "\ue0bb",
+                "text": "\uf005",
+                "selectedText": "\uf005",
             },
         },
     },
@@ -64,18 +80,6 @@ const items = [
         },
         meta: {
             title: '搜索',
-        },
-    },
-    {
-        path: '/novel',
-        name: 'list',
-        component: () => import('./pages/list.vue'),
-        showNav: false,
-        props: {
-            mode: 'list'
-        },
-        meta: {
-            title: '所有小说',
         },
     },
     {
