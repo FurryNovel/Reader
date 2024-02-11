@@ -146,6 +146,16 @@ onServerPrefetch(() => {
     });
 });
 
+watchEffect(() => {
+    if (data.novel) {
+        useMeta({
+            title: data.novel.name,
+            description: data.novel.desc,
+            image: data.novel.cover,
+        });
+    }
+});
+
 function loadData() {
     const tasks = [];
     tasks.push(
@@ -181,15 +191,6 @@ function loadData() {
 }
 
 
-watchEffect(() => {
-    if (data.novel) {
-        useMeta({
-            title: data.novel.name,
-            description: data.novel.desc,
-            image: data.novel.cover,
-        });
-    }
-});
 </script>
 
 <style scoped>
