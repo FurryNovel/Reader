@@ -33,7 +33,6 @@ export function initRouter(router) {
     });
     useHead({
         title: computed(() => {
-            console.log(data.title)
             return data.title;
         }),
         meta: computed(() => {
