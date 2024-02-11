@@ -3,7 +3,9 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items">
-					<div class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
+					<router-link
+							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40"
+							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
@@ -25,7 +27,8 @@
 								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
 								     v-html="item.desc">
 								</div>
-								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无</div>
+								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无
+								</div>
 							</div>
 							<div class="overflow-hidden flex1">
 								<div class="mb-1 font-bold">标签</div>
@@ -37,7 +40,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</router-link>
 				</template>
 			</div>
 		</div>
