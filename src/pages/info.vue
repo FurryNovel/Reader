@@ -2,7 +2,7 @@
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
 		<NavBar :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
 		<template v-if="data.novel">
-			<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
+			<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 				<div class="flex w-full">
 					<div class="rounded-xl">
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
