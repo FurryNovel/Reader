@@ -38,7 +38,10 @@ export function defineBaseStore() {
             remove(id) {
                 delete this.$state[this.prefix + id];
                 this.driver.removeItem(this.prefix + id);
-            }
+            },
+            has(id) {
+                return this.$state?.[this.prefix + id] || this?.[this.prefix + id];
+            },
         },
     }
 }
