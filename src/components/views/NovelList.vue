@@ -77,8 +77,8 @@
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-1 flex-col p-2">
-							<div class="flex max-sm:flex-col">
-								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[16px] leading-[16px]">
+							<div class="flex max-sm:flex-col sm:items-center">
+								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 									{{ item.name }}
 								</div>
 								<div class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
@@ -86,13 +86,19 @@
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col justify-between p-2">
-								<div class="mb-1">
+								<div class="mb-1 text-xs">
 									<div v-if="item.desc.length > 0"
-									     class="overflow-hidden whitespace-pre-line line-clamp-[2]"
+									     class="overflow-hidden whitespace-pre-line line-clamp-[2] text-sm"
 									     v-html="item.desc">
 									</div>
 									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
 										无
+									</div>
+								</div>
+								<div v-if="props.withChapters" class="mb-1">
+									<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
+									     class=" rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 overflow-hidden whitespace-pre-line line-clamp-[2]">
+										最新章节：{{ item.latest_chapters[0].name }}
 									</div>
 								</div>
 								<div class="overflow-hidden flex1">
