@@ -21,15 +21,21 @@ const computeParams = computed(() => {
     };
 });
 
-export function initRouter(router) {
-    data.route = router.currentRoute.value;
-    router.afterEach((to) => {
-        data.route = to;
+function initParams(route) {
+    data.route = route.value;
+    watchEffect(() => {
         data.title = computeParams.value.title;
         data.keywords = computeParams.value.keywords;
         data.description = computeParams.value.description;
         data.image = computeParams.value.image ? computeParams.value.image : iconUrl;
         data.url = computeParams.value.url ? computeParams.value.url : `${config.base}${data.route?.path || ''}`;
+    });
+}
+
+export function initRouter(router) {
+    initParams(router.currentRoute);
+    router.afterEach((to) => {
+        data.route = to;
     });
     useHead({
         title: computed(() => {
@@ -71,14 +77,11 @@ export function useMeta(params) {
         return;
     }
     if (isRef(params)) {
-        watchEffect(() => {
-            useMeta(params.value);
-        });
-    } else {
-        data.title = params.title ? params.title : config.title;
-        data.keywords = params.keywords ? params.keywords : config.keywords;
-        data.description = params.description ? params.description : config.description;
-        data.image = params.image ? params.image : iconUrl;
-        data.url = params.url ? params.url : `${config.base}${data.route?.path || ''}`;
+        params = params?.value ?? {};
     }
+    data.title = params.title ? params.title : config.title;
+    data.keywords = params.keywords ? params.keywords : config.keywords;
+    data.description = params.description ? params.description : config.description;
+    data.image = params.image ? params.image : iconUrl;
+    data.url = params.url ? params.url : `${config.base}${data.route?.path || ''}`;
 }

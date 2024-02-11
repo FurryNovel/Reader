@@ -136,6 +136,13 @@ onServerPrefetch(() => {
             data: data.chapters,
             reqId: `novel-${data.id}-chapters`,
         });
+        if (data.novel) {
+            useMeta({
+                title: data.novel.name,
+                description: data.novel.desc,
+                image: data.novel.cover,
+            });
+        }
     });
 });
 
