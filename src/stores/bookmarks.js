@@ -5,7 +5,7 @@ const abstract = defineBaseStore();
 
 export const useBookmarkStore = defineStore(Object.assign(abstract, {
     id: 'bookmarks',
-    lazy: true,
+    lazy: false,
 }));
 
 export default {
