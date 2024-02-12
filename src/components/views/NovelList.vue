@@ -282,10 +282,12 @@ onServerData((res) => {
 });
 
 onServerPrefetch(() => {
+    const instance = getCurrentInstance();
     return loadData().then((res) => {
         provideServerData({
             reqId: ssrId,
             data: res,
+            instance: instance,
         });
         data.items = res.data;
         data.page = res.page;

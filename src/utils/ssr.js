@@ -18,11 +18,11 @@ export function useServerData({reqId = null}) {
     return ssrStore.find(reqId);
 }
 
-export function onServerData(hook, reqId = null) {
+export function onServerData(hook, reqId = null, pinia = null) {
     if (import.meta.env.SSR) {
         return Promise.resolve();
     }
-    const ssrStore = useServerSideRenderStore();
+    const ssrStore = useServerSideRenderStore(pinia);
     if (!reqId) {
         reqId = useId();
     }
@@ -35,8 +35,18 @@ export function onServerData(hook, reqId = null) {
     return Promise.reject();
 }
 
-export function provideServerData({reqId = null, data}) {
-    const ssrStore = useServerSideRenderStore();
+/**
+ * @param reqId{any}
+ * @param data{any}
+ * @param instance{any}
+ */
+export function provideServerData({reqId = null, data, instance = null}) {
+    if (import.meta.env.SSR) {
+        if (instance === null)
+            throw new Error('provideServerData must be called with a Vue instance');
+        instance = instance.appContext.config.globalProperties.$pinia;
+    }
+    const ssrStore = useServerSideRenderStore(instance);
     if (!reqId) {
         reqId = useId();
     }
