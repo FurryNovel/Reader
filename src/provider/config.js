@@ -104,13 +104,11 @@ export function useConfigProvider() {
     // noinspection JSUnresolvedReference
     state.global = Object.assign(base.global, state.global);
     if (!import.meta.env.SSR) {
-        (() => {
-            const settingStore = useSettingStore();
-            watchEffect(() => {
-                state.saveToCookie();
-                settingStore.$patch(state);
-            });
-        })();
+        const settingStore = useSettingStore();
+        watch(() => state, () => {
+            state.saveToCookie();
+            settingStore.$patch(state);
+        }, {deep: true});
     }
     return state;
 }
