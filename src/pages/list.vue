@@ -2,9 +2,9 @@
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
 		<NavBar v-if="data.keyword === '' && props.mode === 'search'" :show-in="['mobile']"
 		        :show-buttons="['search', 'settings', 'back', 'home']"/>
-		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
+		<div class="flex flex-1 flex-col rounded bg-white text-black pb-[64px] sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
-				<div class="m-2 pl-2 flex items-center justify-between">
+				<div class="m-2 flex items-center justify-between pl-2">
 					<div class="text-2xl font-bold">
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
@@ -15,7 +15,7 @@
 					</div>
 					<Button class="mr-2 text-sm text-primary-500" label="条件筛选" @click="showFilter"
 					        size="small">
-						<i class="fa-regular fa-filter mr-2"></i>
+						<i class="mr-2 fa-regular fa-filter"></i>
 						条件筛选
 					</Button>
 				</div>
@@ -42,19 +42,19 @@
 	<ConfirmPopup group="filters">
 		<template #container="{ message, acceptCallback, rejectCallback }">
 			<div class="rounded-xl p-3 w-[300px]">
-				<div class="flex flex-col mb-2">
+				<div class="mb-2 flex flex-col">
 					<span class="font-bold">名称</span>
 					<InputText id="keyword" v-model="data.preKeyword" size="small"
 					           class="text-sm"
 					           placeholder="请输入关键字：小说名、作者名、简介等"/>
 				</div>
-				<div class="flex flex-col mb-2">
+				<div class="mb-2 flex flex-col">
 					<span class="font-bold">标签</span>
 					<InputText id="keyword" v-model="data.preTags" size="small"
 					           class="text-sm"
 					           placeholder="使用半角逗号间隔多个标签"/>
 				</div>
-				<div class="flex items-center justify-end gap-2 mt-3">
+				<div class="mt-3 flex items-center justify-end gap-2">
 					<Button label="确定" @click="acceptCallback" size="small"></Button>
 					<Button label="清除" outlined @click="rejectCallback" severity="secondary" size="small"
 					        text></Button>

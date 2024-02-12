@@ -1,7 +1,7 @@
 <template>
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
-		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
-			<div class="m-2 pl-2 flex items-center justify-between">
+		<div class="flex flex-1 flex-col rounded bg-white text-black pb-[64px] sm:p-10 dark:bg-surface-600 dark:text-white">
+			<div class="m-2 flex items-center justify-between pl-2">
 				<div class="text-2xl font-bold">
 					书架
 				</div>
