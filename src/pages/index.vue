@@ -11,7 +11,7 @@
 				</router-link>
 			</div>
 			<NovelList v-ssr type="popular" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
-			           :limit="8"
+			           :limit="16"
 			           :userId="null" :keyword="null" :ids="null"/>
 		</div>
 		<div class="flex flex-1 flex-col rounded bg-white p-10 max-sm:p-3 text-black dark:bg-surface-600 dark:text-white">
@@ -25,7 +25,7 @@
 				</router-link>
 			</div>
 			<NovelList v-ssr type="random" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
-			           :limit="8"
+			           :limit="16"
 			           :userId="null" :keyword="null" :ids="null"/>
 		</div>
 	</div>

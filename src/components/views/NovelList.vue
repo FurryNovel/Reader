@@ -46,7 +46,7 @@
 		</div>
 		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
-				<template v-for="idx in 20">
+				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl border-gray-50 border-2 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
@@ -117,7 +117,7 @@
 		</div>
 		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
-				<template v-for="idx in 20">
+				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white border-gray-50 border-2 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
 						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
@@ -225,7 +225,7 @@ const props = defineProps({
         default: true,
     },
     limit: {
-        default: null,
+        default: 15,
     },
     showPagination: {
         type: Boolean,
@@ -320,6 +320,7 @@ function loadData() {
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
         hate_tags: props.applyFilter ? hateTags.value : null,
+        limit: props.limit,
     };
     return loadNovels({params, ignoreReq: import.meta.env.SSR}).then((res) => {
         data.loading = false;
