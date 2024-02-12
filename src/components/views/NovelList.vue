@@ -44,7 +44,7 @@
 				</template>
 			</div>
 		</div>
-		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
+		<div v-else ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl border-gray-50 border-2 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
@@ -115,7 +115,7 @@
 				</template>
 			</div>
 		</div>
-		<div v-if="data.loading" ref="parent" class="h-full w-full flex-col">
+		<div v-else ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white border-gray-50 border-2 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
