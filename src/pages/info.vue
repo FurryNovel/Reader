@@ -132,25 +132,6 @@ onRouteChange(to => {
     data.id = to.params.id;
 });
 
-(() => {
-    const tasks = [];
-    tasks.push(
-        onServerData((novel) => {
-            data.novel = novel;
-        }, `novel-${data.id}`)
-    );
-    tasks.push(
-        onServerData((chapters) => {
-            data.chapters = chapters;
-        }, `novel-${data.id}-chapters`)
-    );
-    
-    Promise.all(tasks).catch(err => {
-        data.loading = true;
-        return loadData();
-    });
-})();
-
 onServerPrefetch(() => {
     return loadData().then(() => {
         provideServerData({
@@ -172,7 +153,24 @@ onServerPrefetch(() => {
 });
 
 onMounted(() => {
-    isMounted.value = true;
+    const tasks = [];
+    tasks.push(
+        onServerData((novel) => {
+            data.novel = novel;
+        }, `novel-${data.id}`)
+    );
+    tasks.push(
+        onServerData((chapters) => {
+            data.chapters = chapters;
+        }, `novel-${data.id}-chapters`)
+    );
+    
+    Promise.all(tasks).catch(err => {
+        data.loading = true;
+        return loadData();
+    }).finally(() => {
+        isMounted.value = true;
+    });
 });
 
 watchEffect(() => {
