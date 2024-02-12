@@ -133,14 +133,17 @@ onRouteChange(to => {
 });
 
 onServerPrefetch(() => {
+    const instance = getCurrentInstance();
     return loadData().then(() => {
         provideServerData({
             data: data.novel,
             reqId: `novel-${data.id}`,
+            instance,
         });
         provideServerData({
             data: data.chapters,
             reqId: `novel-${data.id}-chapters`,
+            instance,
         });
         if (data.novel) {
             useMeta({
