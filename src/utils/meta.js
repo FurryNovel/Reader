@@ -32,8 +32,8 @@ function initParams(route) {
     });
 }
 
-export function initRouter(router) {
-    initParams(router.currentRoute);
+export function initMeta(router) {
+    initParams(router.currentRoute.value);
     router.afterEach((to) => {
         data.route = to;
     });

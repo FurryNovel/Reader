@@ -42,9 +42,6 @@ export function createApp() {
     app.use(directivePlugin());
     pinia.use(localDatabase);
     app.use(vueBindSSRPlugin);
-    
-    initRouterEvent(router);
-    
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
         asyncPlugins.push(createRecoveryStorePlugin());

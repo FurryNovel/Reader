@@ -3,11 +3,9 @@ let router = null;
 
 function initRouterEvent(routerInstance) {
     router = routerInstance;
-    if (import.meta.env.SSR) {
-        router.afterEach((to, from) => {
-            triggerRouteChange(to);
-        });
-    }
+    router.afterEach((to, from) => {
+        triggerRouteChange(to);
+    });
 }
 
 /**

@@ -20,11 +20,12 @@
 </style>
 <script setup>
 import {initDeviceEvent} from "@/utils/device.js";
-import {initRouter} from "@/utils/meta.js";
+import {initMeta} from "@/utils/meta.js";
 import {initCookieManager} from "@/utils/cookie.js";
+import {initRouterEvent} from "@/utils/router-event.js";
 
-
-initRouter(useRouter());
+initMeta(useRouter());
+initRouterEvent(useRouter());
 onBeforeMount(() => {
     initDeviceEvent();
     initCookieManager();
