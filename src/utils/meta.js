@@ -33,7 +33,7 @@ function initParams(route) {
 }
 
 export function initMeta(router) {
-    initParams(router.currentRoute.value);
+    initParams(router.currentRoute);
     router.afterEach((to) => {
         data.route = to;
     });
