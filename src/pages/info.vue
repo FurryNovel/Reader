@@ -29,6 +29,13 @@
 								}}</span>
 							</div>
 						</div>
+						<div>
+							<div v-if="data.chapters && data.chapters.length > 0"
+							     class="text-sm text-black dark:text-white">
+								<span class="font-bold ">最新章节：</span>
+								{{ data.chapters[0].name }}
+							</div>
+						</div>
 						<div class="">
 							<Button v-if="!isBookmarked" class="mr-2 text-sm text-primary-500" label="加入书架"
 							        size="small"
