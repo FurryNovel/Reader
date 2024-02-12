@@ -155,7 +155,7 @@ onServerPrefetch(() => {
     });
 });
 
-onMounted(() => {
+(() => {
     const tasks = [];
     tasks.push(
         onServerData((novel) => {
@@ -167,13 +167,14 @@ onMounted(() => {
             data.chapters = chapters;
         }, `novel-${data.id}-chapters`)
     );
-    
     Promise.all(tasks).catch(err => {
         data.loading = true;
         return loadData();
-    }).finally(() => {
-        isMounted.value = true;
-    });
+    })
+})();
+
+onMounted(() => {
+    isMounted.value = true;
 });
 
 watchEffect(() => {
