@@ -18,11 +18,11 @@ export function useServerData({reqId = null}) {
     return ssrStore.find(reqId);
 }
 
-export function onServerData(hook, reqId = null, pinia = null) {
+export function onServerData(hook, reqId = null) {
     if (import.meta.env.SSR) {
         return Promise.resolve();
     }
-    const ssrStore = useServerSideRenderStore(pinia);
+    const ssrStore = useServerSideRenderStore();
     if (!reqId) {
         reqId = useId();
     }
