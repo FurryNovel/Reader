@@ -107,6 +107,7 @@ import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {loadChapter, loadChapters} from "@/api/chapters.js";
 import {useMeta} from "@/utils/meta.js";
 import {useBookmarkStore} from "@/stores/bookmarks.js";
+import {onRouteChange} from "@/utils/router-event.js";
 
 const bookmarkStore = useBookmarkStore();
 
@@ -127,10 +128,9 @@ const isBookmarked = computed(() => {
     return bookmarkStore.has(data.id);
 });
 
-
-if (router.currentRoute.value.params.id) {
-    data.id = router.currentRoute.value.params.id;
-}
+onRouteChange(to => {
+    data.id = to.params.id;
+});
 
 (() => {
     const tasks = [];

@@ -17,6 +17,7 @@ import VueCookies from 'vue-cookies'
 import {initialPinia} from "@/plugins/initial-pinia.js";
 import {vueBindSSRPlugin, vueSSRMarker} from "vue-unique-ssr-id";
 import ConfirmationService from 'primevue/confirmationservice';
+import {initRouterEvent} from "@/utils/router-event.js";
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -41,6 +42,8 @@ export function createApp() {
     app.use(directivePlugin());
     pinia.use(localDatabase);
     app.use(vueBindSSRPlugin);
+    
+    initRouterEvent(router);
     
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
