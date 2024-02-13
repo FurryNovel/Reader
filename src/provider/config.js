@@ -45,12 +45,12 @@ export const baseConfig = {
             return !['showLanguages', 'hateTags', 'tags'].includes(key) && typeof value !== 'function' && value !== undefined;
         }))));
     },
-    get showLanguages() {
+    getShowLanguages() {
         return this.global.acceptedLanguages.filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
     },
-    get hateTags() {
+    getHateTags() {
         let tags = [];
         let showLanguages = this.global.acceptedLanguages.filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
@@ -71,7 +71,7 @@ export const baseConfig = {
         }
         return tags;
     },
-    get tags() {
+    getTags() {
         let tags = [];
         let showLanguages = this.global.acceptedLanguages.filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
@@ -93,9 +93,9 @@ export function useConfigProvider() {
     } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
-        delete state.showLanguages;
-        delete state.hateTags;
-        delete state.tags;
+        delete state.getShowLanguages;
+        delete state.getHateTags;
+        delete state.getTags;
         delete state.saveToCookie;
         state = Object.assign(base, state,);
     }
@@ -103,12 +103,14 @@ export function useConfigProvider() {
     state.chapter = Object.assign(base.chapter, state.chapter);
     // noinspection JSUnresolvedReference
     state.global = Object.assign(base.global, state.global);
+    
+    const wrapper = reactive(state);
     if (!import.meta.env.SSR) {
         const settingStore = useSettingStore();
-        watch(() => state, () => {
+        watch(wrapper, () => {
             state.saveToCookie();
             settingStore.$patch(state);
         }, {deep: true});
     }
-    return state;
+    return wrapper;
 }

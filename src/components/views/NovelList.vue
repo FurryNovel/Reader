@@ -245,8 +245,8 @@ const data = reactive({
 
 const isMounted = ref(false);
 
-const hateTags = computed(() => configProvider.hateTags);
-const tags = computed(() => (configProvider?.tags || []).concat(props.tags || []));
+const hateTags = computed(() => configProvider.getHateTags());
+const tags = computed(() => (configProvider.getTags() || []).concat(props.tags || []));
 
 
 const perLineCount = computed(() => {
