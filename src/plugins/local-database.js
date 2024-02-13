@@ -102,7 +102,7 @@ export function createRecoveryStorePlugin() {
     return Promise.all(globalInstall.map((installer) => {
         return new Promise((resolve, reject) => {
             const store = installer.install();
-            if (installer.async) {
+            if (installer.sync) {
                 const unSubscribe = store.$subscribe((mutation, state) => {
                     unSubscribe();
                     resolve();
