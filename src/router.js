@@ -10,12 +10,14 @@ const items = [
         alias: '/index',
         name: 'index',
         component: () => import('./pages/index.vue'),
-        showNav: true,
         meta: {
             title: '主页',
             icon: {
                 "text": "\uf3ce",
                 "selectedText": "\uf3ce",
+            },
+            layout: {
+                showInNavBar: true,
             },
         },
     },
@@ -23,9 +25,8 @@ const items = [
         path: '/novel',
         name: 'list',
         component: () => import('./pages/list.vue'),
-        showNav: true,
         props: {
-            mode: 'list'
+            mode: 'list',
         },
         meta: {
             title: '书库',
@@ -33,18 +34,23 @@ const items = [
                 "text": "\ue0bb",
                 "selectedText": "\ue0bb",
             },
+            layout: {
+                showInNavBar: true,
+            },
         },
     },
     {
         path: '/bookmark',
         name: 'bookmark',
         component: () => import('./pages/bookmark.vue'),
-        showNav: true,
         meta: {
             title: '书架',
             icon: {
                 "text": "\uf005",
                 "selectedText": "\uf005",
+            },
+            layout: {
+                showInNavBar: true,
             },
         },
     },
@@ -52,12 +58,14 @@ const items = [
         path: '/about',
         name: 'about',
         component: () => import('./pages/about.vue'),
-        showNav: true,
         meta: {
             title: '关于',
             icon: {
                 "text": "\uf05a",
                 "selectedText": "\uf05a",
+            },
+            layout: {
+                showInNavBar: true,
             },
         },
     },
@@ -65,25 +73,34 @@ const items = [
         path: '/settings',
         name: 'settings',
         component: () => import('./pages/settings.vue'),
-        showNav: false,
         meta: {
             title: '设置',
+            layout: {
+                showInNavBar: false,
+            },
         },
     },
     {
         path: '/search',
         name: 'search',
         component: () => import('./pages/list.vue'),
-        showNav: false,
         props: {
             mode: 'search'
         },
         meta: {
             title: '搜索',
+            layout: {
+                showInNavBar: false,
+            },
         },
     },
     {
         path: '/novel/:id(\\d+)',
+        meta: {
+            layout: {
+                showInNavBar: false,
+            },
+        },
         children: [
             {
                 path: 'chapter/:cid(\\d+)',
@@ -92,16 +109,25 @@ const items = [
                 props: {},
                 meta: {
                     title: '章节',
+                    style: {
+                        navBar: '',
+                    },
+                    layout: {
+                        showInNavBar: false,
+                        navBar: false,
+                    },
                 },
             },
             {
                 path: '',
                 name: 'info',
                 component: () => import('./pages/info.vue'),
-                showNav: false,
                 props: {},
                 meta: {
                     title: '小说详情',
+                    layout: {
+                        showInNavBar: false,
+                    },
                 },
             }
         ],

@@ -113,7 +113,7 @@ const isMounted = ref(false);
 
 
 const items = computed(() => {
-    return (deviceInfo.value.isMobile && isMounted.value) ? [] : (routes.filter(route => route.showNav).map(route => {
+    return (deviceInfo.value.isMobile && isMounted.value) ? [] : (routes.filter(route => route.meta.layout.showInNavBar).map(route => {
         return {
             label: route.meta.title,
             icon: route.meta.icon,
@@ -129,7 +129,7 @@ const showWrapper = computed(() => {
     
     let show = false;
     if (deviceInfo.value.isMobile) {
-        if (routes.filter(route => route.showNav && route.isActive(router)).length > 0) {
+        if (routes.filter(route => route.meta.layout.showInNavBar && route.isActive(router)).length > 0) {
             show = true;
         } else if (props.showIn.includes('pc')) {
             show = false;
@@ -142,6 +142,9 @@ const showWrapper = computed(() => {
         } else if (props.showIn.includes('mobile')) {
             show = false;
         }
+    }
+    if (show) {
+        show = router.currentRoute.value?.meta.layout.navBar ?? true;
     }
     return show;
 });
