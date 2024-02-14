@@ -75,8 +75,9 @@
 						</TabPanel>
 						<TabPanel header="目录">
 							<div class="flex flex-wrap ">
-								<div v-for="chapter in data.chapters"
-								     class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full border-b">
+								<router-link v-for="chapter in data.chapters"
+								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
+								             class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full border-b">
 									<div class="flex-1 flex flex-col gap-2">
 										<span class="font-bold">{{ chapter.name }}</span>
 										<div class="flex flex-wrap overflow-hidden max-h-[65px]">
@@ -90,7 +91,7 @@
 										</div>
 									</div>
 									<span class="font-bold"></span>
-								</div>
+								</router-link>
 							</div>
 						</TabPanel>
 					</TabView>
