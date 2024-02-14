@@ -84,13 +84,27 @@ const items = [
     },
     {
         path: '/novel/:id(\\d+)',
-        name: 'info',
-        component: () => import('./pages/info.vue'),
-        showNav: false,
-        props: {},
-        meta: {
-            title: '小说详情',
-        },
+        children: [
+            {
+                path: 'chapter/:cid(\\d+)',
+                name: 'chapter',
+                component: () => import('./pages/chapter.vue'),
+                props: {},
+                meta: {
+                    title: '章节',
+                },
+            },
+            {
+                path: '',
+                name: 'info',
+                component: () => import('./pages/info.vue'),
+                showNav: false,
+                props: {},
+                meta: {
+                    title: '小说详情',
+                },
+            }
+        ],
     },
 ].map((item) => {
     return Object.assign(item, {
