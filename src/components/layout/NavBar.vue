@@ -12,7 +12,7 @@
 				</Button>
 			</template>
 			<template v-if="props.showButtons.includes('home')">
-				<router-link v-if="props.showButtons.includes('settings')" :to="{name:'index'}">
+				<router-link :to="{name:'index'}">
 					<Button v-ripple class="w-[45px] h-[45px]" href="/" outlined rounded severity="secondary"
 					        size="small" text>
 						<span class="fa-regular fa-home"></span>
