@@ -56,7 +56,7 @@
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"
 					        text @click="navigate">
-						<span class="fa-regular">&#xf013;</span>
+						<span class="fa-regular fa-gear"></span>
 					</Button>
 				</router-link>
 				<template v-if="props.showButtons.includes('endSlot')">
