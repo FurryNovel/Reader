@@ -65,7 +65,7 @@
 			</div>
 		</template>
 	</Menubar>
-	<div v-if="showWrapper">
+	<div v-if="showWrapper && !props.fixed">
 		<div class="mt-[64px]"></div>
 	</div>
 	<slot/>
@@ -89,6 +89,14 @@ const props = defineProps({
     showButtons: {
         type: Array,
         default: ['search', 'settings', 'icon']
+    },
+    custom: {
+        type: Boolean,
+        default: false
+    },
+    fixed: {
+        type: Boolean,
+        default: false
     },
 });
 
@@ -143,7 +151,7 @@ const showWrapper = computed(() => {
             show = false;
         }
     }
-    if (show) {
+    if (show && !props.custom) {
         show = router.currentRoute.value?.meta.layout.navBar ?? true;
     }
     return show;
