@@ -46,7 +46,7 @@
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
                     'fixed top-0 h-screen w-64 transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0': true,
-                    'opacity-100 z-50' : data.toggleSettings,
+                    'opacity-100 z-[51]' : data.toggleSettings,
 				}">
 					<div v-if="data.toggleSettings" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
@@ -100,7 +100,7 @@
 										背景颜色
 									</div>
 									<div class="w-full">
-										<ColorPicker v-model="config.chapter.bgColor"/>
+										<ColorPicker v-model="config.chapter.bgColor" :baseZIndex="50"/>
 									</div>
 								</div>
 								<div class="mb-5">
@@ -108,7 +108,7 @@
 										字体颜色
 									</div>
 									<div class="w-full">
-										<ColorPicker v-model="config.chapter.fontColor"/>
+										<ColorPicker v-model="config.chapter.fontColor" :baseZIndex="50"/>
 									</div>
 								</div>
 								<div class="mb-5">
@@ -145,7 +145,7 @@
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
                     'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0': true,
-                    'opacity-100 z-50' : data.toggleChapters,
+                    'opacity-100 z-[51]' : data.toggleChapters,
 				}">
 					<div v-if="data.toggleChapters" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
