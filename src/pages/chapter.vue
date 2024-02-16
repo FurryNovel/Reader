@@ -305,8 +305,11 @@ const lines = computed(() => {
 });
 
 onRouteChange(to => {
-    data.novel.id = to.params.id;
-    data.chapter.id = to.params.cid;
+    if (data.chapter.id !== to.params.cid) {
+        data.novel.id = to.params.id;
+        data.chapter.id = to.params.cid;
+        loadData();
+    }
 });
 
 onMounted(() => {
@@ -377,33 +380,37 @@ onServerPrefetch(() => {
 
 function loadData() {
     const tasks = [];
-    tasks.push(
-        loadNovel({
-            id: data.novel.id,
-            onCache: (novel) => {
+    if (!data.novel || !data.novel.name) {
+        tasks.push(
+            loadNovel({
+                id: data.novel.id,
+                onCache: (novel) => {
+                    data.novel = novel;
+                },
+                ignoreReq: import.meta.env.SSR,
+            }).then((novel) => {
                 data.novel = novel;
-            },
-            ignoreReq: import.meta.env.SSR,
-        }).then((novel) => {
-            data.novel = novel;
-        }).catch((e) => {
-            data.novel = null;
-        })
-    );
-    tasks.push(
-        loadChapters({
-            novelId: data.novel.id,
-            onCache: (chapters) => {
+            }).catch((e) => {
+                data.novel = null;
+            })
+        );
+    }
+    if (data.chapters.length === 0) {
+        tasks.push(
+            loadChapters({
+                novelId: data.novel.id,
+                onCache: (chapters) => {
+                    data.chapters = chapters;
+                },
+                ignoreReq: import.meta.env.SSR,
+            }).then((chapters) => {
                 data.chapters = chapters;
-            },
-            ignoreReq: import.meta.env.SSR,
-        }).then((chapters) => {
-            data.chapters = chapters;
-        }).catch((e) => {
-            console.error(e);
-            data.chapters = [];
-        })
-    )
+            }).catch((e) => {
+                console.error(e);
+                data.chapters = [];
+            })
+        )
+    }
     tasks.push(
         loadChapter({
             id: data.chapter.id,
