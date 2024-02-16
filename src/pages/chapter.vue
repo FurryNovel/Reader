@@ -156,7 +156,10 @@
 								<router-link v-for="chapter in data.chapters"
 								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
 								             class="flex flex-wrap p-2 items-center gap-3 w-full border-b">
-									<div class="flex-1 flex flex-col gap-2">
+									<div :class="{
+                                        'flex-1 flex flex-col gap-2':true,
+                                        'text-primary-500': chapter.id === data.chapter?.id,
+									}" :data-cid="chapter.id">
 										<span class="font-bold">{{ chapter.name }}</span>
 										<div class="flex items-center gap-2">
 											<span>{{ chapter.updated_at }}</span>
@@ -426,6 +429,10 @@ function toggleModal(type = 'Settings') {
         data.toggleChapters = !data.toggleChapters;
         nextTick(() => {
             data.toggleSettings = false;
+            let el = document.querySelector(`[data-cid="${data.chapter.id}"]`);
+            if (el) {
+                el.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
         });
     } else {
         data.toggleSettings = !data.toggleSettings;
