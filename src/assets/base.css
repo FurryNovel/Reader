@@ -37,13 +37,13 @@ body {
     height: stretch;
 }
 
-:root::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     @apply bg-gray-50;
 }
 
-:root::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background-color: rgba(204, 204, 204, 0.7);
     border-radius: 10px;
 }
