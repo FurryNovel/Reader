@@ -170,7 +170,24 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="data.toggleMobile" class=""></div>
+		<div v-if="data.toggleMobile" class="fixed bottom-0 left-0 w-screen z-20 bg-white/70 backdrop-blur-sm">
+			<div class="h-20 flex gap-3 flex-1 justify-center items-center">
+				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				        @click="toggleModal('Chapters')" text>
+					<div class="flex flex-col justify-center items-center h-full">
+						<span class="fa-regular fa-list mb-1 text-xl"></span>
+						<span class="text-sm">目录</span>
+					</div>
+				</Button>
+				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				        @click="toggleModal('Settings')" text>
+					<div class="flex flex-col justify-center items-center h-full">
+						<span class="fa-regular fa-gear mb-1 text-xl"></span>
+						<span class="text-sm">设置</span>
+					</div>
+				</Button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -184,6 +201,7 @@ import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useMeta} from "@/utils/meta.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {processContent} from "@/utils/reader.js";
+import {isMobile} from "@/utils/device.js";
 
 const config = useConfigProvider();
 
@@ -415,11 +433,19 @@ function toggleModal(type = 'Settings') {
         });
         data.toggleChapters = false;
     }
+    data.toggleMobile = false;
 }
 
 function toggleMobile() {
+    if (!isMobile.value) {
+        return;
+    }
+    if (data.toggleChapters || data.toggleSettings) {
+        data.toggleChapters = false;
+        data.toggleSettings = false;
+        return;
+    }
     data.toggleMobile = !data.toggleMobile;
-    
 }
 </script>
 
