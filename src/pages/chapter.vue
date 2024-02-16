@@ -423,15 +423,15 @@ function loadData() {
 
 function toggleModal(type = 'Settings') {
     if (type === 'Chapters') {
+        data.toggleChapters = !data.toggleChapters;
         nextTick(() => {
-            data.toggleChapters = !data.toggleChapters;
+            data.toggleSettings = false;
         });
-        data.toggleSettings = false;
     } else {
+        data.toggleSettings = !data.toggleSettings;
         nextTick(() => {
-            data.toggleSettings = !data.toggleSettings;
+            data.toggleChapters = false;
         });
-        data.toggleChapters = false;
     }
     data.toggleMobile = false;
 }
