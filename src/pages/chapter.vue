@@ -1,5 +1,5 @@
 <template>
-	<div class="flex h-full w-full flex-col max-sm:h-screen" :style="wrapperStyle">
+	<div ref="parent" class="flex h-full w-full flex-col max-sm:h-screen" :style="wrapperStyle">
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
 		     class="transition-all duration-300">
 			<NavBar :show-in="['mobile']" :show-buttons="['back', 'home', 'startSlot']"
@@ -308,6 +308,8 @@ onRouteChange(to => {
     if (data.chapter.id !== to.params.cid) {
         data.novel.id = to.params.id;
         data.chapter.id = to.params.cid;
+        
+        data.loading = true;
         loadData();
     }
 });
