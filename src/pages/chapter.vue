@@ -46,9 +46,9 @@
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
                     'fixed top-0 h-screen w-64 transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0': true,
-                    'opacity-100' : data.toggleSettings,
+                    'opacity-100 z-50' : data.toggleSettings,
 				}">
-					<div v-if="data.toggleSettings" class="flex flex-col p-5">
+					<div v-if="data.toggleSettings" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
 							设置
 						</div>
@@ -145,9 +145,9 @@
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
                     'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0': true,
-                    'opacity-100' : data.toggleChapters,
+                    'opacity-100 z-50' : data.toggleChapters,
 				}">
-					<div v-if="data.toggleChapters" class="flex flex-col p-5">
+					<div v-if="data.toggleChapters" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
 							目录
 						</div>
