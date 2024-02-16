@@ -419,10 +419,22 @@ function loadData() {
             novelId: data.novel.id,
             onCache: (chapter) => {
                 data.chapter = chapter;
+                if (!import.meta.env.SSR) {
+                    window.scroll({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
             },
             ignoreReq: import.meta.env.SSR,
         }).then((chapter) => {
             data.chapter = chapter;
+            if (!import.meta.env.SSR) {
+                window.scroll({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
         }).catch((e) => {
             console.error(e);
             data.chapter = [];
