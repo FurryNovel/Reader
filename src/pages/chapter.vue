@@ -22,6 +22,31 @@
 		<div class="flex items-center lg:justify-center max-lg:justify-start" @click="toggleMobile">
 			<div class="h-full w-full max-w-3xl" :style="readerStyle">
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
+				
+				<div class="flex justify-center items-center m-10 gap-3 max-sm:flex-col">
+					<router-link v-if="pervChapter" v-slot="{ href, navigate }"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}" custom>
+						<Button v-ripple class="text-white !w-full" href="/settings" outlined
+						        severity="secondary"
+						        @click.stop="navigate">
+							<div>
+								<div class="text-lg font-bold">上一章</div>
+								<div class="text-sm">{{ pervChapter.name }}</div>
+							</div>
+						</Button>
+					</router-link>
+					<router-link v-if="nextChapter" v-slot="{ href, navigate }"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}" custom>
+						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
+						        severity="secondary"
+						        @click.stop="navigate">
+							<div>
+								<div class="text-lg font-bold">下一章</div>
+								<div class="text-sm">{{ nextChapter.name }}</div>
+							</div>
+						</Button>
+					</router-link>
+				</div>
 			</div>
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
 				<Button v-ripple class="aspect-square !p-0 text-white" href="/settings" outlined severity="secondary"
@@ -40,6 +65,7 @@
 			<div :class="{
                 'flex h-screen w-0 flex-col transition-all duration-300' : true,
                 'lg:w-[300px]' : data.toggleSettings,
+                'pointer-events-none' : !data.toggleSettings,
 			 }">
 				<div :style="{
                     color: `#${config.chapter.fontColor}`,
@@ -140,6 +166,7 @@
 			<div :class="{
                 'flex h-screen w-0 flex-col transition-all duration-300' : true,
                 'lg:w-[300px]' : data.toggleChapters,
+                'pointer-events-none' : !data.toggleChapters,
 			 }">
 				<div class="chapters-wrapper" :style="{
                     color: `#${config.chapter.fontColor}`,
@@ -315,6 +342,28 @@ const lines = computed(() => {
         lines = lines.concat(['<br>']);
     })
     return lines;
+});
+
+const pervChapter = computed(() => {
+    let index = data.chapters.findIndex((chapter) => chapter.id === data.chapter.id);
+    if (index === -1) {
+        return null;
+    }
+    if (index === 0) {
+        return null;
+    }
+    return data.chapters[index - 1];
+});
+
+const nextChapter = computed(() => {
+    let index = data.chapters.findIndex((chapter) => chapter.id === data.chapter.id);
+    if (index === -1) {
+        return null;
+    }
+    if (index === data.chapters.length - 1) {
+        return null;
+    }
+    return data.chapters[index + 1];
 });
 
 onRouteChange(to => {
