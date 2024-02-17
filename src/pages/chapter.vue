@@ -39,13 +39,13 @@
 			</div>
 			<div :class="{
                 'flex h-screen w-0 flex-col transition-all duration-300' : true,
-                'lg:w-64' : data.toggleSettings,
+                'lg:w-[300px]' : data.toggleSettings,
 			 }">
 				<div :style="{
                     color: `#${config.chapter.fontColor}`,
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
-                    'fixed top-0 h-screen w-64 transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0': true,
+                    'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0': true,
                     'opacity-100 z-[51]' : data.toggleSettings,
 				}">
 					<div v-if="data.toggleSettings" class="flex flex-col p-5" @click.stop="() => {}">
@@ -58,13 +58,14 @@
 									<div class="mb-2 font-bold">
 										字体
 									</div>
-									<div class="w-full">
+									<div class="w-full flex">
 										<ClientOnly>
 											<Dropdown v-model="config.chapter.font" :options="fonts" optionLabel="name"
-											          option-value="value">
+											          option-value="value" class="flex-1">
 												<template #option="slotProps">
 													<div class="flex align-items-center">
-													<span class="1" :style="{fontFamily: `${slotProps.option.value}`}">
+													<span class="select-none"
+													      :style="{fontFamily: `${slotProps.option.value}`}">
 														{{
 															slotProps.option.name
 														}}
@@ -225,6 +226,8 @@ const data = reactive({
     toggleMobile: false,
     toggleSettings: false,
     toggleChapters: false,
+    
+    loading: false,
     
     novel: {
         id: 0,
@@ -466,7 +469,7 @@ function toggleModal(type = 'Settings') {
             data.toggleSettings = false;
             let el = document.querySelector(`[data-cid="${data.chapter.id}"]`);
             if (el) {
-                el.scrollIntoView({behavior: 'smooth', block: 'center'});
+                el.scrollIntoView({block: 'center'});
             }
         });
     } else {
@@ -488,10 +491,6 @@ function toggleMobile() {
         return;
     }
     data.toggleMobile = !data.toggleMobile;
-}
-
-function onLoadMore() {
-    console.log(1)
 }
 </script>
 
