@@ -193,7 +193,9 @@
 		</div>
 		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
 			<template #container="{ closeCallback }">
-				<div class="flex flex-col items-center justify-center h-full">
+				<div class="flex flex-col items-center justify-center h-full" :style="{
+                    color: `#${config.chapter.fontColor}`,
+				}">
 					<i class="fa-regular fa-loader fa-spin"></i>
 					<div class="mt-5">加载中...</div>
 				</div>
