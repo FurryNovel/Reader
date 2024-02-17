@@ -19,14 +19,16 @@ import TabBar from "@/components/layout/TabBar.vue";
 import eventbus from "@/utils/eventbus.js";
 import {onRouteChange} from "@/utils/router-event.js";
 
+const router = useRouter();
 const wrapperStyle = ref(null);
 
-onRouteChange(to => {
-    if (to?.meta?.style?.navBar !== undefined) {
+router.beforeEach((to, from, next) => {
+    if (to.meta.style?.navBar !== undefined) {
         wrapperStyle.value = to.meta.style.navBar;
     } else {
         wrapperStyle.value = 'h-full w-full max-w-screen-xl flex flex-col mx-auto rounded-md bg-surface-50 dark:bg-surface-700 sm:border border-surface-200 dark:border-surface-700';
     }
+    next();
 });
 
 </script>
