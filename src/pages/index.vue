@@ -24,7 +24,7 @@
 					</Button>
 				</router-link>
 			</div>
-			<NovelList v-ssr type="random" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
+			<NovelList v-ssr type="latest" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
 			           :limit="16"
 			           :userId="null" :keyword="null" :ids="null"/>
 		</div>
