@@ -335,6 +335,7 @@ const lines = computed(() => {
     });
     let lines = [];
     parts.forEach((part) => {
+        part = '&emsp;&emsp;' + part;
         lines = lines.concat(processContent(
             part,
             config.chapter.fontSize
