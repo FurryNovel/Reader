@@ -13,6 +13,8 @@
 		"@tryghost/mg-shortcodes": "^0.2.16",
 		"@unhead/ssr": "^1.8.10",
 		"@unhead/vue": "^1.8.9",
+		"@vueuse/components": "^10.7.2",
+		"@vueuse/core": "^10.7.2",
 		"axios": "^1.6.7",
 		"cookie-parser": "^1.4.6",
 		"fontawesome-6-pro": "^6.4.0",
