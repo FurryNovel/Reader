@@ -191,6 +191,14 @@
 				</Button>
 			</div>
 		</div>
+		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
+			<template #container="{ closeCallback }">
+				<div class="flex flex-col items-center justify-center h-full">
+					<i class="fa-regular fa-loader fa-spin"></i>
+					<div class="mt-5">加载中...</div>
+				</div>
+			</template>
+		</Dialog>
 	</div>
 </template>
 
@@ -306,11 +314,13 @@ const lines = computed(() => {
 
 onRouteChange(to => {
     if (data.chapter.id !== to.params.cid) {
+        const needLoad = data.novel.id !== 0;
         data.novel.id = to.params.id;
         data.chapter.id = to.params.cid;
-        
-        data.loading = true;
-        loadData();
+        if (needLoad) {
+            data.loading = true;
+            loadData();
+        }
     }
 });
 
@@ -375,6 +385,7 @@ onServerPrefetch(() => {
         }, `chapter-${data.chapter.id}`)
     );
     Promise.all(tasks).catch(err => {
+        console.log(err)
         data.loading = true;
         return loadData();
     })
@@ -419,6 +430,7 @@ function loadData() {
             novelId: data.novel.id,
             onCache: (chapter) => {
                 data.chapter = chapter;
+                data.loading = false;
                 if (!import.meta.env.SSR) {
                     window.scroll({
                         top: 0,
@@ -474,6 +486,10 @@ function toggleMobile() {
         return;
     }
     data.toggleMobile = !data.toggleMobile;
+}
+
+function onLoadMore() {
+    console.log(1)
 }
 </script>
 
