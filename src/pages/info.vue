@@ -2,7 +2,7 @@
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
 		<NavBar :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
-			<template v-if="!data.loading">
+			<template v-if="!data.loading && data.novel">
 				<div class="flex w-full">
 					<div class="rounded-xl">
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
@@ -117,7 +117,7 @@
 			<div class="mt-10 max-sm:mt-0">
 				<TabView>
 					<TabPanel header="关于">
-						<template v-if="!data.loading">
+						<template v-if="!data.loading && data.novel">
 							<div class="mb-10">
 								<div class="text-xl font-bold mb-2">简介</div>
 								<div class="" v-html="data.novel.desc"></div>
@@ -148,7 +148,7 @@
 						</template>
 					</TabPanel>
 					<TabPanel header="目录">
-						<template v-if="!data.loading">
+						<template v-if="!data.loading && data.novel">
 							<div class="flex flex-wrap ">
 								<router-link v-for="(chapter,idx) in data.chapters"
 								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
