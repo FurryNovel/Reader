@@ -24,7 +24,7 @@
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
-					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-w-[200px] max-sm:w-full"
+					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
 						<Button v-ripple class="text-white !w-full" href="/settings" outlined
 						        severity="secondary">
@@ -34,7 +34,7 @@
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-w-[200px] max-sm:w-full"
+					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
 						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
 						        severity="secondary">
