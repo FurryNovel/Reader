@@ -8,9 +8,9 @@
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
 						     class="h-full w-full rounded-xl object-cover aspect-[140/186] max-h-[213px]"/>
 					</div>
-					<div class="ml-5 flex w-full flex-1 flex-col justify-between">
+					<div class="ml-5 flex w-full flex-1 flex-col justify-between gap-1">
 						<div>
-							<div class="flex items-center">
+							<div class="flex items-center gap-3">
 								<div class="text-2xl font-bold">
 									{{ data.novel.name || '小说详情' }}
 								</div>
@@ -37,29 +37,36 @@
 						<div>
 							<div v-if="data.chapters && data.chapters.length > 0"
 							     class="text-sm text-black dark:text-white">
-								<span class="font-bold ">最新章节：</span>
-								{{ data.chapters[0].name }}
+								最新章节：
+								<span class="font-bold">
+									{{ data.chapters[0].name }}
+								</span>
 							</div>
 						</div>
 						<div class="flex gap-3">
-							<div class="text-sm text-black dark:text-white flex justify-center flex-wrap items-center">
-								<span class="font-bold ">更新时间：</span>
+							<div class="text-sm text-black dark:text-white flex flex-wrap items-center">
+								更新时间：
+								<span class="font-bold ">
 								{{ data.novel.updated_at }}
+								</span>
 							</div>
 						</div>
-						<div class="">
-							<Button v-if="!isBookmarked" class="mr-2 text-sm text-primary-500" label="加入书架"
+						<div class="flex gap-3 max-sm:flex-col">
+							<Button v-if="!isBookmarked" class="text-sm text-primary-500 max-sm:w-full"
+							        label="加入书架"
 							        size="small"
 							        @click="toggleBookmark">
 								<div class="mr-2 fa-regular fa-book-bookmark"></div>
 								加入书架
 							</Button>
-							<Button v-else class="mr-2 text-sm text-primary-500" label="加入书架" size="small"
+							<Button v-else class="text-sm text-primary-500 max-sm:w-full"
+							        label="加入书架"
+							        size="small"
 							        @click="toggleBookmark">
 								<div class="mr-2 fa-regular fa-book-bookmark"></div>
 								从书架移除
 							</Button>
-							<Button class="mr-2 text-sm text-primary-500" label="立即阅读" size="small">
+							<Button class="text-sm text-primary-500 max-sm:w-full" label="立即阅读" size="small">
 								立即阅读
 								<div class="ml-2 fa-regular fa-chevron-right"></div>
 							</Button>
@@ -67,7 +74,7 @@
 					</div>
 				</div>
 				
-				<div class="mt-10">
+				<div class="mt-10 max-sm:mt-0">
 					<TabView>
 						<TabPanel header="关于">
 							<div class="mb-10">

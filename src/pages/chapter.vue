@@ -23,8 +23,8 @@
 			<div class="h-full w-full max-w-3xl" :style="readerStyle">
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
-				<div class="flex justify-center items-center m-10 gap-3 max-sm:flex-col">
-					<router-link v-if="pervChapter"
+				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
+					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-w-[200px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
 						<Button v-ripple class="text-white !w-full" href="/settings" outlined
 						        severity="secondary">
@@ -34,7 +34,7 @@
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter"
+					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-w-[200px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
 						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
 						        severity="secondary">
@@ -82,7 +82,7 @@
 									<div class="mb-2 font-bold">
 										字体
 									</div>
-									<div class="w-full flex">
+									<div class="flex w-full">
 										<ClientOnly>
 											<Dropdown v-model="config.chapter.font" :options="fonts" optionLabel="name"
 											          option-value="value" class="flex-1">
@@ -180,14 +180,14 @@
 						<div class="mt-5">
 							<div class="flex flex-col justify-between pb-5">
 								<div v-for="(chapter,idx) in data.chapters"
-								     class="flex flex-wrap p-2 items-center gap-3 w-full border-b">
+								     class="flex w-full flex-wrap items-center gap-3 border-b p-2">
 									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}">
 										<div :class="{
                                         'flex-1 flex flex-col gap-2':true,
                                         'text-primary-500': chapter.id === data.chapter?.id,
 									}" :data-cid="chapter.id">
 											<div class="flex">
-												<div class="dark:text-white mr-1 w-min h-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+												<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 dark:text-white py-0.5">
 													{{ idx + 1 }}
 												</div>
 												<span class="font-bold">{{ chapter.name }}</span>
@@ -205,19 +205,19 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="data.toggleMobile" class="fixed bottom-0 left-0 w-screen z-20 bg-white/70 backdrop-blur-sm">
-			<div class="h-20 flex gap-3 flex-1 justify-center items-center">
+		<div v-if="data.toggleMobile" class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm">
+			<div class="flex h-20 flex-1 items-center justify-center gap-3">
 				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
 				        @click="toggleModal('Chapters')" text>
-					<div class="flex flex-col justify-center items-center h-full">
-						<span class="fa-regular fa-list mb-1 text-xl"></span>
+					<div class="flex h-full flex-col items-center justify-center">
+						<span class="mb-1 text-xl fa-regular fa-list"></span>
 						<span class="text-sm">目录</span>
 					</div>
 				</Button>
 				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
 				        @click="toggleModal('Settings')" text>
-					<div class="flex flex-col justify-center items-center h-full">
-						<span class="fa-regular fa-gear mb-1 text-xl"></span>
+					<div class="flex h-full flex-col items-center justify-center">
+						<span class="mb-1 text-xl fa-regular fa-gear"></span>
 						<span class="text-sm">设置</span>
 					</div>
 				</Button>
@@ -225,7 +225,7 @@
 		</div>
 		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
 			<template #container="{ closeCallback }">
-				<div class="flex flex-col items-center justify-center h-full" :style="{
+				<div class="flex h-full flex-col items-center justify-center" :style="{
                     color: `#${config.chapter.fontColor}`,
 				}">
 					<i class="fa-regular fa-loader fa-spin"></i>
