@@ -1,19 +1,23 @@
 import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
 import {basename} from 'path';
+import {renderSSRHead} from '@unhead/ssr'
+import devalue from "@nuxt/devalue";
+import {useServerSideRenderStore} from "@/stores/ssr.js";
 
-export async function render(url, manifest = {}) {
-    const {app, router} = createApp();
-    
+export async function render(url, manifest = {}, request = {cookies: {}}) {
+    const {app, router, head, pinia} = await createApp();
+    const ssrStore = useServerSideRenderStore(pinia);
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
-    
-    const ctx = {};
+    const ctx = {
+        ...request,
+    };
     const html = await renderToString(app, ctx);
-    
-    const preloadLinks = renderPreloadLinks(ctx.modules, manifest)
-    return {html, preloadLinks}
+    const preloadLinks = renderPreloadLinks(ctx.modules, manifest);
+    const {headTags} = await renderSSRHead(head);
+    return {html, preloadLinks, headTags, state: devalue(ssrStore.$state)};
 }
 
 function renderPreloadLinks(modules, manifest) {

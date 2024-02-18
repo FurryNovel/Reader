@@ -7,10 +7,12 @@ import {VitePWA} from 'vite-plugin-pwa'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
+import {viteBindSSRPlugin} from "vue-unique-ssr-id";
 
 
 export default defineConfig({
     plugins: [
+        viteBindSSRPlugin(),
         vuePlugin(),
         AutoImport({
             // targets to transform
@@ -113,8 +115,17 @@ export default defineConfig({
                     }
                 ]
             }
-        })
+        }),
     ],
+    server: {
+        proxy: {
+            '/api': {
+                target: 'https://novel.tigerkk.me/api',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            },
+        }
+    },
     build: {
         minify: false,
     },

@@ -19,5 +19,15 @@
 
 </style>
 <script setup>
-import Navbar from "@/components/layout/Navbar.vue";
+import {initDeviceEvent} from "@/utils/device.js";
+import {initMeta} from "@/utils/meta.js";
+import {initCookieManager} from "@/utils/cookie.js";
+import {initRouterEvent} from "@/utils/router-event.js";
+
+initMeta(useRouter());
+initRouterEvent(useRouter());
+onBeforeMount(() => {
+    initDeviceEvent();
+    initCookieManager();
+});
 </script>

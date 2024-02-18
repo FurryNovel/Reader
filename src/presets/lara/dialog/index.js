@@ -27,11 +27,12 @@ export default {
                 '!h-screen': state.maximized,
                 '!max-h-full': state.maximized,
                 '!top-0': state.maximized,
-                '!left-0': state.maximized
+                '!left-0': state.maximized,
+                '!rounded-none': state.maximized,
             }
         ]
     }),
-    header: {
+    header: ({ state }) => ({
         class: [
             // Flexbox and Alignment
             'flex items-center justify-between',
@@ -44,12 +45,17 @@ export default {
             'border-t-0',
             'rounded-tl-lg',
             'rounded-tr-lg',
+            
+            // Maximized State
+            {
+                '!rounded-none': state.maximized,
+            },
 
             // Colors
             'bg-surface-0 dark:bg-surface-800',
             'text-surface-700 dark:text-surface-0/80'
         ]
-    },
+    }),
     title: {
         class: ['font-bold text-lg']
     },
@@ -82,8 +88,6 @@ export default {
             // States
             'hover:text-surface-700 dark:hover:text-white/80',
             'hover:bg-surface-100 dark:hover:bg-surface-800/80',
-            'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-inset',
-            'focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
 
             // Misc
             'overflow-hidden'
@@ -115,8 +119,6 @@ export default {
             // States
             'hover:text-surface-700 dark:hover:text-white/80',
             'hover:bg-surface-100 dark:hover:bg-surface-800/80',
-            'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-inset',
-            'focus:ring-primary-400/50 dark:focus:ring-primary-300/50',
 
             // Misc
             'overflow-hidden'
@@ -152,8 +154,8 @@ export default {
             // Shape
             {
                 grow: state.maximized,
-                'rounded-bl-lg': !instance.$slots.footer,
-                'rounded-br-lg': !instance.$slots.footer
+                'rounded-bl-lg': !instance.$slots.footer && !state.maximized,
+                'rounded-br-lg': !instance.$slots.footer && !state.maximized,
             },
 
             // Colors
