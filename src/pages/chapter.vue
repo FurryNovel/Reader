@@ -181,20 +181,26 @@
 						</div>
 						<div class="mt-5">
 							<div class="flex flex-col justify-between pb-5">
-								<router-link v-for="chapter in data.chapters"
-								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
-								             class="flex flex-wrap p-2 items-center gap-3 w-full border-b">
-									<div :class="{
+								<div v-for="(chapter,idx) in data.chapters"
+								     class="flex flex-wrap p-2 items-center gap-3 w-full border-b">
+									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}">
+										<div :class="{
                                         'flex-1 flex flex-col gap-2':true,
                                         'text-primary-500': chapter.id === data.chapter?.id,
 									}" :data-cid="chapter.id">
-										<span class="font-bold">{{ chapter.name }}</span>
-										<div class="flex items-center gap-2">
-											<span>{{ chapter.updated_at }}</span>
+											<div class="flex">
+												<div class="dark:text-white mr-1 w-min h-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+													{{ idx + 1 }}
+												</div>
+												<span class="font-bold">{{ chapter.name }}</span>
+											</div>
+											<div class="flex items-center gap-2">
+												<span>{{ chapter.updated_at }}</span>
+											</div>
 										</div>
-									</div>
-									<span class="font-bold"></span>
-								</router-link>
+										<span class="font-bold"></span>
+									</router-link>
+								</div>
 							</div>
 						</div>
 					</div>
