@@ -286,11 +286,16 @@ watchEffect(() => {
 
 function loadData() {
     const tasks = [];
+    const hitCaches = [];
     tasks.push(
         loadNovel({
             id: data.id,
             onCache: (novel) => {
                 data.novel = novel;
+                hitCaches.push('novel');
+                if (hitCaches.length === 2) {
+                    data.loading = false;
+                }
             },
             ignoreReq: import.meta.env.SSR,
         }).then((novel) => {
@@ -304,6 +309,10 @@ function loadData() {
             novelId: data.id,
             onCache: (chapters) => {
                 data.chapters = chapters;
+                hitCaches.push('chapters');
+                if (hitCaches.length === 2) {
+                    data.loading = false;
+                }
             },
             ignoreReq: import.meta.env.SSR,
         }).then((chapters) => {
