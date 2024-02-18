@@ -24,22 +24,20 @@
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
 				<div class="flex justify-center items-center m-10 gap-3 max-sm:flex-col">
-					<router-link v-if="pervChapter" v-slot="{ href, navigate }"
-					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}" custom>
+					<router-link v-if="pervChapter"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
 						<Button v-ripple class="text-white !w-full" href="/settings" outlined
-						        severity="secondary"
-						        @click.stop="navigate">
+						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">上一章</div>
 								<div class="text-sm">{{ pervChapter.name }}</div>
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter" v-slot="{ href, navigate }"
-					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}" custom>
+					<router-link v-if="nextChapter"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
 						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
-						        severity="secondary"
-						        @click.stop="navigate">
+						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">下一章</div>
 								<div class="text-sm">{{ nextChapter.name }}</div>
