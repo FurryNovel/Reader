@@ -1,8 +1,8 @@
 <template>
 	<div class="flex h-full w-full flex-col max-sm:h-screen">
 		<NavBar :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
-		<template v-if="data.novel">
-			<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
+		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
+			<template v-if="!data.loading">
 				<div class="flex w-full">
 					<div class="rounded-xl">
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
@@ -73,10 +73,51 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="mt-10 max-sm:mt-0">
-					<TabView>
-						<TabPanel header="关于">
+			</template>
+			<template v-else>
+				<div class="flex w-full">
+					<div class="rounded-xl">
+						<Skeleton borderRadius="10px"
+						          class="h-full w-full rounded-xl object-cover aspect-[140/186] max-h-[213px]"
+						          height="213px"
+						          width="160px"></Skeleton>
+					</div>
+					<div class="ml-5 flex w-full flex-1 flex-col justify-between gap-1">
+						<div class="flex flex-col gap-3">
+							<div class="flex items-center gap-3">
+								<Skeleton class="text-2xl font-bold"
+								          height="32px"
+								          width="300px"></Skeleton>
+							</div>
+							<Skeleton class="text-sm text-gray-500 dark:text-white"
+							          height="20px"
+							          width="250px"></Skeleton>
+						</div>
+						<div>
+							<Skeleton class="text-sm text-black dark:text-white"
+							          height="20px"
+							          width="150px"></Skeleton>
+						</div>
+						<div class="flex gap-3">
+							<Skeleton class="text-sm text-black dark:text-white flex flex-wrap items-center"
+							          height="20px"
+							          width="150px"></Skeleton>
+						</div>
+						<div class="flex gap-3 max-sm:flex-col">
+							<Skeleton class="text-sm text-primary-500 max-sm:!w-full"
+							          height="40px"
+							          width="95px"></Skeleton>
+							<Skeleton class="text-sm text-primary-500 max-sm:!w-full"
+							          height="40px"
+							          width="95px"></Skeleton>
+						</div>
+					</div>
+				</div>
+			</template>
+			<div class="mt-10 max-sm:mt-0">
+				<TabView>
+					<TabPanel header="关于">
+						<template v-if="!data.loading">
 							<div class="mb-10">
 								<div class="text-xl font-bold mb-2">简介</div>
 								<div class="" v-html="data.novel.desc"></div>
@@ -90,8 +131,24 @@
 									</div>
 								</div>
 							</div>
-						</TabPanel>
-						<TabPanel header="目录">
+						</template>
+						<template v-else>
+							<div class="mb-10 flex flex-col gap-1">
+								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+							</div>
+							<div class="flex flex-col gap-1">
+								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+							</div>
+						</template>
+					</TabPanel>
+					<TabPanel header="目录">
+						<template v-if="!data.loading">
 							<div class="flex flex-wrap ">
 								<router-link v-for="(chapter,idx) in data.chapters"
 								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
@@ -116,11 +173,19 @@
 									<span class="font-bold"></span>
 								</router-link>
 							</div>
-						</TabPanel>
-					</TabView>
-				</div>
+						</template>
+						<template v-else>
+							<div class="flex flex-col gap-1">
+								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+								<Skeleton class="" height="20px" width="300px"></Skeleton>
+							</div>
+						</template>
+					</TabPanel>
+				</TabView>
 			</div>
-		</template>
+		</div>
 	</div>
 </template>
 
@@ -132,6 +197,7 @@ import {loadChapter, loadChapters} from "@/api/chapters.js";
 import {useMeta} from "@/utils/meta.js";
 import {useBookmarkStore} from "@/stores/bookmarks.js";
 import {onRouteChange} from "@/utils/router-event.js";
+import Skeleton from "primevue/skeleton";
 
 const bookmarkStore = useBookmarkStore();
 
