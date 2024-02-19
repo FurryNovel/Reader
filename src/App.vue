@@ -23,11 +23,19 @@ import {initDeviceEvent} from "@/utils/device.js";
 import {initMeta} from "@/utils/meta.js";
 import {initCookieManager} from "@/utils/cookie.js";
 import {initRouterEvent} from "@/utils/router-event.js";
+import {initThemeManager, onThemeChange} from "@/utils/theme.js";
 
 initMeta(useRouter());
 initRouterEvent(useRouter());
 onBeforeMount(() => {
     initDeviceEvent();
     initCookieManager();
+    initThemeManager();
+});
+
+onThemeChange(({theme}) => {
+    if (!import.meta.env.SSR) {
+        document.documentElement.classList = [theme]
+    }
 });
 </script>
