@@ -4,7 +4,7 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items">
 					<router-link
-							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40"
+							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
 							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
@@ -17,7 +17,7 @@
 							{{ item.author.nickname }}
 						</div>
 						<div :class="{
-                            'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl':true,
+                            'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl dark:bg-surface-500 dark:text-white':true,
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
@@ -32,9 +32,9 @@
 							</div>
 							<div class="overflow-hidden flex1">
 								<div class="mb-1 font-bold">标签</div>
-								<div class="flex flex-wrap overflow-hidden max-h-[65px]">
+								<div class="flex flex-wrap overflow-hidden max-h-[63px]">
 									<div v-for="tag in item.tags"
-									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 										{{ tag }}
 									</div>
 								</div>
@@ -47,7 +47,7 @@
 		<div v-else ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="idx in props.limit">
-					<div class="m-2 flex h-auto select-none flex-col rounded-xl border-gray-50 border-2 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40">
+					<div class="m-2 flex h-auto select-none flex-col rounded-xl transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
 						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
 							          height="100%"
@@ -71,7 +71,7 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
-					             class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
+					             class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
 						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
@@ -97,14 +97,14 @@
 								</div>
 								<div v-if="props.withChapters" class="mb-1">
 									<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
-									     class=" rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 overflow-hidden whitespace-pre-line line-clamp-[2]">
+									     class=" rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 overflow-hidden whitespace-pre-line line-clamp-[2] dark:bg-surface-400 dark:text-white">
 										最新章节：{{ item.latest_chapters[0].name }}
 									</div>
 								</div>
 								<div class="overflow-hidden flex1">
 									<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 										<div v-for="tag in item.tags"
-										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 											{{ tag }}
 										</div>
 									</div>
@@ -118,7 +118,7 @@
 		<div v-else ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="idx in props.limit">
-					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white border-gray-50 border-2 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40">
+					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
 						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
 							          height="100%"

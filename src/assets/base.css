@@ -51,3 +51,8 @@ body {
 :root:hover::-webkit-scrollbar {
     opacity: 1;
 }
+
+
+:root.dark {
+    background-color: rgb(var(--surface-700));
+}

@@ -1,5 +1,6 @@
 <template>
-	<div ref="parent" class="flex h-full w-full flex-col max-sm:h-screen" :style="wrapperStyle">
+	<div ref="parent" class="flex h-full w-full flex-col max-sm:h-screen dark:!bg-surface-700 dark:!text-white"
+	     :style="wrapperStyle">
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
 		     class="transition-all duration-300">
 			<NavBar :show-in="['mobile']" :show-buttons="['back', 'home', 'startSlot']"
@@ -20,7 +21,7 @@
 			</NavBar>
 		</div>
 		<div class="flex items-center lg:justify-center max-lg:justify-start" @click="toggleMobile">
-			<div class="h-full w-full max-w-3xl" :style="readerStyle">
+			<div class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white" :style="readerStyle">
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
@@ -69,7 +70,7 @@
                     color: `#${config.chapter.fontColor}`,
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
-                    'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0': true,
+                    'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0 dark:!bg-surface-600 dark:!text-white': true,
                     'opacity-100 z-[51]' : data.toggleSettings,
 				}">
 					<div v-if="data.toggleSettings" class="flex flex-col p-5" @click.stop="() => {}">
@@ -170,7 +171,7 @@
                     color: `#${config.chapter.fontColor}`,
                     backgroundColor: `#${config.chapter.bgColor}`,
 				}" :class="{
-                    'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0': true,
+                    'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0 dark:!bg-surface-600 dark:!text-white': true,
                     'opacity-100 z-[51]' : data.toggleChapters,
 				}">
 					<div v-if="data.toggleChapters" class="flex flex-col p-5" @click.stop="() => {}">
@@ -187,7 +188,7 @@
                                         'text-primary-500': chapter.id === data.chapter?.id,
 									}" :data-cid="chapter.id">
 											<div class="flex">
-												<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 dark:text-white py-0.5">
+												<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 													{{ idx + 1 }}
 												</div>
 												<span class="font-bold">{{ chapter.name }}</span>

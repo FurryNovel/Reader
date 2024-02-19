@@ -14,7 +14,7 @@
 								<div class="text-2xl font-bold">
 									{{ data.novel.name || '小说详情' }}
 								</div>
-								<div class="dark:text-white mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0 dark:bg-surface-500 dark:text-white">
 									{{ syncStatus }}
 								</div>
 							</div>
@@ -126,7 +126,7 @@
 								<div class="text-xl font-bold mb-2">标签</div>
 								<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 									<div v-for="tag in data.novel.tags"
-									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
 										{{ tag }}
 									</div>
 								</div>
@@ -154,14 +154,14 @@
 								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
 								             class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full border-b">
 									<div class="flex">
-										<div class="dark:text-white mr-1 w-min h-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+										<div class="mr-1 w-min h-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
 											{{ idx + 1 }}
 										</div>
 										<div class="flex-1 flex flex-col gap-2">
 											<span class="font-bold">{{ chapter.name }}</span>
 											<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 												<div v-for="tag in chapter.tags.slice(0, 3)"
-												     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5">
+												     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
 													{{ tag }}
 												</div>
 											</div>
