@@ -11,7 +11,15 @@
 						        @click="data.keyword = ''">
 							<i class="fa-regular fa-chevron-left"></i>
 						</Button>
-						{{ data.mode === 'search' ? '搜索' : '所有小说' }}
+						<template v-if="data.mode === 'search'">
+							搜索
+						</template>
+						<template v-else-if="data.type === 'latest'">
+							最新小说
+						</template>
+						<template v-else>
+							热门小说
+						</template>
 					</div>
 					<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="条件筛选" @click="showFilter"
 					        size="small">
@@ -102,6 +110,9 @@ watchEffect(() => {
     }
     if (data.tags && data.tags.length > 0) {
         next.tags = data.tags;
+    }
+    if (data.type) {
+        next.type = data.type;
     }
     data.keyword = next?.keyword || '';
     data.mode = next.mode;
