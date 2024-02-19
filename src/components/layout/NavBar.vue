@@ -66,7 +66,7 @@
 		</template>
 	</Menubar>
 	<div v-if="showWrapper && !props.fixed">
-		<div class="mt-[64px]"></div>
+		<!--<div class="mt-[64px]"></div>-->
 	</div>
 	<slot/>
 </template>
@@ -106,14 +106,11 @@ const deviceInfo = useDeviceInfo();
 const wrapperClass = computed(() => {
     return {
         'backdrop-blur-sm': true,
-        'bg-white/70': true,
-        '!fixed': true,
-        'w-screen': true,
+        'bg-white/70 dark:bg-surface-700/70': true,
+        'sticky': true,
         'z-50': true,
         'top-0': true,
         'h-[64px]': true,
-        //
-        'w-full max-w-screen-xl mx-auto': true,
     };
 });
 

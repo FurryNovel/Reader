@@ -1,8 +1,8 @@
 <template>
-	<div ref="parent" class="flex h-full w-full flex-col max-sm:h-screen dark:!bg-surface-700 dark:!text-white"
+	<div ref="parent" class="flex h-full w-full flex-col dark:!bg-surface-700 dark:!text-white"
 	     :style="wrapperStyle">
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
-		     class="transition-all duration-300">
+		     class="transition-all duration-300 fixed top-0 left-0 w-full">
 			<NavBar :show-in="['mobile']" :show-buttons="['back', 'home', 'startSlot']"
 			        fixed
 			        custom>
