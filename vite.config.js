@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
 import {viteBindSSRPlugin} from "vue-unique-ssr-id";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 
 export default defineConfig({
@@ -116,6 +117,12 @@ export default defineConfig({
                 ]
             }
         }),
+        topLevelAwait({
+            // The export name of top-level await promise for each chunk module
+            promiseExportName: '__tla',
+            // The function to generate import names of top-level await promise in each chunk module
+            promiseImportName: i => `__tla_${i}`
+        })
     ],
     server: {
         proxy: {
