@@ -13,7 +13,7 @@
 			</template>
 			<template v-else>
 				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] max-sm:h-full w-full">
-					<div class="text-2xl font-bold mb-2">书架为空</div>
+					<div class="mb-2 text-2xl font-bold">书架为空</div>
 					<div class="text-gray-500 dark:text-white">
 						书架为空，快去添加一些小说吧！
 					</div>

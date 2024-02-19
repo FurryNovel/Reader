@@ -14,17 +14,17 @@
 								<div class="text-2xl font-bold">
 									{{ data.novel.name || '小说详情' }}
 								</div>
-								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0 dark:bg-surface-500 dark:text-white">
+								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
 									{{ syncStatus }}
 								</div>
 							</div>
-							<div class="text-gray-500 dark:text-white text-sm">
+							<div class="text-sm text-gray-500 dark:text-white">
 								<div class="mr-5 inline-block">
-									<i class=" fa-regular fa-files"></i>
+									<i class="fa-regular fa-files"></i>
 									{{ data.chapters.length || 0 }}章
 								</div>
 								<div class="mr-5 inline-block">
-									<i class=" fa-regular fa-eye"></i>
+									<i class="fa-regular fa-eye"></i>
 									{{ data.novel.view_count || 0 }}浏览
 								</div>
 							</div>
@@ -44,9 +44,9 @@
 							</div>
 						</div>
 						<div class="flex gap-3">
-							<div class="text-sm text-black dark:text-white flex flex-wrap items-center">
+							<div class="flex flex-wrap items-center text-sm text-black dark:text-white">
 								更新时间：
-								<span class="font-bold ">
+								<span class="font-bold">
 								{{ data.novel.updated_at }}
 								</span>
 							</div>
@@ -99,7 +99,7 @@
 							          width="150px"></Skeleton>
 						</div>
 						<div class="flex gap-3">
-							<Skeleton class="text-sm text-black dark:text-white flex flex-wrap items-center"
+							<Skeleton class="flex flex-wrap items-center text-sm text-black dark:text-white"
 							          height="20px"
 							          width="150px"></Skeleton>
 						</div>
@@ -119,11 +119,11 @@
 					<TabPanel header="关于">
 						<template v-if="!data.loading && data.novel">
 							<div class="mb-10">
-								<div class="text-xl font-bold mb-2">简介</div>
+								<div class="mb-2 text-xl font-bold">简介</div>
 								<div class="" v-html="data.novel.desc"></div>
 							</div>
 							<div class="">
-								<div class="text-xl font-bold mb-2">标签</div>
+								<div class="mb-2 text-xl font-bold">标签</div>
 								<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 									<div v-for="tag in data.novel.tags"
 									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
@@ -134,13 +134,13 @@
 						</template>
 						<template v-else>
 							<div class="mb-10 flex flex-col gap-1">
-								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="mb-2 text-xl font-bold" height="24px" width="100px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 							</div>
 							<div class="flex flex-col gap-1">
-								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="mb-2 text-xl font-bold" height="24px" width="100px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
@@ -149,15 +149,15 @@
 					</TabPanel>
 					<TabPanel header="目录">
 						<template v-if="!data.loading && data.novel">
-							<div class="flex flex-wrap ">
+							<div class="flex flex-wrap">
 								<router-link v-for="(chapter,idx) in data.chapters"
 								             :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
-								             class="flex flex-wrap p-2 items-center gap-3 w-6/12 max-sm:w-full border-b">
+								             class="flex w-6/12 flex-wrap items-center gap-3 border-b p-2 max-sm:w-full">
 									<div class="flex">
-										<div class="mr-1 w-min h-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
+										<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
 											{{ idx + 1 }}
 										</div>
-										<div class="flex-1 flex flex-col gap-2">
+										<div class="flex flex-1 flex-col gap-2">
 											<span class="font-bold">{{ chapter.name }}</span>
 											<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 												<div v-for="tag in chapter.tags.slice(0, 3)"
@@ -176,7 +176,7 @@
 						</template>
 						<template v-else>
 							<div class="flex flex-col gap-1">
-								<Skeleton class="text-xl font-bold mb-2" height="24px" width="100px"></Skeleton>
+								<Skeleton class="mb-2 text-xl font-bold" height="24px" width="100px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>
 								<Skeleton class="" height="20px" width="300px"></Skeleton>

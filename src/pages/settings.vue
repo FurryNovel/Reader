@@ -127,7 +127,7 @@
 							<div v-for="(tag,idx) in config.global.hideTags" class="mb-5 flex flex-col">
 								<div class="flex flex-wrap items-center justify-between pl-2">
 									<div class="cursor-pointer">
-										<div class="text-lg text-gray-500 font-bold">
+										<div class="text-lg font-bold text-gray-500">
 											{{ tag }}
 										</div>
 									</div>
