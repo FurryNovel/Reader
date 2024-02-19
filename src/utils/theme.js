@@ -40,23 +40,20 @@ export function onThemeChange(hook) {
 }
 
 export function useTheme() {
-    let theme = {};
-    switch (config.global.themeMode) {
-        case 'auto':
-            if (isDarkMode.value) {
-                theme = {
-                    theme: 'dark',
-                };
-            } else {
-                theme = {
-                    theme: 'light',
-                };
-            }
-            break;
-        default:
-            theme = {
-                theme: config.global.themeMode,
-            };
-    }
-    return theme;
+    const config = useConfigProvider();
+    return computed(() => {
+        let theme = null;
+        switch (config.global.themeMode) {
+            case 'auto':
+                if (isDarkMode.value) {
+                    theme = 'dark';
+                } else {
+                    theme = 'light'
+                }
+                break;
+            default:
+                theme = config.global.themeMode;
+        }
+        return theme;
+    });
 }

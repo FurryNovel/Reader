@@ -13,7 +13,7 @@
 						</Button>
 						{{ data.mode === 'search' ? '搜索' : '所有小说' }}
 					</div>
-					<Button class="mr-2 text-sm text-primary-500" label="条件筛选" @click="showFilter"
+					<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="条件筛选" @click="showFilter"
 					        size="small">
 						<i class="mr-2 fa-regular fa-filter"></i>
 						条件筛选
@@ -22,7 +22,7 @@
 				<NovelList ref="novelList" v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
 				           :limit="8" :tags="data.tags"
 				           :userId="null" :show-pagination="true"
-				           listStyle="style2" order="desc" type="popular"/>
+				           listStyle="style2" order="desc" :type="data.type"/>
 			</template>
 			<template v-else>
 				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] max-sm:h-full w-full">
@@ -33,7 +33,7 @@
 						<InputText id="keyword" v-model="data.preKeyword"
 						           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0"
 						           placeholder="请输入关键字：小说名、作者名、简介等"/>
-						<Button label="搜索" @click="data.keyword = data.preKeyword"/>
+						<Button label="搜索" @click="data.keyword = data.preKeyword" class="dark:text-white"/>
 					</InputGroup>
 				</div>
 			</template>
@@ -123,6 +123,11 @@ function onInit() {
     if (router.currentRoute.value.query.tags) {
         data.tags = router.currentRoute.value.query.tags.filter(tag => tag !== '');
         data.preTags = data.tags.join(',');
+    }
+    if (router.currentRoute.value.query.type) {
+        data.type = router.currentRoute.value.query.type;
+    } else {
+        data.type = 'popular';
     }
 }
 
