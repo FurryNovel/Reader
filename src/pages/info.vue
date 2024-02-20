@@ -29,9 +29,12 @@
 								</div>
 							</div>
 							<div class="text-sm text-gray-500 dark:text-white">
-								作者：<span class="font-bold text-black dark:text-white">{{
-									data.novel.author.nickname || '作者未知'
-								}}</span>
+								作者：
+								<router-link :to="{ name:'search', query:{ keyword:data.novel.author.nickname || '作者未知' }}" class="font-bold text-black dark:text-white">
+									{{
+										data.novel.author.nickname || '作者未知'
+									}}
+								</router-link>
 							</div>
 						</div>
 						<div>
