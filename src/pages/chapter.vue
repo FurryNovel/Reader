@@ -27,7 +27,7 @@
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
 					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
-						<Button v-ripple class="text-white !w-full" href="/settings" outlined
+						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">上一章</div>
@@ -37,7 +37,7 @@
 					</router-link>
 					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
-						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
+						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">下一章</div>
@@ -226,9 +226,7 @@
 		</div>
 		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
 			<template #container="{ closeCallback }">
-				<div class="flex h-full flex-col items-center justify-center" :style="{
-                    color: `#${config.chapter.fontColor}`,
-				}">
+				<div class="flex h-full flex-col items-center justify-center dark:!text-white" :style="textStyle">
 					<i class="fa-regular fa-loader fa-spin"></i>
 					<div class="mt-5">加载中...</div>
 				</div>
@@ -309,6 +307,13 @@ const readerStyle = computed(() => {
         color: `#${config.chapter.fontColor}`,
         backgroundColor: `#${config.chapter.bgColor}`,
         padding: `${config.chapter.padding}px`,
+        fontFamily: config.chapter.font,
+    }
+});
+
+const textStyle = computed(() => {
+    return {
+        color: `#${config.chapter.fontColor}`,
         fontFamily: config.chapter.font,
     }
 });
@@ -398,7 +403,7 @@ watchEffect(() => {
             description: data.novel.desc,
             image: data.novel.cover,
         });
-        if(!import.meta.env.SSR){
+        if (!import.meta.env.SSR) {
             historyStore.save(data.novel.id, data.chapter.id);
         }
     }
