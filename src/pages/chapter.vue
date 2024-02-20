@@ -24,7 +24,7 @@
 			<div class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white" :style="readerStyle">
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
-				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
+				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col max-sm:mx-0">
 					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full"
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
 						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
