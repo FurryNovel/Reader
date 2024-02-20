@@ -57,3 +57,9 @@ export function useTheme() {
         return theme;
     });
 }
+
+export function toggleTheme() {
+    const theme = useTheme();
+    const config = useConfigProvider();
+    config.global.themeMode = theme.value === 'dark' ? 'light' : 'dark';
+}

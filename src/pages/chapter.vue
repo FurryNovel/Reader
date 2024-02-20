@@ -49,13 +49,19 @@
 				</div>
 			</div>
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
-				<Button v-ripple class="aspect-square !p-0 text-white" href="/settings" outlined severity="secondary"
+				<Button v-ripple class="aspect-square !p-0 text-white" outlined rounded severity="secondary"
+				        size="small"
+				        @click="toggleTheme" text>
+					<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
+					<span v-else class="fa-regular fa-sun-bright"></span>
+				</Button>
+				<Button v-ripple class="aspect-square !p-0 text-white" outlined severity="secondary"
 				        size="small"
 				        @click="toggleModal('Chapters')"
 				        text>
 					<span class="fa-regular fa-list"></span>
 				</Button>
-				<Button v-ripple class="aspect-square !p-0 text-white" href="/settings" outlined severity="secondary"
+				<Button v-ripple class="aspect-square !p-0 text-white" outlined severity="secondary"
 				        size="small"
 				        @click="toggleModal('Settings')"
 				        text>
@@ -251,6 +257,7 @@ import {useConfigProvider} from "@/provider/config.js";
 import {processContent} from "@/utils/reader.js";
 import {isMobile} from "@/utils/device.js";
 import {useHistoryStore} from "@/stores/histories.js";
+import {toggleTheme, useTheme} from "@/utils/theme.js";
 
 const historyStore = useHistoryStore();
 
@@ -382,6 +389,14 @@ const nextChapter = computed(() => {
         return null;
     }
     return data.chapters[index + 1];
+});
+
+const theme = useTheme();
+const themeButton = computed(() => {
+    if (!isMounted.value) {
+        return 'light';
+    }
+    return theme.value;
 });
 
 onRouteChange(to => {

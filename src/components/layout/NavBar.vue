@@ -52,6 +52,12 @@
 						<span class="fa-regular fa-search"></span>
 					</Button>
 				</router-link>
+				<Button v-if="showButtons.includes('theme')" v-ripple class="w-[45px] h-[45px]" href="/settings"
+				        outlined rounded severity="secondary" @click="toggleTheme"
+				        size="small" text>
+					<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
+					<span v-else class="fa-regular fa-sun-bright"></span>
+				</Button>
 				<router-link v-if="showButtons.includes('settings')"
 				             v-slot="{ href, navigate }"
 				             :to="{name:'settings'}" custom>
@@ -76,9 +82,18 @@
 <script setup>
 import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
+import {toggleTheme, useTheme} from "@/utils/theme.js";
 
 const showButtons = computed(() => {
     return props.showButtons.filter(button => !props.hideButtons.includes(button)).concat(props.appendButtons);
+});
+
+const theme = useTheme();
+const themeButton = computed(() => {
+    if (!isMounted.value) {
+        return 'light';
+    }
+    return theme.value;
 });
 
 const props = defineProps({
@@ -98,7 +113,7 @@ const props = defineProps({
     },
     showButtons: {
         type: Array,
-        default: ['search', 'settings', 'icon']
+        default: ['search', 'settings', 'icon', 'theme']
     },
     hideButtons: {
         type: Array,
