@@ -226,7 +226,14 @@ const syncStatus = computed(() => {
 });
 
 onRouteChange(to => {
-    data.id = to.params.id;
+    if (data.id !== to.params.id) {
+        const needLoad = data.novel !== null;
+        data.id = to.params.id;
+        if (needLoad) {
+            data.loading = true;
+            loadData();
+        }
+    }
 });
 
 onServerPrefetch(() => {
