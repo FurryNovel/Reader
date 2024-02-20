@@ -9,8 +9,8 @@
 						     class="h-full w-full rounded-xl object-cover aspect-[140/186] max-h-[213px]"/>
 					</div>
 					<div class="ml-5 flex w-full flex-1 flex-col justify-between gap-1">
-						<div>
-							<div class="flex items-center gap-3">
+						<div class="flex flex-col gap-3">
+							<div class="flex sm:items-center gap-3 max-sm:flex-col">
 								<div class="text-2xl font-bold">
 									{{ data.novel.name || '小说详情' }}
 								</div>
