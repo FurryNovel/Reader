@@ -313,7 +313,7 @@ onMounted(() => {
 watchEffect(() => {
     if (data.novel) {
         useMeta({
-            title: data.novel.name,
+            title: `${data.novel.name} - ${data.novel?.author?.nickname || '铁名'}`,
             description: data.novel.desc,
             image: data.novel.cover,
         });
