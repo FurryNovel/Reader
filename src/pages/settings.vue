@@ -1,6 +1,6 @@
 <template>
 	<div class="flex h-full w-full flex-col">
-		<NavBar :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
+		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between pl-2">
 				<div class="text-2xl font-bold">

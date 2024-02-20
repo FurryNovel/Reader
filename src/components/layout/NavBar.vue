@@ -4,14 +4,14 @@
 			<Avatar v-if="showIcon && props.showButtons.includes('icon')"
 			        class="mx-4 flex justify-center bg-transparent align-middle"
 			        image="/static/icon.png" shape="circle"/>
-			<template v-if="props.showButtons.includes('back') && canBack">
+			<template v-if="showButtons.includes('back') && canBack">
 				<Button v-ripple class="w-[45px] h-[45px]" outlined rounded severity="secondary"
 				        size="small"
 				        text @click="router.back()">
 					<span class="fa-regular fa-chevron-left"></span>
 				</Button>
 			</template>
-			<template v-if="props.showButtons.includes('home')">
+			<template v-if="showButtons.includes('home')">
 				<router-link :to="{name:'index'}">
 					<Button v-ripple class="w-[45px] h-[45px]" href="/" outlined rounded severity="secondary"
 					        size="small" text>
@@ -19,7 +19,7 @@
 					</Button>
 				</router-link>
 			</template>
-			<template v-if="props.showButtons.includes('startSlot')">
+			<template v-if="showButtons.includes('startSlot')">
 				<slot name="start"/>
 			</template>
 		</template>
@@ -43,7 +43,8 @@
 		</template>
 		<template #end>
 			<div class="flex flex-row gap-2 align-items-center">
-				<router-link v-if="props.showButtons.includes('search')" v-slot="{ href, navigate }"
+				<router-link v-if="showButtons.includes('search')"
+				             v-slot="{ href, navigate }"
 				             :to="{name:'search'}" custom>
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"
@@ -51,7 +52,8 @@
 						<span class="fa-regular fa-search"></span>
 					</Button>
 				</router-link>
-				<router-link v-if="props.showButtons.includes('settings')" v-slot="{ href, navigate }"
+				<router-link v-if="showButtons.includes('settings')"
+				             v-slot="{ href, navigate }"
 				             :to="{name:'settings'}" custom>
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"
@@ -59,7 +61,7 @@
 						<span class="fa-regular fa-gear"></span>
 					</Button>
 				</router-link>
-				<template v-if="props.showButtons.includes('endSlot')">
+				<template v-if="showButtons.includes('endSlot')">
 					<slot name="end"/>
 				</template>
 			</div>
@@ -75,6 +77,10 @@
 import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
 
+const showButtons = computed(() => {
+    return props.showButtons.filter(button => !props.hideButtons.includes(button)).concat(props.appendButtons);
+});
+
 const props = defineProps({
     showWrapper: {
         default: null
@@ -86,9 +92,17 @@ const props = defineProps({
         type: Array,
         default: ['pc']
     },
+    appendButtons: {
+        type: Array,
+        default: [],
+    },
     showButtons: {
         type: Array,
         default: ['search', 'settings', 'icon']
+    },
+    hideButtons: {
+        type: Array,
+        default: []
     },
     custom: {
         type: Boolean,
