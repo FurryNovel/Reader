@@ -4,8 +4,7 @@
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
 		     class="fixed top-0 left-0 w-full transition-all duration-300">
 			<NavBar :show-in="['mobile']"
-			        :hide-buttons="['search', 'settings', 'icon']"
-			        :append-buttons="['back', 'home', 'startSlot']"
+			        :show-buttons="['back', 'home', 'startSlot']"
 			        fixed
 			        custom>
 				<template #start>
