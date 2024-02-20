@@ -71,10 +71,13 @@
 								<div class="mr-2 fa-regular fa-book-bookmark"></div>
 								从书架移除
 							</Button>
-							<Button class="text-sm text-primary-500 max-sm:w-full" label="立即阅读" size="small">
-								立即阅读
-								<div class="ml-2 fa-regular fa-chevron-right"></div>
-							</Button>
+							<router-link v-if="currentReadChapter"
+							             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
+								<Button class="text-sm text-primary-500 max-sm:w-full" label="立即阅读" size="small">
+									{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
+									<div class="ml-2 fa-regular fa-chevron-right"></div>
+								</Button>
+							</router-link>
 						</div>
 					</div>
 				</div>
@@ -203,7 +206,10 @@ import {useMeta} from "@/utils/meta.js";
 import {useBookmarkStore} from "@/stores/bookmarks.js";
 import {onRouteChange} from "@/utils/router-event.js";
 import Skeleton from "primevue/skeleton";
+import {useHistoryStore} from "@/stores/histories.js";
+import {computedAsync} from "@vueuse/core";
 
+const historyStore = useHistoryStore();
 const bookmarkStore = useBookmarkStore();
 
 const isMounted = ref(false);
@@ -222,6 +228,24 @@ const isBookmarked = computed(() => {
     }
     return bookmarkStore.has(data.id);
 });
+
+const currentReadChapterId = computedAsync(async () => {
+    if (!isMounted.value) {
+        return false;
+    }
+    return await historyStore.find(data.id);
+}, null, {lazy: true});
+
+const currentReadChapter = computed(() => {
+    if (!isMounted.value) {
+        return false;
+    }
+    if (!currentReadChapterId.value){
+        return data.chapters[0] ?? false;
+    }
+    return data.chapters.find(chapter => chapter.id === currentReadChapterId.value);
+});
+
 
 const syncStatus = computed(() => {
     if (data.novel) {

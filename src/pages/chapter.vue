@@ -248,6 +248,9 @@ import {useMeta} from "@/utils/meta.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {processContent} from "@/utils/reader.js";
 import {isMobile} from "@/utils/device.js";
+import {useHistoryStore} from "@/stores/histories.js";
+
+const historyStore = useHistoryStore();
 
 const config = useConfigProvider();
 
@@ -395,6 +398,9 @@ watchEffect(() => {
             description: data.novel.desc,
             image: data.novel.cover,
         });
+        if(!import.meta.env.SSR){
+            historyStore.save(data.novel.id, data.chapter.id);
+        }
     }
 });
 
