@@ -42,7 +42,7 @@
 							     class="text-sm text-black dark:text-white">
 								最新章节：
 								<span class="font-bold">
-									{{ data.chapters[0].name }}
+									{{ data.chapters[data.chapters.length - 1].name }}
 								</span>
 							</div>
 						</div>
