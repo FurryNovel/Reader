@@ -41,9 +41,11 @@
 							<div v-if="data.chapters && data.chapters.length > 0"
 							     class="text-sm text-black dark:text-white">
 								最新章节：
-								<span class="font-bold">
-									{{ data.chapters[data.chapters.length - 1].name }}
-								</span>
+								<router-link :to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}" class="font-bold">
+									{{
+										data.chapters[data.chapters.length - 1].name
+									}}
+								</router-link>
 							</div>
 						</div>
 						<div class="flex gap-3">
