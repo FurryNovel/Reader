@@ -206,18 +206,21 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="data.toggleMobile" class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm">
+		<div v-if="data.toggleMobile"
+		     class="fixed bottom-0 left-0 z-20 w-screen backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
-				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				<Button v-ripple class="h-full" href="/settings" outlined
+				        severity="secondary"
 				        @click="toggleModal('Chapters')" text>
-					<div class="flex h-full flex-col items-center justify-center">
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-list"></span>
 						<span class="text-sm">目录</span>
 					</div>
 				</Button>
-				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				<Button v-ripple class="h-full" href="/settings" outlined
+				        severity="secondary"
 				        @click="toggleModal('Settings')" text>
-					<div class="flex h-full flex-col items-center justify-center">
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-gear"></span>
 						<span class="text-sm">设置</span>
 					</div>
