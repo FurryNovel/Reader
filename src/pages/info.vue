@@ -14,8 +14,20 @@
 								<div class="text-2xl font-bold">
 									{{ novelTitle || data.novel.name || '小说详情' }}
 								</div>
-								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
-									{{ syncStatus }}
+								<div class="flex gap-1">
+									<div class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										{{ syncStatus }}
+									</div>
+									<a v-if="data.novel.source === 'bilibili'"
+									   :href="`https://www.bilibili.com/read/readlist/rl${data.novel.source_id}/`"
+									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										来源<i class="ml-2 mr-1 fa-brands fa-bilibili"></i>bilibili
+									</a>
+									<a v-if="data.novel.source === 'pixiv'"
+									   :href="data.novel.ext_data?.oneshot? `https://www.pixiv.net/novel/show.php?id=${data.novel.source_id}` : `https://www.pixiv.net/novel/series/${data.novel.source_id}`"
+									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										来源<i class="ml-2 mr-1 fa-brands fa-product-hunt"></i>pixiv
+									</a>
 								</div>
 							</div>
 							<div class="text-sm text-gray-500 dark:text-white">
@@ -106,11 +118,13 @@
 							        label="书架"
 							        size="small" text
 							        @click="toggleBookmark">
-								<div v-if="!isBookmarked"  class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-if="!isBookmarked"
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									加入书架
 								</div>
-								<div v-else class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-else
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									移出书架
 								</div>
