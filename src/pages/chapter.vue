@@ -278,6 +278,7 @@ import {processContent} from "@/utils/reader.js";
 import {isMobile} from "@/utils/device.js";
 import {useHistoryStore} from "@/stores/histories.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
+import {canTranslate, useTranslate} from "@/utils/translate.js";
 
 const historyStore = useHistoryStore();
 
@@ -372,8 +373,21 @@ const fonts = computed(() => {
     return fonts;
 });
 
+const isShowTranslate = ref(config.global.autoTranslate);
+
+const chapterName = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => data.chapter?.name)
+);
+
+const chapterContent = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => data.chapter?.content)
+);
+
+
 const lines = computed(() => {
-    let content = `[title]${data.chapter.name}[/title]\n\n` + data.chapter.content;
+    let content = `[title]${chapterName.value || data.chapter?.name}[/title]\n\n` + (chapterContent.value || data.chapter?.content);
     let parts = content.replace("\n\n", "\n").split("\n").filter((part) => part.length > 0).map((part) => {
         return part.trim();
     });

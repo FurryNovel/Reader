@@ -12,7 +12,7 @@
 						<div class="flex flex-col gap-3">
 							<div class="flex sm:items-center gap-3 max-sm:flex-col">
 								<div class="text-2xl font-bold">
-									{{ data.novel.name || '小说详情' }}
+									{{ novelTitle || data.novel.name || '小说详情' }}
 								</div>
 								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
 									{{ syncStatus }}
@@ -158,7 +158,7 @@
 						<template v-if="!data.loading && data.novel">
 							<div class="mb-10">
 								<div class="mb-2 text-xl font-bold">简介</div>
-								<div class="" v-html="data.novel.desc"></div>
+								<div class="" v-html="novelDesc || data.novel.desc"></div>
 							</div>
 							<div class="">
 								<div class="mb-2 text-xl font-bold">标签</div>
@@ -238,7 +238,10 @@ import {onRouteChange} from "@/utils/router-event.js";
 import Skeleton from "primevue/skeleton";
 import {useHistoryStore} from "@/stores/histories.js";
 import {computedAsync} from "@vueuse/core";
+import {canTranslate, detectedLanguage, useTranslate} from "@/utils/translate.js";
+import {useConfigProvider} from "@/provider/config.js";
 
+const config = useConfigProvider();
 const historyStore = useHistoryStore();
 const bookmarkStore = useBookmarkStore();
 
@@ -283,6 +286,20 @@ const syncStatus = computed(() => {
     }
     return '未知';
 });
+
+const isShowTranslate = ref(config.global.autoTranslate);
+
+const novelTitle = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => data.novel?.name)
+);
+
+const novelDesc = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => {
+        return data.novel?.desc;
+    })
+);
 
 onRouteChange(to => {
     if (data.id !== to.params.id) {
