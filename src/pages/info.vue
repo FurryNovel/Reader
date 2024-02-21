@@ -3,7 +3,7 @@
 		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<template v-if="!data.loading && data.novel">
-				<div class="flex w-full">
+				<div class="flex w-full gap-3">
 					<div class="rounded-xl">
 						<img :alt="`${data.novel.name}(cover)`" :draggable="false" :src="data.novel.cover"
 						     class="h-full w-full rounded-xl object-cover aspect-[140/186] max-h-[213px]"/>
@@ -61,19 +61,32 @@
 							</div>
 						</div>
 						<div class="flex gap-3 max-sm:hidden">
-							<Button v-if="!isBookmarked" class="text-sm text-primary-500 max-sm:w-full dark:text-white"
-							        label="加入书架"
+							<Button v-if="canTranslate(data.novel?.tags || [])"
+							        class="text-sm text-primary-500 max-sm:w-full dark:text-white"
+							        label="翻译"
 							        size="small"
-							        @click="toggleBookmark">
-								<div class="mr-2 fa-regular fa-book-bookmark"></div>
-								加入书架
+							        @click="isShowTranslate = !isShowTranslate">
+								<template v-if="isShowTranslate">
+									<div class="mr-2 fa-regular fa-language"></div>
+									原&nbsp;文
+								</template>
+								<template v-else>
+									<div class="mr-2 fa-regular fa-language"></div>
+									翻&nbsp;译
+								</template>
 							</Button>
-							<Button v-else class="text-sm text-primary-500 max-sm:w-full dark:text-white"
+							<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white"
 							        label="加入书架"
 							        size="small"
 							        @click="toggleBookmark">
-								<div class="mr-2 fa-regular fa-book-bookmark"></div>
-								从书架移除
+								<template v-if="!isBookmarked">
+									<div class="mr-2 fa-regular fa-book-bookmark"></div>
+									加入书架
+								</template>
+								<template v-else>
+									<div class="mr-2 fa-regular fa-book-bookmark"></div>
+									从书架移除
+								</template>
 							</Button>
 							<router-link v-if="currentReadChapter"
 							             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
@@ -89,20 +102,33 @@
 				<div class="hidden max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
-							<Button v-if="!isBookmarked" class="text-sm text-primary-500 w-auto h-full rounded-none"
+							<Button class="text-sm text-primary-500 h-full rounded-none flex-1"
+							        label="书架"
 							        size="small" text
 							        @click="toggleBookmark">
-								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-if="!isBookmarked"  class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									加入书架
 								</div>
-							</Button>
-							<Button v-else class="text-sm text-primary-500 w-auto h-full rounded-none"
-							        size="small" text
-							        @click="toggleBookmark">
-								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-else class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
-									从书架移除
+									移出书架
+								</div>
+							</Button>
+							<Button v-if="canTranslate(data.novel?.tags || [])"
+							        class="text-sm text-primary-500 h-full rounded-none flex-1"
+							        label="翻译" text
+							        size="small"
+							        @click="isShowTranslate = !isShowTranslate">
+								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+									<template v-if="isShowTranslate">
+										<div class="text-lg mb-1 fa-regular fa-language"></div>
+										原&nbsp;文
+									</template>
+									<template v-else>
+										<div class="text-lg mb-1 fa-regular fa-language"></div>
+										翻&nbsp;译
+									</template>
 								</div>
 							</Button>
 						</div>
@@ -235,6 +261,7 @@
 				</TabView>
 			</div>
 		</div>
+		<div class="mt-16"></div>
 	</div>
 </template>
 

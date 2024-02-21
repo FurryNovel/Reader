@@ -66,6 +66,17 @@
 					</router-link>
 				</div>
 				<div class="">
+					<Button v-if="canTranslate(data.novel?.tags || [])"
+					        v-tooltip.left="isShowTranslate ? '原文' : '翻译'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="isShowTranslate = !isShowTranslate" text>
+						<template v-if="isShowTranslate">
+							<span class="fa-regular fa-language"></span>
+						</template>
+						<template v-else>
+							<span class="fa-regular fa-language"></span>
+						</template>
+					</Button>
 					<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
 					        size="small"
 					        @click="toggleModal('Chapters')"
@@ -236,7 +247,20 @@
 		<div v-if="data.toggleMobile"
 		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
-				<Button v-ripple class="h-full" href="/settings" outlined
+				<Button v-if="canTranslate(data.novel?.tags || [])"
+				        class="h-full" outlined severity="secondary"
+				        @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;" text>
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
+						<span class="mb-1 text-xl fa-regular fa-language"></span>
+						<template v-if="isShowTranslate">
+							<span class="text-sm">原文</span>
+						</template>
+						<template v-else>
+							<span class="text-sm">翻译</span>
+						</template>
+					</div>
+				</Button>
+				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Chapters')" text>
 					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
@@ -244,7 +268,7 @@
 						<span class="text-sm">目录</span>
 					</div>
 				</Button>
-				<Button v-ripple class="h-full" href="/settings" outlined
+				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Settings')" text>
 					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
