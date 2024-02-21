@@ -8,6 +8,9 @@ import {asyncComputed} from "@vueuse/core";
 
 export function detectedLanguage() {
     let lang = '中文';
+    if (import.meta.env.SSR) {
+        return lang;
+    }
     switch (navigator.language) {
         case 'zh-CN':
             lang = '中文';
