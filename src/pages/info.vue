@@ -1,7 +1,7 @@
 <template>
 	<div class="flex h-full w-full flex-col">
 		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
-		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
+		<div class="flex gap-3 flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<template v-if="!data.loading && data.novel">
 				<div class="flex w-full gap-3">
 					<div class="rounded-xl">
@@ -51,23 +51,10 @@
 								</router-link>
 							</div>
 						</div>
-						<div>
-							<div v-if="data.chapters && data.chapters.length > 0"
-							     class="text-sm text-black dark:text-white">
-								最新章节：
-								<router-link
-										:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
-										class="font-bold">
-									{{
-										data.chapters[data.chapters.length - 1].name
-									}}
-								</router-link>
-							</div>
-						</div>
 						<div class="flex gap-3">
-							<div class="flex flex-wrap items-center text-sm text-black dark:text-white">
+							<div class="flex flex-wrap items-center text-sm text-gray-500 dark:text-white">
 								更新时间：
-								<span class="font-bold">
+								<span class="font-bold text-black dark:text-white">
 								{{ data.novel.updated_at }}
 								</span>
 							</div>
@@ -111,6 +98,21 @@
 						</div>
 					</div>
 				</div>
+				<TabView>
+					<TabPanel header="最新章节">
+						<router-link
+								:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
+								class="flex">
+							
+							<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
+								{{ data.chapters.length }}
+							</div>
+							<div class="flex flex-1 flex-col gap-2">
+								<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
+							</div>
+						</router-link>
+					</TabPanel>
+				</TabView>
 				<div class="hidden max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
@@ -203,7 +205,7 @@
 					</div>
 				</div>
 			</template>
-			<div class="mt-10 max-sm:mt-0">
+			<div class="">
 				<TabView>
 					<TabPanel header="关于">
 						<template v-if="!data.loading && data.novel">
