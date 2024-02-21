@@ -61,7 +61,7 @@
 				<Button v-if="showButtons.includes('theme')" v-ripple class="w-[45px] h-[45px]" href="/settings"
 				        outlined rounded severity="secondary" @click="toggleTheme"
 				        size="small" text>
-					<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
+					<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
 					<span v-else class="fa-regular fa-sun-bright"></span>
 				</Button>
 				<router-link v-if="showButtons.includes('settings')"

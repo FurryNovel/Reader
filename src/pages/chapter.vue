@@ -72,11 +72,11 @@
 					        text>
 						<span class="fa-regular fa-list"></span>
 					</Button>
-					<Button v-tooltip.left="themeButton === 'dark' ? '明亮' : '夜间'" class="aspect-square !p-0 text-white"
+					<Button v-tooltip.left="themeButton === 'light' ? '夜间' : '明亮'" class="aspect-square !p-0 text-white"
 					        outlined rounded severity="secondary"
 					        size="small"
 					        text @click="toggleTheme">
-						<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
+						<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
 						<span v-else class="fa-regular fa-sun-bright"></span>
 					</Button>
 					<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
