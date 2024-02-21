@@ -86,30 +86,41 @@
 						</div>
 					</div>
 				</div>
-				<div class="gap-3 hidden max-sm:flex max-sm:flex-col my-3">
-					<Button v-if="!isBookmarked" class="text-sm text-primary-500 w-full dark:text-white"
-					        label="加入书架"
-					        size="small"
-					        @click="toggleBookmark">
-						<div class="mr-2 fa-regular fa-book-bookmark"></div>
-						加入书架
-					</Button>
-					<Button v-else class="text-sm text-primary-500 w-full dark:text-white"
-					        label="加入书架"
-					        size="small"
-					        @click="toggleBookmark">
-						<div class="mr-2 fa-regular fa-book-bookmark"></div>
-						从书架移除
-					</Button>
-					<router-link v-if="currentReadChapter"
-					             class="text-sm text-primary-500 w-full dark:text-white"
-					             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
-						<Button label="立即阅读" class="w-full dark:text-white"
+				<div class="hidden max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
+					<div class="flex flex-1">
+						<div class="flex flex-1 justify-center items-center">
+							<Button v-if="!isBookmarked" class="text-sm text-primary-500 w-auto h-full rounded-none"
+							        size="small" text
+							        @click="toggleBookmark">
+								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
+									加入书架
+								</div>
+							</Button>
+							<Button v-else class="text-sm text-primary-500 w-auto h-full rounded-none"
+							        size="small" text
+							        @click="toggleBookmark">
+								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
+									从书架移除
+								</div>
+							</Button>
+						</div>
+						<router-link v-if="currentReadChapter"
+						             class="text-sm text-primary-500 w-[50vw] h-full"
+						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
+							<Button class="w-full h-full rounded-none text-black max-sm:!text-white"
+							        size="small">
+								{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
+								<div class="ml-2 fa-regular fa-chevron-right"></div>
+							</Button>
+						</router-link>
+						<Button v-else class="w-[50vw] rounded-none text-black max-sm:!text-white"
 						        size="small">
-							{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
+							立即阅读
 							<div class="ml-2 fa-regular fa-chevron-right"></div>
 						</Button>
-					</router-link>
+					</div>
 				</div>
 			</template>
 			<template v-else>
