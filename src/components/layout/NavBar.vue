@@ -27,11 +27,17 @@
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
 				<a v-if="item.isActive" v-ripple :draggable="false" :href="href" class="text-primary-500"
 				   v-bind="props.action" @click="navigate">
-					<span v-if="item.icon" class="fa-regular" aria-hidden="true">{{ item.icon.text }}</span>
+					<span v-if="item.icon" :class="{
+                            [item.icon.text]:true,
+					     }" aria-hidden="true">
+					</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
 				<a v-else v-ripple :draggable="false" :href="href" v-bind="props.action" @click="navigate">
-					<span v-if="item.icon" class="fa-regular" aria-hidden="true">{{ item.icon.text }}</span>
+					<span v-if="item.icon" :class="{
+                            [item.icon.text]:true,
+					      }" aria-hidden="true">
+					</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
 			</router-link>
