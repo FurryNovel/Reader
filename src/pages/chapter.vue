@@ -26,7 +26,7 @@
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col max-sm:mx-0">
-					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full"
+					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
 						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
@@ -36,7 +36,7 @@
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full"
+					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
 						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
@@ -189,7 +189,7 @@
 							<div class="flex flex-col justify-between pb-5">
 								<div v-for="(chapter,idx) in data.chapters"
 								     class="flex w-full flex-wrap items-center gap-3 border-b p-2">
-									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}">
+									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}" replace>
 										<div :class="{
                                         'flex-1 flex flex-col gap-2':true,
                                         'text-primary-500': chapter.id === data.chapter?.id,
