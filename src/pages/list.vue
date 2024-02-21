@@ -1,7 +1,7 @@
 <template>
-	<div class="flex h-full w-full flex-col max-sm:h-screen">
+	<div class="flex h-full w-full flex-col">
 		<NavBar v-if="data.keyword === '' && props.mode === 'search'" :show-in="['mobile']"
-		        :show-buttons="['search', 'settings', 'back', 'home']"/>
+		        :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black pb-[64px] sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
 				<div class="m-2 flex items-center justify-between pl-2">

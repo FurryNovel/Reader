@@ -1,6 +1,6 @@
 <template>
-	<div class="flex h-full w-full flex-col max-sm:h-screen">
-		<NavBar :show-in="['mobile']" :show-buttons="['search', 'settings', 'back', 'home']"/>
+	<div class="flex h-full w-full flex-col">
+		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between pl-2">
 				<div class="text-2xl font-bold">
@@ -127,7 +127,7 @@
 							<div v-for="(tag,idx) in config.global.hideTags" class="mb-5 flex flex-col">
 								<div class="flex flex-wrap items-center justify-between pl-2">
 									<div class="cursor-pointer">
-										<div class="text-lg text-gray-500 font-bold">
+										<div class="text-lg font-bold text-gray-500">
 											{{ tag }}
 										</div>
 									</div>

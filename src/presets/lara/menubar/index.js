@@ -11,14 +11,13 @@ export default {
             
             // Spacing
             'p-2',
-            'sm:ml-[-0.8px]',
             
             // Shape
             'sm:rounded-md max-sm:rounded-bl-md max-sm:rounded-br-md',
             
             // Color
-            'bg-surface-50 dark:bg-surface-700',
-            'sm:border max-sm:border-b border-surface-200 dark:border-surface-700'
+            'bg-white/70 dark:bg-surface-700/70',
+            'border-b border-surface-200 dark:border-surface-700'
         ]
     },
     menu: ({props}) => ({
@@ -48,7 +47,7 @@ export default {
             'border-0',
             
             // Color
-            'bg-surface-0 dark:bg-surface-700 sm:bg-transparent',
+            'bg-transparent',
             
             // Misc
             'outline-none'

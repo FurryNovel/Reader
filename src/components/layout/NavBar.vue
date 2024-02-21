@@ -4,14 +4,14 @@
 			<Avatar v-if="showIcon && props.showButtons.includes('icon')"
 			        class="mx-4 flex justify-center bg-transparent align-middle"
 			        image="/static/icon.png" shape="circle"/>
-			<template v-if="props.showButtons.includes('back') && canBack">
+			<template v-if="showButtons.includes('back') && canBack">
 				<Button v-ripple class="w-[45px] h-[45px]" outlined rounded severity="secondary"
 				        size="small"
 				        text @click="router.back()">
 					<span class="fa-regular fa-chevron-left"></span>
 				</Button>
 			</template>
-			<template v-if="props.showButtons.includes('home')">
+			<template v-if="showButtons.includes('home')">
 				<router-link :to="{name:'index'}">
 					<Button v-ripple class="w-[45px] h-[45px]" href="/" outlined rounded severity="secondary"
 					        size="small" text>
@@ -19,7 +19,7 @@
 					</Button>
 				</router-link>
 			</template>
-			<template v-if="props.showButtons.includes('startSlot')">
+			<template v-if="showButtons.includes('startSlot')">
 				<slot name="start"/>
 			</template>
 		</template>
@@ -27,11 +27,17 @@
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
 				<a v-if="item.isActive" v-ripple :draggable="false" :href="href" class="text-primary-500"
 				   v-bind="props.action" @click="navigate">
-					<span v-if="item.icon" class="fa-regular" aria-hidden="true">{{ item.icon.text }}</span>
+					<span v-if="item.icon" :class="{
+                            [item.icon.text]:true,
+					     }" aria-hidden="true">
+					</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
 				<a v-else v-ripple :draggable="false" :href="href" v-bind="props.action" @click="navigate">
-					<span v-if="item.icon" class="fa-regular" aria-hidden="true">{{ item.icon.text }}</span>
+					<span v-if="item.icon" :class="{
+                            [item.icon.text]:true,
+					      }" aria-hidden="true">
+					</span>
 					<span class="ml-2">{{ item.label }}</span>
 				</a>
 			</router-link>
@@ -43,7 +49,8 @@
 		</template>
 		<template #end>
 			<div class="flex flex-row gap-2 align-items-center">
-				<router-link v-if="props.showButtons.includes('search')" v-slot="{ href, navigate }"
+				<router-link v-if="showButtons.includes('search')"
+				             v-slot="{ href, navigate }"
 				             :to="{name:'search'}" custom>
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"
@@ -51,7 +58,14 @@
 						<span class="fa-regular fa-search"></span>
 					</Button>
 				</router-link>
-				<router-link v-if="props.showButtons.includes('settings')" v-slot="{ href, navigate }"
+				<Button v-if="showButtons.includes('theme')" v-ripple class="w-[45px] h-[45px]" href="/settings"
+				        outlined rounded severity="secondary" @click="toggleTheme"
+				        size="small" text>
+					<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
+					<span v-else class="fa-regular fa-sun-bright"></span>
+				</Button>
+				<router-link v-if="showButtons.includes('settings')"
+				             v-slot="{ href, navigate }"
 				             :to="{name:'settings'}" custom>
 					<Button v-ripple class="w-[45px] h-[45px]" href="/settings" outlined rounded severity="secondary"
 					        size="small"
@@ -59,14 +73,14 @@
 						<span class="fa-regular fa-gear"></span>
 					</Button>
 				</router-link>
-				<template v-if="props.showButtons.includes('endSlot')">
+				<template v-if="showButtons.includes('endSlot')">
 					<slot name="end"/>
 				</template>
 			</div>
 		</template>
 	</Menubar>
 	<div v-if="showWrapper && !props.fixed">
-		<div class="mt-[64px]"></div>
+		<!--<div class="mt-[64px]"></div>-->
 	</div>
 	<slot/>
 </template>
@@ -74,6 +88,19 @@
 <script setup>
 import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
+import {toggleTheme, useTheme} from "@/utils/theme.js";
+
+const showButtons = computed(() => {
+    return props.showButtons.filter(button => !props.hideButtons.includes(button)).concat(props.appendButtons);
+});
+
+const theme = useTheme();
+const themeButton = computed(() => {
+    if (!isMounted.value) {
+        return 'light';
+    }
+    return theme.value;
+});
 
 const props = defineProps({
     showWrapper: {
@@ -86,9 +113,17 @@ const props = defineProps({
         type: Array,
         default: ['pc']
     },
+    appendButtons: {
+        type: Array,
+        default: [],
+    },
     showButtons: {
         type: Array,
-        default: ['search', 'settings', 'icon']
+        default: ['search', 'settings', 'icon', 'theme']
+    },
+    hideButtons: {
+        type: Array,
+        default: []
     },
     custom: {
         type: Boolean,
@@ -106,14 +141,11 @@ const deviceInfo = useDeviceInfo();
 const wrapperClass = computed(() => {
     return {
         'backdrop-blur-sm': true,
-        'bg-white/70': true,
-        '!fixed': true,
-        'w-screen': true,
+        'bg-white/70 dark:bg-surface-700/70': true,
+        'sticky': true,
         'z-50': true,
         'top-0': true,
         'h-[64px]': true,
-        //
-        'w-full max-w-screen-xl mx-auto': true,
     };
 });
 

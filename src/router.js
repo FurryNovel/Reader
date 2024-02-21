@@ -13,8 +13,8 @@ const items = [
         meta: {
             title: '主页',
             icon: {
-                "text": "\uf3ce",
-                "selectedText": "\uf3ce",
+                "text": "fa-regular fa-mobile",
+                "selectedText": "fa-regular fa-mobile",
             },
             layout: {
                 showInNavBar: true,
@@ -31,8 +31,8 @@ const items = [
         meta: {
             title: '书库',
             icon: {
-                "text": "\ue0bb",
-                "selectedText": "\ue0bb",
+                "text": "fa-regular fa-book-bookmark",
+                "selectedText": "fa-regular fa-book-bookmark",
             },
             layout: {
                 showInNavBar: true,
@@ -46,8 +46,8 @@ const items = [
         meta: {
             title: '书架',
             icon: {
-                "text": "\uf005",
-                "selectedText": "\uf005",
+                "text": "fa-regular fa-star",
+                "selectedText": "fa-regular fa-star",
             },
             layout: {
                 showInNavBar: true,
@@ -61,8 +61,8 @@ const items = [
         meta: {
             title: '关于',
             icon: {
-                "text": "\uf05a",
-                "selectedText": "\uf05a",
+                "text": "fa-regular fa-circle-info",
+                "selectedText": "fa-regular fa-circle-info",
             },
             layout: {
                 showInNavBar: true,

@@ -1,21 +1,22 @@
 <template>
-	<div ref="parent" class="flex h-full w-full flex-col max-sm:h-screen dark:!bg-surface-700 dark:!text-white"
+	<div ref="parent" class="flex h-full w-full flex-col dark:!bg-surface-700 dark:!text-white"
 	     :style="wrapperStyle">
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
-		     class="transition-all duration-300">
-			<NavBar :show-in="['mobile']" :show-buttons="['back', 'home', 'startSlot']"
+		     class="fixed top-0 left-0 w-full transition-all duration-300">
+			<NavBar :show-in="['mobile']"
+			        :show-buttons="['back', 'home', 'startSlot']"
 			        fixed
 			        custom>
 				<template #start>
 					<div v-if="data.novel && data.toggleMobile" class="inline-block w-[calc(90vw-90px)]">
-						<div class="flex flex-col">
+						<router-link :to="{name:'info', params:{id: data.novel.id}}" class="flex flex-col">
 							<div class="text-xl font-bold line-clamp-1">
 								{{ data.novel.name }}
 							</div>
 							<div class="text-gray-500 dark:text-white line-clamp-1">
 								{{ data.novel.author.nickname }}
 							</div>
-						</div>
+						</router-link>
 					</div>
 				</template>
 			</NavBar>
@@ -24,10 +25,10 @@
 			<div class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white" :style="readerStyle">
 				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
 				
-				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col">
-					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full"
+				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col max-sm:mx-0">
+					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
-						<Button v-ripple class="text-white !w-full" href="/settings" outlined
+						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">上一章</div>
@@ -35,9 +36,9 @@
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full"
+					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
 					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
-						<Button v-if="nextChapter" v-ripple class="text-white !w-full" href="/settings" outlined
+						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
 						        severity="secondary">
 							<div>
 								<div class="text-lg font-bold">下一章</div>
@@ -48,18 +49,55 @@
 				</div>
 			</div>
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
-				<Button v-ripple class="aspect-square !p-0 text-white" href="/settings" outlined severity="secondary"
-				        size="small"
-				        @click="toggleModal('Chapters')"
-				        text>
-					<span class="fa-regular fa-list"></span>
-				</Button>
-				<Button v-ripple class="aspect-square !p-0 text-white" href="/settings" outlined severity="secondary"
-				        size="small"
-				        @click="toggleModal('Settings')"
-				        text>
-					<span class="fa-regular fa-gear"></span>
-				</Button>
+				<div class="flex flex-1 flex-col">
+					<router-link :to="{name:'index'}">
+						<Button v-tooltip.left="'主页'" class="aspect-square !p-0 text-white"  outlined
+						        severity="secondary"
+						        size="small" text>
+							<span class="fa-regular fa-home"></span>
+						</Button>
+					</router-link>
+					<router-link :to="{name:'info', params:{id: data.novel.id}}">
+						<Button v-tooltip.left="'小说'" class="aspect-square !p-0 text-white"  outlined
+						        severity="secondary"
+						        size="small" text>
+							<span class="fa-regular fa-book-bookmark"></span>
+						</Button>
+					</router-link>
+				</div>
+				<div class="">
+					<Button v-if="canTranslate(data.novel?.tags || [])"
+					        v-tooltip.left="isShowTranslate ? '原文' : '翻译'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="isShowTranslate = !isShowTranslate" text>
+						<template v-if="isShowTranslate">
+							<span class="fa-regular fa-language"></span>
+						</template>
+						<template v-else>
+							<span class="fa-regular fa-language"></span>
+						</template>
+					</Button>
+					<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="toggleModal('Chapters')"
+					        text>
+						<span class="fa-regular fa-list"></span>
+					</Button>
+					<Button v-tooltip.left="themeButton === 'light' ? '夜间' : '明亮'" class="aspect-square !p-0 text-white"
+					        outlined rounded severity="secondary"
+					        size="small"
+					        text @click="toggleTheme">
+						<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
+						<span v-else class="fa-regular fa-sun-bright"></span>
+					</Button>
+					<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="toggleModal('Settings')"
+					        text>
+						<span class="fa-regular fa-gear"></span>
+					</Button>
+				</div>
+				<div class="flex flex-1 flex-col"></div>
 			</div>
 			<div :class="{
                 'flex h-screen w-0 flex-col transition-all duration-300' : true,
@@ -182,7 +220,7 @@
 							<div class="flex flex-col justify-between pb-5">
 								<div v-for="(chapter,idx) in data.chapters"
 								     class="flex w-full flex-wrap items-center gap-3 border-b p-2">
-									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}">
+									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}" replace>
 										<div :class="{
                                         'flex-1 flex flex-col gap-2':true,
                                         'text-primary-500': chapter.id === data.chapter?.id,
@@ -206,18 +244,34 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="data.toggleMobile" class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm">
+		<div v-if="data.toggleMobile"
+		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
-				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				<Button v-if="canTranslate(data.novel?.tags || [])"
+				        class="h-full" outlined severity="secondary"
+				        @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;" text>
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
+						<span class="mb-1 text-xl fa-regular fa-language"></span>
+						<template v-if="isShowTranslate">
+							<span class="text-sm">原文</span>
+						</template>
+						<template v-else>
+							<span class="text-sm">翻译</span>
+						</template>
+					</div>
+				</Button>
+				<Button class="h-full" href="/settings" outlined
+				        severity="secondary"
 				        @click="toggleModal('Chapters')" text>
-					<div class="flex h-full flex-col items-center justify-center">
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-list"></span>
 						<span class="text-sm">目录</span>
 					</div>
 				</Button>
-				<Button v-ripple class="!text-black h-full" href="/settings" outlined severity="secondary"
+				<Button class="h-full" href="/settings" outlined
+				        severity="secondary"
 				        @click="toggleModal('Settings')" text>
-					<div class="flex h-full flex-col items-center justify-center">
+					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-gear"></span>
 						<span class="text-sm">设置</span>
 					</div>
@@ -226,9 +280,7 @@
 		</div>
 		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
 			<template #container="{ closeCallback }">
-				<div class="flex h-full flex-col items-center justify-center" :style="{
-                    color: `#${config.chapter.fontColor}`,
-				}">
+				<div class="flex h-full flex-col items-center justify-center dark:!text-white" :style="textStyle">
 					<i class="fa-regular fa-loader fa-spin"></i>
 					<div class="mt-5">加载中...</div>
 				</div>
@@ -248,6 +300,11 @@ import {useMeta} from "@/utils/meta.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {processContent} from "@/utils/reader.js";
 import {isMobile} from "@/utils/device.js";
+import {useHistoryStore} from "@/stores/histories.js";
+import {toggleTheme, useTheme} from "@/utils/theme.js";
+import {canTranslate, useTranslate} from "@/utils/translate.js";
+
+const historyStore = useHistoryStore();
 
 const config = useConfigProvider();
 
@@ -310,6 +367,13 @@ const readerStyle = computed(() => {
     }
 });
 
+const textStyle = computed(() => {
+    return {
+        color: `#${config.chapter.fontColor}`,
+        fontFamily: config.chapter.font,
+    }
+});
+
 const fonts = computed(() => {
     let fonts = [
         {name: '微软雅黑', value: '微软雅黑', default: false, lineHeight: 1.3},
@@ -333,8 +397,21 @@ const fonts = computed(() => {
     return fonts;
 });
 
+const isShowTranslate = ref(config.global.autoTranslate);
+
+const chapterName = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => data.chapter?.name)
+);
+
+const chapterContent = useTranslate(
+    computed(() => isShowTranslate.value && canTranslate(data.novel?.tags || [])),
+    computed(() => data.chapter?.content)
+);
+
+
 const lines = computed(() => {
-    let content = `[title]${data.chapter.name}[/title]\n\n` + data.chapter.content;
+    let content = `[title]${chapterName.value || data.chapter?.name}[/title]\n\n` + (chapterContent.value || data.chapter?.content);
     let parts = content.replace("\n\n", "\n").split("\n").filter((part) => part.length > 0).map((part) => {
         return part.trim();
     });
@@ -372,6 +449,14 @@ const nextChapter = computed(() => {
     return data.chapters[index + 1];
 });
 
+const theme = useTheme();
+const themeButton = computed(() => {
+    if (!isMounted.value) {
+        return 'light';
+    }
+    return theme.value;
+});
+
 onRouteChange(to => {
     if (data.chapter.id !== to.params.cid) {
         const needLoad = data.novel.id !== 0;
@@ -395,6 +480,9 @@ watchEffect(() => {
             description: data.novel.desc,
             image: data.novel.cover,
         });
+        if (!import.meta.env.SSR) {
+            historyStore.save(data.novel.id, data.chapter.id);
+        }
     }
 });
 

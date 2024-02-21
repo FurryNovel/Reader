@@ -21,6 +21,7 @@ import {initialPinia} from "@/plugins/initial-pinia.js";
 import {vueBindSSRPlugin, vueSSRMarker} from "vue-unique-ssr-id";
 import ConfirmationService from 'primevue/confirmationservice';
 import {initRouterEvent} from "@/utils/router-event.js";
+import Tooltip from "primevue/tooltip";
 
 export function createApp() {
     const app = createSSRApp(App);
@@ -71,6 +72,7 @@ function directivePlugin() {
             app.directive('ripple', Ripple);
             app.directive('animate-on-scroll', AnimateOnScroll);
             app.directive('ssr', vueSSRMarker);
+            app.directive('tooltip', Tooltip);
         }
     }
 }
