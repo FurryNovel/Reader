@@ -9,14 +9,14 @@
 			        custom>
 				<template #start>
 					<div v-if="data.novel && data.toggleMobile" class="inline-block w-[calc(90vw-90px)]">
-						<div class="flex flex-col">
+						<router-link :to="{name:'info', params:{id: data.novel.id}}" class="flex flex-col">
 							<div class="text-xl font-bold line-clamp-1">
 								{{ data.novel.name }}
 							</div>
 							<div class="text-gray-500 dark:text-white line-clamp-1">
 								{{ data.novel.author.nickname }}
 							</div>
-						</div>
+						</router-link>
 					</div>
 				</template>
 			</NavBar>
@@ -49,25 +49,44 @@
 				</div>
 			</div>
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
-				<Button v-tooltip.left="themeButton === 'dark' ? '明亮' : '夜间'" class="aspect-square !p-0 text-white"
-				        outlined rounded severity="secondary"
-				        size="small"
-				        text @click="toggleTheme">
-					<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
-					<span v-else class="fa-regular fa-sun-bright"></span>
-				</Button>
-				<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
-				        size="small"
-				        @click="toggleModal('Chapters')"
-				        text>
-					<span class="fa-regular fa-list"></span>
-				</Button>
-				<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
-				        size="small"
-				        @click="toggleModal('Settings')"
-				        text>
-					<span class="fa-regular fa-gear"></span>
-				</Button>
+				<div class="flex flex-1 flex-col">
+					<router-link :to="{name:'index'}">
+						<Button v-tooltip.left="'主页'" class="aspect-square !p-0 text-white"  outlined
+						        severity="secondary"
+						        size="small" text>
+							<span class="fa-regular fa-home"></span>
+						</Button>
+					</router-link>
+					<router-link :to="{name:'info', params:{id: data.novel.id}}">
+						<Button v-tooltip.left="'小说'" class="aspect-square !p-0 text-white"  outlined
+						        severity="secondary"
+						        size="small" text>
+							<span class="fa-regular fa-book-bookmark"></span>
+						</Button>
+					</router-link>
+				</div>
+				<div class="">
+					<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="toggleModal('Chapters')"
+					        text>
+						<span class="fa-regular fa-list"></span>
+					</Button>
+					<Button v-tooltip.left="themeButton === 'dark' ? '明亮' : '夜间'" class="aspect-square !p-0 text-white"
+					        outlined rounded severity="secondary"
+					        size="small"
+					        text @click="toggleTheme">
+						<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
+						<span v-else class="fa-regular fa-sun-bright"></span>
+					</Button>
+					<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        size="small"
+					        @click="toggleModal('Settings')"
+					        text>
+						<span class="fa-regular fa-gear"></span>
+					</Button>
+				</div>
+				<div class="flex flex-1 flex-col"></div>
 			</div>
 			<div :class="{
                 'flex h-screen w-0 flex-col transition-all duration-300' : true,
@@ -215,7 +234,7 @@
 			</div>
 		</div>
 		<div v-if="data.toggleMobile"
-		     class="fixed bottom-0 left-0 z-20 w-screen backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70">
+		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
 				<Button v-ripple class="h-full" href="/settings" outlined
 				        severity="secondary"
