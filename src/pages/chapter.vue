@@ -49,19 +49,19 @@
 				</div>
 			</div>
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
-				<Button v-ripple class="aspect-square !p-0 text-white" outlined rounded severity="secondary"
+				<Button v-tooltip.left="themeButton === 'dark' ? '明亮' : '夜间'" class="aspect-square !p-0 text-white" outlined rounded severity="secondary"
 				        size="small"
 				        @click="toggleTheme" text>
 					<span v-if="themeButton === 'dark'" class="fa-regular fa-moon-stars"></span>
 					<span v-else class="fa-regular fa-sun-bright"></span>
 				</Button>
-				<Button v-ripple class="aspect-square !p-0 text-white" outlined severity="secondary"
+				<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
 				        size="small"
 				        @click="toggleModal('Chapters')"
 				        text>
 					<span class="fa-regular fa-list"></span>
 				</Button>
-				<Button v-ripple class="aspect-square !p-0 text-white" outlined severity="secondary"
+				<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
 				        size="small"
 				        @click="toggleModal('Settings')"
 				        text>
