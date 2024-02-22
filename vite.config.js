@@ -141,4 +141,7 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src'),
         },
     },
+    define: {
+        __APP_VERSION: `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}.${new Date().getHours()}`,
+    },
 });

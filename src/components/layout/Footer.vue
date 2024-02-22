@@ -17,6 +17,10 @@
 				<p class="font-bold">{{ config.title }}</p>
 				{{ config.host.toUpperCase() }} &copy; 2024
 			</div>
+			<div class="flex w-full items-center justify-center gap-1 text-xs">
+				Build
+				<p class="font-bold">{{ APP_VERSION }}</p>
+			</div>
 			<div class="sm:hidden pb-[64px]"></div>
 		</footer>
 	</template>
@@ -27,13 +31,13 @@ import {routes} from "@/router.js";
 
 import config from "@/config.js";
 
+const APP_VERSION = __APP_VERSION;
 
 const router = useRouter();
 
 const isMounted = ref(false);
 
 const showWrapper = computed(() => {
-    if (!isMounted.value) return false;
     return !(routes.filter(route => route.meta.layout.showInNavBar && route.isActive(router)).length === 0);
 });
 
