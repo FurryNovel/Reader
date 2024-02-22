@@ -35,8 +35,8 @@ const router = useRouter();
 const wrapperClass = computed(() => {
     return {
         'backdrop-blur-sm': true,
-        'bg-white/70 max-sm:bg-surface-700/70': true,
-        'text-black max-sm:text-surface-300': true,
+        'bg-white/70 dark:bg-surface-700/70': true,
+        'text-surface-500 dark:text-surface-300': true,
         'w-screen': true,
         'z-50': true,
         'h-[64px]': true,
