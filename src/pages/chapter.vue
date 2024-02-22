@@ -248,12 +248,12 @@
 			</div>
 		</div>
 		<div v-if="data.toggleMobile"
-		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70 dark:bg-surface-700/70">
+		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm dark:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
 				<Button v-if="canTranslate(data.novel?.tags || [])"
 				        class="h-full" outlined severity="secondary"
 				        @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;" text>
-					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-language"></span>
 						<template v-if="isShowTranslate">
 							<span class="text-sm">原文</span>
@@ -263,10 +263,23 @@
 						</template>
 					</div>
 				</Button>
+				<Button class="h-full" outlined severity="secondary"
+				        text @click="toggleTheme">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
+						<template v-if="themeButton === 'light'">
+							<span class="mb-1 text-xl fa-regular fa-moon-stars"></span>
+							<span class="text-sm">夜间</span>
+						</template>
+						<template v-else>
+							<span class="mb-1 text-xl fa-regular fa-sun-bright"></span>
+							<span class="text-sm">明亮</span>
+						</template>
+					</div>
+				</Button>
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Chapters')" text>
-					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-list"></span>
 						<span class="text-sm">目录</span>
 					</div>
@@ -274,7 +287,7 @@
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Settings')" text>
-					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-gear"></span>
 						<span class="text-sm">设置</span>
 					</div>

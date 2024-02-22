@@ -113,7 +113,7 @@
 						</router-link>
 					</TabPanel>
 				</TabView>
-				<div class="hidden z-50 max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
+				<div class="hidden z-50 max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 dark:bg-surface-700/70 text-black max-sm:text-white">
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
 							<Button class="text-sm text-primary-500 h-full rounded-none flex-1"
@@ -121,12 +121,12 @@
 							        size="small" text
 							        @click="toggleBookmark">
 								<div v-if="!isBookmarked"
-								     class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									加入书架
 								</div>
 								<div v-else
-								     class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									移出书架
 								</div>
@@ -136,7 +136,7 @@
 							        label="翻译" size="small"
 							        text
 							        @click="isShowTranslate = !isShowTranslate">
-								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<template v-if="isShowTranslate">
 										<div class="text-lg mb-1 fa-regular fa-language"></div>
 										原&nbsp;文
@@ -151,13 +151,13 @@
 						<router-link v-if="currentReadChapter"
 						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}"
 						             class="text-sm text-primary-500 w-[50vw] h-full">
-							<Button class="w-full h-full rounded-none text-black max-sm:!text-white"
+							<Button class="w-full h-full rounded-none dark:!text-white font-bold text-lg"
 							        size="small">
 								{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
 								<div class="ml-2 fa-regular fa-chevron-right"></div>
 							</Button>
 						</router-link>
-						<Button v-else class="w-[50vw] rounded-none text-black max-sm:!text-white"
+						<Button v-else class="w-[50vw] rounded-none dark:!text-white font-bold text-lg"
 						        size="small">
 							立即阅读
 							<div class="ml-2 fa-regular fa-chevron-right"></div>
@@ -279,7 +279,7 @@
 			<div class="">
 				<TabView>
 					<TabPanel header="评论">
-						<PageComments />
+						<PageComments/>
 					</TabPanel>
 				</TabView>
 			</div>
