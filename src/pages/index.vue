@@ -1,5 +1,5 @@
 <template>
-	<div class="flex h-full w-full flex-col pb-[64px]">
+	<div class="flex h-full w-full flex-col">
 		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between">
 				<div class="text-2xl font-bold">热门精选</div>

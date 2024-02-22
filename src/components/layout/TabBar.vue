@@ -47,7 +47,7 @@ const wrapperClass = computed(() => {
 const isMounted = ref(false);
 const showWrapper = computed(() => {
     if (!isMounted.value) return false;
-    return !(isMobile && routes.filter(route => route.meta.layout.showInNavBar && route.isActive(router)).length === 0);
+    return !(isMobile.value && routes.filter(route => route.meta.layout.showInNavBar && route.isActive(router)).length === 0);
 });
 onMounted(() => {
     isMounted.value = true;

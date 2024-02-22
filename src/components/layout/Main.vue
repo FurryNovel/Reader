@@ -5,6 +5,7 @@
 				<slot/>
 			</NavBar>
 			<TabBar/>
+			<Footer/>
 		</div>
 	</div>
 	<MainNotification/>
@@ -18,6 +19,7 @@ import ChallengeModal from "@/components/global/ChallengeModal.vue";
 import TabBar from "@/components/layout/TabBar.vue";
 import eventbus from "@/utils/eventbus.js";
 import {onRouteChange} from "@/utils/router-event.js";
+import Footer from "@/components/layout/Footer.vue";
 
 const router = useRouter();
 const wrapperStyle = ref('');
