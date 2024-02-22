@@ -2,7 +2,7 @@
 	<template v-if="props.listStyle === 'style1'">
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
-				<template v-for="(item,idx) in data.items">
+				<template v-for="(item,idx) in data.items" :key="item.id">
 					<router-link
 							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
 							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
@@ -24,8 +24,8 @@
 							<div class="mb-1">
 								<div class="mb-1 font-bold">简介</div>
 								<div v-if="item.desc.length > 0"
-								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]"
-								     v-html="item.desc">
+								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
+									{{ item.desc.replace(/<[^>]+>/g, '') }}
 								</div>
 								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无
 								</div>
