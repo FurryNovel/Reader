@@ -1,6 +1,6 @@
 <template>
 	<div class="flex h-full w-full flex-col">
-		<div class="flex flex-1 flex-col rounded bg-white text-black pb-[64px] sm:p-10 dark:bg-surface-600 dark:text-white">
+		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="novelIds.length > 0">
 				<div class="m-2 flex items-center justify-between pl-2">
 					<div class="text-2xl font-bold">

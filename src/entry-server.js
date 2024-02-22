@@ -13,6 +13,7 @@ export async function render(url, manifest = {}, request = {cookies: {}}) {
     await router.isReady();
     const ctx = {
         ...request,
+        pinia,
     };
     const html = await renderToString(app, ctx);
     const preloadLinks = renderPreloadLinks(ctx.modules, manifest);

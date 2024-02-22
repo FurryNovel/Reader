@@ -1,7 +1,7 @@
 <template>
 	<div class="flex h-full w-full flex-col">
-		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
-		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
+		<NavBar :append-buttons="['back', 'home']" :hide-buttons="['icon']" :show-in="['mobile']"/>
+		<div class="flex gap-3 flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<template v-if="!data.loading && data.novel">
 				<div class="flex w-full gap-3">
 					<div class="rounded-xl">
@@ -14,8 +14,20 @@
 								<div class="text-2xl font-bold">
 									{{ novelTitle || data.novel.name || '小说详情' }}
 								</div>
-								<div class="mr-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
-									{{ syncStatus }}
+								<div class="flex gap-1">
+									<div class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										{{ syncStatus }}
+									</div>
+									<a v-if="data.novel.source === 'bilibili'"
+									   :href="`https://www.bilibili.com/read/readlist/rl${data.novel.source_id}/`"
+									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										来源<i class="ml-2 mr-1 fa-brands fa-bilibili"></i>bilibili
+									</a>
+									<a v-if="data.novel.source === 'pixiv'"
+									   :href="data.novel.ext_data?.oneshot? `https://www.pixiv.net/novel/show.php?id=${data.novel.source_id}` : `https://www.pixiv.net/novel/series/${data.novel.source_id}`"
+									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
+										来源<i class="ml-2 mr-1 fa-brands fa-product-hunt"></i>pixiv
+									</a>
 								</div>
 							</div>
 							<div class="text-sm text-gray-500 dark:text-white">
@@ -39,23 +51,10 @@
 								</router-link>
 							</div>
 						</div>
-						<div>
-							<div v-if="data.chapters && data.chapters.length > 0"
-							     class="text-sm text-black dark:text-white">
-								最新章节：
-								<router-link
-										:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
-										class="font-bold">
-									{{
-										data.chapters[data.chapters.length - 1].name
-									}}
-								</router-link>
-							</div>
-						</div>
 						<div class="flex gap-3">
-							<div class="flex flex-wrap items-center text-sm text-black dark:text-white">
+							<div class="flex flex-wrap items-center text-sm text-gray-500 dark:text-white">
 								更新时间：
-								<span class="font-bold">
+								<span class="font-bold text-black dark:text-white">
 								{{ data.novel.updated_at }}
 								</span>
 							</div>
@@ -99,28 +98,45 @@
 						</div>
 					</div>
 				</div>
-				<div class="hidden max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
+				<TabView>
+					<TabPanel header="最新章节">
+						<router-link
+								:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
+								class="flex">
+							
+							<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
+								{{ data.chapters.length }}
+							</div>
+							<div class="flex flex-1 flex-col gap-2">
+								<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
+							</div>
+						</router-link>
+					</TabPanel>
+				</TabView>
+				<div class="hidden z-50 max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 dark:bg-surface-700/70 text-black max-sm:text-white">
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
 							<Button class="text-sm text-primary-500 h-full rounded-none flex-1"
 							        label="书架"
 							        size="small" text
 							        @click="toggleBookmark">
-								<div v-if="!isBookmarked"  class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-if="!isBookmarked"
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									加入书架
 								</div>
-								<div v-else class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div v-else
+								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
 									移出书架
 								</div>
 							</Button>
 							<Button v-if="canTranslate(data.novel?.tags || [])"
 							        class="text-sm text-primary-500 h-full rounded-none flex-1"
-							        label="翻译" text
-							        size="small"
+							        label="翻译" size="small"
+							        text
 							        @click="isShowTranslate = !isShowTranslate">
-								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
+								<div class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<template v-if="isShowTranslate">
 										<div class="text-lg mb-1 fa-regular fa-language"></div>
 										原&nbsp;文
@@ -133,15 +149,15 @@
 							</Button>
 						</div>
 						<router-link v-if="currentReadChapter"
-						             class="text-sm text-primary-500 w-[50vw] h-full"
-						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
-							<Button class="w-full h-full rounded-none text-black max-sm:!text-white"
+						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}"
+						             class="text-sm text-primary-500 w-[50vw] h-full">
+							<Button class="w-full h-full rounded-none dark:!text-white font-bold text-lg"
 							        size="small">
 								{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
 								<div class="ml-2 fa-regular fa-chevron-right"></div>
 							</Button>
 						</router-link>
-						<Button v-else class="w-[50vw] rounded-none text-black max-sm:!text-white"
+						<Button v-else class="w-[50vw] rounded-none dark:!text-white font-bold text-lg"
 						        size="small">
 							立即阅读
 							<div class="ml-2 fa-regular fa-chevron-right"></div>
@@ -189,7 +205,7 @@
 					</div>
 				</div>
 			</template>
-			<div class="mt-10 max-sm:mt-0">
+			<div class="">
 				<TabView>
 					<TabPanel header="关于">
 						<template v-if="!data.loading && data.novel">
@@ -260,12 +276,22 @@
 					</TabPanel>
 				</TabView>
 			</div>
+			<div class="">
+				<TabView>
+					<TabPanel header="评论">
+						<div v-show="!data.loading">
+							<PageComments/>
+						</div>
+					</TabPanel>
+				</TabView>
+			</div>
 		</div>
 		<div class="mt-16"></div>
 	</div>
 </template>
 
 <script setup>
+import ClientOnly from "@duannx/vue-client-only";
 import NavBar from "@/components/layout/NavBar.vue";
 import {loadNovel} from "@/api/novels.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
@@ -278,6 +304,7 @@ import {useHistoryStore} from "@/stores/histories.js";
 import {computedAsync} from "@vueuse/core";
 import {canTranslate, detectedLanguage, useTranslate} from "@/utils/translate.js";
 import {useConfigProvider} from "@/provider/config.js";
+import PageComments from "@/components/global/PageComments.vue";
 
 const config = useConfigProvider();
 const historyStore = useHistoryStore();

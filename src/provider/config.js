@@ -42,7 +42,7 @@ export const baseConfig = {
     //保存到cookie
     saveToCookie() {
         useCookieManager().set('settings', JSON.stringify(Object.fromEntries(Object.entries(this).filter(([key, value]) => {
-            return !['showLanguages', 'hateTags', 'tags'].includes(key) && typeof value !== 'function' && value !== undefined;
+            return typeof value !== 'function' && value !== undefined;
         }))));
     },
     getShowLanguages() {
@@ -60,7 +60,7 @@ export const baseConfig = {
             tags.push('R18');
         }
         if (showLanguages.length > 1 || showLanguages.length === 0) {
-            if (this.global.hideLanguages.length > 1) {
+            if (this.global.hideLanguages.length > 0) {
                 tags = tags.concat(this.global.hideLanguages.map((lang) => {
                     return lang;
                 }));
@@ -93,10 +93,6 @@ export function useConfigProvider() {
     } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
-        delete state.getShowLanguages;
-        delete state.getHateTags;
-        delete state.getTags;
-        delete state.saveToCookie;
         state = Object.assign(base, state,);
     }
     // noinspection JSUnresolvedReference
