@@ -20,7 +20,7 @@ import eventbus from "@/utils/eventbus.js";
 import {onRouteChange} from "@/utils/router-event.js";
 
 const router = useRouter();
-const wrapperStyle = ref(null);
+const wrapperStyle = ref('');
 
 router.beforeEach((to, from, next) => {
     changeStyle(to)
