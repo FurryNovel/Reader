@@ -279,7 +279,9 @@
 			<div class="">
 				<TabView>
 					<TabPanel header="评论">
-						<PageComments/>
+						<div v-show="!data.loading">
+							<PageComments/>
+						</div>
 					</TabPanel>
 				</TabView>
 			</div>

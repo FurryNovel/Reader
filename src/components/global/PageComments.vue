@@ -2,13 +2,13 @@
 import Giscus from '@giscus/vue';
 import ClientOnly from "@duannx/vue-client-only";
 import {useTheme} from "@/utils/theme.js";
+
 const theme = useTheme();
 
 </script>
 <template>
 	<ClientOnly>
 		<Giscus
-				async
 				category-id="DIC_kwDOLWTxu84CdbVq"
 				crossorigin="anonymous"
 				emit-metadata="0"
@@ -26,5 +26,7 @@ const theme = useTheme();
 </template>
 
 <style scoped>
-
+::part(iframe) {
+    min-height: 400px;
+}
 </style>
