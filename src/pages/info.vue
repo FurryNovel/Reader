@@ -1,6 +1,6 @@
 <template>
 	<div class="flex h-full w-full flex-col">
-		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
+		<NavBar :append-buttons="['back', 'home']" :hide-buttons="['icon']" :show-in="['mobile']"/>
 		<div class="flex gap-3 flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<template v-if="!data.loading && data.novel">
 				<div class="flex w-full gap-3">
@@ -133,8 +133,8 @@
 							</Button>
 							<Button v-if="canTranslate(data.novel?.tags || [])"
 							        class="text-sm text-primary-500 h-full rounded-none flex-1"
-							        label="翻译" text
-							        size="small"
+							        label="翻译" size="small"
+							        text
 							        @click="isShowTranslate = !isShowTranslate">
 								<div class="flex-1 flex flex-col justify-center align-middle text-center text-black max-sm:text-white">
 									<template v-if="isShowTranslate">
@@ -149,8 +149,8 @@
 							</Button>
 						</div>
 						<router-link v-if="currentReadChapter"
-						             class="text-sm text-primary-500 w-[50vw] h-full"
-						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
+						             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}"
+						             class="text-sm text-primary-500 w-[50vw] h-full">
 							<Button class="w-full h-full rounded-none text-black max-sm:!text-white"
 							        size="small">
 								{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
@@ -276,12 +276,20 @@
 					</TabPanel>
 				</TabView>
 			</div>
+			<div class="">
+				<TabView>
+					<TabPanel header="评论">
+						<PageComments />
+					</TabPanel>
+				</TabView>
+			</div>
 		</div>
 		<div class="mt-16"></div>
 	</div>
 </template>
 
 <script setup>
+import ClientOnly from "@duannx/vue-client-only";
 import NavBar from "@/components/layout/NavBar.vue";
 import {loadNovel} from "@/api/novels.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
@@ -294,6 +302,7 @@ import {useHistoryStore} from "@/stores/histories.js";
 import {computedAsync} from "@vueuse/core";
 import {canTranslate, detectedLanguage, useTranslate} from "@/utils/translate.js";
 import {useConfigProvider} from "@/provider/config.js";
+import PageComments from "@/components/global/PageComments.vue";
 
 const config = useConfigProvider();
 const historyStore = useHistoryStore();

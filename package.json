@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",
+		"@giscus/vue": "^2.4.0",
 		"@nuxt/devalue": "^2.0.2",
 		"@rollup/plugin-inject": "^5.0.5",
 		"@tryghost/mg-shortcodes": "^0.2.16",
