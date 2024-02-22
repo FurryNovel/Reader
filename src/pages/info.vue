@@ -113,7 +113,7 @@
 						</router-link>
 					</TabPanel>
 				</TabView>
-				<div class="hidden max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
+				<div class="hidden z-50 max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 max-sm:bg-surface-700/70 text-black max-sm:text-white">
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
 							<Button class="text-sm text-primary-500 h-full rounded-none flex-1"
