@@ -51,14 +51,14 @@
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
 				<div class="flex flex-1 flex-col">
 					<router-link :to="{name:'index'}">
-						<Button v-tooltip.left="'主页'" class="aspect-square !p-0 text-white"  outlined
+						<Button v-tooltip.left="'主页'" class="aspect-square !p-0 text-white" outlined
 						        severity="secondary"
 						        size="small" text>
 							<span class="fa-regular fa-home"></span>
 						</Button>
 					</router-link>
 					<router-link :to="{name:'info', params:{id: data.novel.id}}">
-						<Button v-tooltip.left="'小说'" class="aspect-square !p-0 text-white"  outlined
+						<Button v-tooltip.left="'小说'" class="aspect-square !p-0 text-white" outlined
 						        severity="secondary"
 						        size="small" text>
 							<span class="fa-regular fa-book-bookmark"></span>
@@ -67,7 +67,8 @@
 				</div>
 				<div class="">
 					<Button v-if="canTranslate(data.novel?.tags || [])"
-					        v-tooltip.left="isShowTranslate ? '原文' : '翻译'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					        v-tooltip.left="isShowTranslate ? '原文' : '翻译'" class="aspect-square !p-0 text-white"
+					        outlined severity="secondary"
 					        size="small"
 					        @click="isShowTranslate = !isShowTranslate" text>
 						<template v-if="isShowTranslate">
@@ -83,7 +84,8 @@
 					        text>
 						<span class="fa-regular fa-list"></span>
 					</Button>
-					<Button v-tooltip.left="themeButton === 'light' ? '夜间' : '明亮'" class="aspect-square !p-0 text-white"
+					<Button v-tooltip.left="themeButton === 'light' ? '夜间' : '明亮'"
+					        class="aspect-square !p-0 text-white"
 					        outlined rounded severity="secondary"
 					        size="small"
 					        text @click="toggleTheme">
@@ -220,7 +222,8 @@
 							<div class="flex flex-col justify-between pb-5">
 								<div v-for="(chapter,idx) in data.chapters"
 								     class="flex w-full flex-wrap items-center gap-3 border-b p-2">
-									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}" replace>
+									<router-link :to="{name:'chapter', params:{id:data.novel.id,cid:chapter.id}}"
+									             replace>
 										<div :class="{
                                         'flex-1 flex flex-col gap-2':true,
                                         'text-primary-500': chapter.id === data.chapter?.id,
@@ -245,12 +248,12 @@
 			</div>
 		</div>
 		<div v-if="data.toggleMobile"
-		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70">
+		     class="fixed bottom-0 left-0 z-20 w-screen bg-white/70 backdrop-blur-sm max-sm:bg-surface-700/70 dark:bg-surface-700/70">
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
 				<Button v-if="canTranslate(data.novel?.tags || [])"
 				        class="h-full" outlined severity="secondary"
 				        @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;" text>
-					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-language"></span>
 						<template v-if="isShowTranslate">
 							<span class="text-sm">原文</span>
@@ -263,7 +266,7 @@
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Chapters')" text>
-					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-list"></span>
 						<span class="text-sm">目录</span>
 					</div>
@@ -271,7 +274,7 @@
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
 				        @click="toggleModal('Settings')" text>
-					<div class="flex h-full flex-col items-center justify-center text-black max-sm:text-surface-300">
+					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white max-sm:text-surface-300">
 						<span class="mb-1 text-xl fa-regular fa-gear"></span>
 						<span class="text-sm">设置</span>
 					</div>
