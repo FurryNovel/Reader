@@ -9,7 +9,7 @@ import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
 import {viteBindSSRPlugin} from "vue-unique-ssr-id";
 import topLevelAwait from "vite-plugin-top-level-await";
-import CloudflareWorkerPlugin from "./build/cloudflare-worker.cjs";
+import CloudflareWorkerPlugin from "./build/cloudflare-worker.js";
 
 
 export default defineConfig({
