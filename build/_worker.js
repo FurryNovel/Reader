@@ -5,8 +5,15 @@ export default {
         if (url.pathname.startsWith('/api/')) {
             url.hostname = env.API_HOST;
             return await fetch(new Request(url, request));
+        }else if (
+            url.pathname.startsWith('/assets/')
+            || url.pathname.startsWith('/static/')
+            || url.pathname.split('/').length > 1
+        ) {
+            url.pathname = '/client' + url.pathname;
+            return env.ASSETS.fetch(new Request(url, request));
         }
-        url.pathname = '/client' + url.pathname;
+        url.pathname = '/client/index.html';
         return env.ASSETS.fetch(new Request(url, request));
     },
 }
