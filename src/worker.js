@@ -4,7 +4,6 @@ import manifest from '@/../dist/client/.vite/ssr-manifest.json?raw';
 
 export default {
     async fetch(request, env) {
-        
         const url = new URL(request.url);
         if (
             url.pathname.startsWith('/client')
@@ -23,25 +22,21 @@ export default {
         ) {
             return await env.ASSETS.fetch('http://hostname.invalid/client' + url.pathname);
         }
-        try {
-            const renderRes = await render(url.pathname, manifest, {
-                cookies: request.headers.get('cookie'),
-            });
-            return new Response(
-                template
-                    .replace(`<!--app-html-->`, renderRes.html)
-                    .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-                    .replace(`<!--head-tags-->`, renderRes.headTags)
-                    .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
-                {
-                    status: 200,
-                    headers: {
-                        'Content-Type': 'text/html',
-                    },
+        const renderRes = await render(url.pathname, manifest, {
+            cookies: request.headers.get('cookie'),
+        });
+        return new Response(
+            template
+                .replace(`<!--app-html-->`, renderRes.html)
+                .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+                .replace(`<!--head-tags-->`, renderRes.headTags)
+                .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+            {
+                status: 200,
+                headers: {
+                    'Content-Type': 'text/html',
                 },
-            );
-        } catch (e) {
-            return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
-        }
+            },
+        );
     },
 }
