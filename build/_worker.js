@@ -14,6 +14,7 @@ export default {
             url.pathname = '/client' + url.pathname;
             return env.ASSETS.fetch(url);
         }
-        return env.ASSETS.fetch(new URL('/client/index.html'));
+        url.pathname = '/client/index.html';
+        return env.ASSETS.fetch(url);
     },
 }
