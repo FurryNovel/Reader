@@ -22,21 +22,26 @@ export default {
         ) {
             return await env.ASSETS.fetch('http://hostname.invalid/client' + url.pathname);
         }
-        const renderRes = await render(url.pathname, manifest, {
-            cookies: request.headers.get('cookie'),
-        });
-        return new Response(
-            template
-                .replace(`<!--app-html-->`, renderRes.html)
-                .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-                .replace(`<!--head-tags-->`, renderRes.headTags)
-                .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
-            {
-                status: 200,
-                headers: {
-                    'Content-Type': 'text/html',
+        try {
+            const renderRes = await render(url.pathname, manifest, {
+                cookies: request.headers.get('cookie'),
+            });
+            return new Response(
+                template
+                    .replace(`<!--app-html-->`, renderRes.html)
+                    .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+                    .replace(`<!--head-tags-->`, renderRes.headTags)
+                    .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+                {
+                    status: 200,
+                    headers: {
+                        'Content-Type': 'text/html',
+                    },
                 },
-            },
-        );
+            );
+        } catch (e) {
+            console.error(e)
+            return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
+        }
     },
 }
