@@ -24,10 +24,11 @@ import {initRouterEvent} from "@/utils/router-event.js";
 import Tooltip from "primevue/tooltip";
 
 export function createApp() {
+    let app = undefined;
     if (import.meta.env.SSR || (typeof window !== 'undefined' && window.__INITIAL_STATE__ !== null)) {
-        const app = createSSRApp(App);
+        app = createSSRApp(App);
     } else {
-        const app = createVueApp(App);
+        app = createVueApp(App);
     }
     const head = createHead();
     const router = createRouter();
