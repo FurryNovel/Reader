@@ -9,6 +9,7 @@ export default {
             url.pathname.startsWith('/assets/')
             || url.pathname.startsWith('/static/')
             || url.pathname.split('/').length > 1
+            || url.pathname.indexOf('.') !== -1
         ) {
             url.pathname = '/client' + url.pathname;
             return env.ASSETS.fetch(new Request(url, request));
