@@ -6,7 +6,7 @@ import "./assets/main.css";
 import "./assets/base.css";
 
 import App from './App.vue';
-import {createSSRApp, createApp} from 'vue';
+import {createSSRApp, createApp as createVueApp} from 'vue';
 import {createRouter} from './router';
 import PrimeVue from 'primevue/config';
 import Lara from '@/presets/lara';
@@ -27,7 +27,7 @@ export function createApp() {
     if (import.meta.env.SSR || (typeof window !== 'undefined' && window.__INITIAL_STATE__ !== null)) {
         const app = createSSRApp(App);
     } else {
-        const app = createApp(App);
+        const app = createVueApp(App);
     }
     const head = createHead();
     const router = createRouter();
