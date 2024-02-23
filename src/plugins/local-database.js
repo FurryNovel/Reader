@@ -64,6 +64,9 @@ export async function localDatabase({options, store}) {
                 }
             } else if (mutation.payload) {
                 for (const key of Object.keys(mutation.payload)) {
+                    if (mutation.payload[key] === undefined || typeof mutation.payload[key] === 'function') {
+                        continue;
+                    }
                     instance.setItem(
                         key,
                         {
