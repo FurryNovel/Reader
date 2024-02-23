@@ -50,13 +50,15 @@ export async function localDatabase({options, store}) {
             //payload
             if (mutation.events) {
                 if (mutation.events.key in state) {
-                    instance.setItem(
-                        mutation.events.key,
-                        {
-                            value: JSON.parse(JSON.stringify(state[mutation.events.key])),
-                            time: Date.now(),
-                        },
-                    );
+                    if (state[mutation.events.key] !== undefined && typeof state[mutation.events.key] !== 'function') {
+                        instance.setItem(
+                            mutation.events.key,
+                            {
+                                value: JSON.parse(JSON.stringify(state[mutation.events.key])),
+                                time: Date.now(),
+                            },
+                        );
+                    }
                 } else {
                     saveMode = 1;
                 }
