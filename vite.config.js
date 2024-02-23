@@ -9,7 +9,6 @@ import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
 import {viteBindSSRPlugin} from "vue-unique-ssr-id";
 import topLevelAwait from "vite-plugin-top-level-await";
-import CloudflareWorkerPlugin from "./build/cloudflare-worker.js";
 
 
 export default defineConfig({
@@ -119,7 +118,6 @@ export default defineConfig({
             // The function to generate import names of top-level await promise in each chunk module
             promiseImportName: i => `__tla_${i}`
         }),
-        CloudflareWorkerPlugin(),
     ],
     server: {
         proxy: {
