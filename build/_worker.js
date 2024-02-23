@@ -4,7 +4,7 @@ export default {
         if (url.pathname.startsWith('/api/')) {
             url.href = url.href.replace(url.hostname, env.API_HOST);
             url.hostname = env.API_HOST;
-            return await fetch(new Request(url, request));
+            return fetch(new Request(url, request));
         } else if (
             url.pathname.startsWith('/assets/')
             || url.pathname.startsWith('/static/')
@@ -12,8 +12,8 @@ export default {
         ) {
             url.href = url.href.replace(url.pathname, '/client' + url.pathname);
             url.pathname = '/client' + url.pathname;
-            return env.ASSETS.fetch(new Request(url));
+            return env.ASSETS.fetch(url);
         }
-        return env.ASSETS.fetch(new Request('/client/index.html'));
+        return env.ASSETS.fetch(new URL('/client/index.html'));
     },
 }
