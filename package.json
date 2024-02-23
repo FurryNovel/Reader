@@ -5,7 +5,7 @@
 		"dev": "node server.js",
 		"build": "pnpm run build:client && pnpm run build:server && pnpm run build:worker",
 		"build:client": "vite build --outDir dist/client --ssrManifest",
-		"build:server": "vite build --outDir dist/server --ssr src/entry-server.js",
+		"build:server": "vite build --outDir dist/server --ssr src/worker.js",
 		"build:worker": "node build/cloudflare-worker.js"
 	},
 	"dependencies": {
@@ -28,7 +28,7 @@
 		"mitt": "^3.0.1",
 		"noto-sans-sc": "^36.0.1",
 		"pinia": "^2.1.7",
-		"primevue": "^3.47.2",
+		"primevue": "^3.49.0",
 		"swiper": "^11.0.5",
 		"vue": "^3.4.18",
 		"vue-cookies": "^1.8.3",
