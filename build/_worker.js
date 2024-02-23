@@ -12,10 +12,8 @@ export default {
         ) {
             url.href = url.href.replace(url.pathname, '/client' + url.pathname);
             url.pathname = '/client' + url.pathname;
-            return env.ASSETS.fetch(new Request(url, request));
+            return env.ASSETS.fetch(new Request(url));
         }
-        url.href = url.href.replace(url.pathname, '/client/index.html');
-        url.pathname = '/client/index.html';
-        return env.ASSETS.fetch(new Request(url, request));
+        return env.ASSETS.fetch(new Request('/client/index.html'));
     },
 }
