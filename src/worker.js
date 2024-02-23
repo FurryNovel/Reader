@@ -40,8 +40,8 @@ export default {
                 },
             );
         } catch (e) {
-            console.error(e)
-            return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
+            return new Response(e.stack, {status: 500});
+            //return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
         }
     },
 }
