@@ -130,9 +130,6 @@ export default defineConfig({
     },
     build: {
         minify: false,
-        rollupOptions: {
-            external: ['path'],
-        },
     },
     resolve: {
         alias: {
