@@ -12,6 +12,7 @@ export default {
         ) {
             url.href = url.href.replace(url.pathname, '/client' + url.pathname);
             url.pathname = '/client' + url.pathname;
+            console.log(url)
             return env.ASSETS.fetch(url);
         }
         url.href = url.href.replace(url.pathname, '/client/index.html');
