@@ -5,7 +5,7 @@ export default {
             url.pathname.startsWith('/client')
             || url.pathname.startsWith('/server')
         ) {
-            return await env.ASSETS.fetch(url.pathname);
+            return await env.ASSETS.fetch(`http://hostname.invalid${url.pathname}`);
         }
         if (url.pathname.startsWith('/api/')) {
             url.href = url.href.replace(url.hostname, env.API_HOST);
@@ -16,8 +16,8 @@ export default {
             || url.pathname.startsWith('/static/')
             || url.pathname.indexOf('.') !== -1
         ) {
-            return await env.ASSETS.fetch('/client' + url.pathname);
+            return await env.ASSETS.fetch('http://hostname.invalid/client' + url.pathname);
         }
-        return await env.ASSETS.fetch('/client/index.html');
+        return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
     },
 }
