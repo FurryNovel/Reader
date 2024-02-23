@@ -81,11 +81,6 @@ export default defineConfig({
                 PrimeVueResolver()
             ]
         }),
-        inject({
-            $: 'jquery',  // 这里会自动载入 node_modules 中的 jquery   jquery全局变量
-            jQuery: 'jquery',
-            'windows.jQuery': 'jquery'
-        }),
         VitePWA({
             registerType: 'autoUpdate',
             workbox: {
