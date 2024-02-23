@@ -1,6 +1,7 @@
 export default {
     async fetch(request, env) {
         const url = new URL(request.url);
+        console.log(url, request)
         if (
             url.pathname.startsWith('/client')
             || url.pathname.startsWith('/server')
