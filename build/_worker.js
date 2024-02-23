@@ -1,6 +1,12 @@
 export default {
     async fetch(request, env) {
         const url = new URL(request.url);
+        if (
+            url.pathname.startsWith('/client')
+            || url.pathname.startsWith('/server')
+        ) {
+            return env.ASSETS.fetch(request);
+        }
         if (url.pathname.startsWith('/api/')) {
             url.href = url.href.replace(url.hostname, env.API_HOST);
             url.hostname = env.API_HOST;
@@ -12,7 +18,6 @@ export default {
         ) {
             url.href = url.href.replace(url.pathname, '/client' + url.pathname);
             url.pathname = '/client' + url.pathname;
-            console.log(url)
             return env.ASSETS.fetch(url);
         }
         url.href = url.href.replace(url.pathname, '/client/index.html');
