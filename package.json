@@ -3,8 +3,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node server.js",
+		"build": "pnpm run build:client && pnpm run build:server",
 		"build:client": "vite build --outDir dist/client --ssrManifest",
-		"build:server": "vite build --outDir dist/server --ssr src/entry-server.js"
+		"build:server": "vite build --outDir dist/server --ssr src/entry-server.js",
+		"build:worker": "node build/cloudflare-worker.cjs"
 	},
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",
@@ -18,7 +20,6 @@
 		"@vueuse/core": "^10.7.2",
 		"axios": "^1.6.7",
 		"cookie-parser": "^1.4.6",
-		"fontawesome-6-pro": "^6.4.0",
 		"hash-wasm": "^4.11.0",
 		"jquery": "^3.7.1",
 		"localforage": "^1.10.0",

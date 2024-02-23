@@ -9,6 +9,7 @@ import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
 import {viteBindSSRPlugin} from "vue-unique-ssr-id";
 import topLevelAwait from "vite-plugin-top-level-await";
+import CloudflareWorkerPlugin from "./build/cloudflare-worker.cjs";
 
 
 export default defineConfig({
@@ -81,11 +82,6 @@ export default defineConfig({
                 PrimeVueResolver()
             ]
         }),
-        inject({
-            $: 'jquery',  // 这里会自动载入 node_modules 中的 jquery   jquery全局变量
-            jQuery: 'jquery',
-            'windows.jQuery': 'jquery'
-        }),
         VitePWA({
             registerType: 'autoUpdate',
             workbox: {
@@ -122,7 +118,8 @@ export default defineConfig({
             promiseExportName: '__tla',
             // The function to generate import names of top-level await promise in each chunk module
             promiseImportName: i => `__tla_${i}`
-        })
+        }),
+        CloudflareWorkerPlugin(),
     ],
     server: {
         proxy: {

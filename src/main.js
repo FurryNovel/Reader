@@ -1,4 +1,4 @@
-import "fontawesome-6-pro/css/all.css";
+import "./libs/fontawesome-6-pro/css/all.css";
 import "misans/lib/Normal/MiSans-Regular.min.css";
 import "noto-sans-sc/noto_sans_sc_regular/css.css";
 
