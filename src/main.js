@@ -6,7 +6,7 @@ import "./assets/main.css";
 import "./assets/base.css";
 
 import App from './App.vue';
-import {createSSRApp} from 'vue';
+import {createSSRApp, createApp} from 'vue';
 import {createRouter} from './router';
 import PrimeVue from 'primevue/config';
 import Lara from '@/presets/lara';
@@ -24,7 +24,11 @@ import {initRouterEvent} from "@/utils/router-event.js";
 import Tooltip from "primevue/tooltip";
 
 export function createApp() {
-    const app = createSSRApp(App);
+    if (import.meta.env.SSR || (typeof window !== 'undefined' && window.__INITIAL_STATE__ !== null)) {
+        const app = createSSRApp(App);
+    } else {
+        const app = createApp(App);
+    }
     const head = createHead();
     const router = createRouter();
     const pinia = createPinia();
