@@ -1,0 +1,33 @@
+{
+  "name": "fontawesome-6-pro",
+  "version": "6.4.0",
+  "description": "Font Awesome 6 Pro",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmulGandhiCoding/FontAwesome.git"
+  },
+  "keywords": [
+    "fontawesome",
+    "fontawesome",
+    "6",
+    "icon",
+    "icons",
+    "fontawesome",
+    "pro",
+    "pro",
+    "font",
+    "awesome",
+    "6",
+    "pro"
+  ],
+  "author": "AmulGandhiCoding",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmulGandhiCoding/FontAwesome/issues"
+  },
+  "homepage": "https://github.com/AmulGandhiCoding/FontAwesome#readme"
+}
