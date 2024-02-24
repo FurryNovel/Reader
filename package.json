@@ -5,7 +5,7 @@
 		"dev": "node server.js",
 		"build": "pnpm run build:client && pnpm run build:server",
 		"build:client": "vite build --outDir dist/client --ssrManifest",
-		"build:server": "vite build --outDir dist/server --ssr src/worker.js"
+		"build:server": "vite build --outDir dist/server --ssr server-production.js"
 	},
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",

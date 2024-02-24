@@ -139,4 +139,8 @@ export default defineConfig({
     define: {
         __APP_VERSION: `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}.${new Date().getHours()}`,
     },
+    ssr: {
+        external: true,
+        noExternal: ['primevue'],
+    },
 });
