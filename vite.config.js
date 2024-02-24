@@ -84,7 +84,7 @@ export default defineConfig({
         VitePWA({
             registerType: 'autoUpdate',
             workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+                globPatterns: ['**/*.{js,css,ico,png,svg,ttf,woff,woff2,json,webp}'],
                 navigateFallbackDenylist: [
                     /^\/api/,
                     /^\/cdn-cgi/,
@@ -138,5 +138,9 @@ export default defineConfig({
     },
     define: {
         __APP_VERSION: `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}.${new Date().getHours()}`,
+    },
+    ssr: {
+        external: true,
+        noExternal: ['primevue'],
     },
 });
