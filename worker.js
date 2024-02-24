@@ -20,10 +20,12 @@ routes.forEach((route) => {
         route = route.slice(0, -1);
         route = route + '[[catchall]]';
     }
-    if (route.split('/').length > 1) {
-        Array.from(route.split('/')).forEach((r) => {
-            _worker = _worker.replace(`'./../`, `'./../../`);
-        });
+    if (route.split('/').length > 0) {
+        _worker = `import worker from "./../${Array.from({length: route.split('/').length}).map((_, i) => {
+            return '../';
+        }).join('')}dist/server/worker.js"\n` + _worker;
+    } else {
+        _worker = `import worker from "./../dist/server/worker.js"\n` + _worker;
     }
     const toPath = path.resolve(basePath, `${route}.js`);
     fs.mkdirSync(path.dirname(toPath), {recursive: true});
