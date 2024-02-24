@@ -1,12 +1,9 @@
-import {createCRC32} from "hash-wasm";
 import {useServerSideRenderStore} from "@/stores/ssr.js";
 import {useId} from "vue-unique-ssr-id";
-
-const crc32Instance = (await createCRC32());
+import CRC32 from "crc-32";
 
 export function getReqId(params = {}) {
-    // noinspection JSCheckFunctionSignatures
-    return crc32Instance.init().update(JSON.stringify(params)).digest('hex', null);
+    return CRC32.str(JSON.stringify(params)).toString(16);
 }
 
 
