@@ -21,7 +21,7 @@ routes.forEach((route) => {
         route = route + '[[catchall]]';
     }
     if (route.split('/').length > 0) {
-        _worker = `import worker from "./../${Array.from({length: route.split('/').length}).map((_, i) => {
+        _worker = `import worker from "./${Array.from({length: route.split('/').length}).map((_, i) => {
             return '../';
         }).join('')}dist/server/worker.js"\n` + _worker;
     } else {
