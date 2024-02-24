@@ -6,7 +6,7 @@
 		"build": "pnpm run build:client && pnpm run build:server && pnpm run build:worker",
 		"build:client": "vite build --outDir dist/client --ssrManifest",
 		"build:server": "vite build --outDir dist/server --ssr src/worker.js",
-		"build:worker": "node build/cloudflare-worker.js"
+		"build:worker": "node worker.js"
 	},
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",

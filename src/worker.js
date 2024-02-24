@@ -3,27 +3,10 @@ import template from '@/../dist/client/index.html?raw';
 import manifest from '@/../dist/client/.vite/ssr-manifest.json?raw';
 
 export default {
-    async fetch(request, env) {
+    async fetch(request) {
         try {
-            const url = new URL(request.url);
-            if (
-                url.pathname.startsWith('/client')
-                || url.pathname.startsWith('/server')
-            ) {
-                return await env.ASSETS.fetch(`http://hostname.invalid${url.pathname}`);
-            }
-            if (url.pathname.startsWith('/api/')) {
-                url.href = url.href.replace(url.hostname, env.API_HOST);
-                url.hostname = env.API_HOST;
-                return fetch(new Request(url, request));
-            } else if (
-                url.pathname.startsWith('/assets/')
-                || url.pathname.startsWith('/static/')
-                || url.pathname.indexOf('.') !== -1
-            ) {
-                return await env.ASSETS.fetch('http://hostname.invalid/client' + url.pathname);
-            }
-            const renderRes = await render(url.pathname, manifest, {
+            const url = request.originalUrl || request.url;
+            const renderRes = await render(url, manifest, {
                 cookies: request.headers.get('cookie'),
             });
             return new Response(
@@ -41,7 +24,6 @@ export default {
             );
         } catch (e) {
             return new Response(e.stack, {status: 500});
-            //return await env.ASSETS.fetch('http://hostname.invalid/client/index.html');
         }
     },
 }
