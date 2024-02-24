@@ -1,6 +1,6 @@
 import {render} from '@/entry-server';
-import template from '@/../dist/client/index.html?raw';
-import manifest from '@/../dist/client/.vite/ssr-manifest.json?raw';
+import template from '@/../dist/index.html?raw';
+import manifest from '@/../dist/.vite/ssr-manifest.json?raw';
 
 export default {
     async fetch(request) {
