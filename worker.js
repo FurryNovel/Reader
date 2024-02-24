@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const worker = fs.readFileSync(path.resolve('./cloudflare/functions/[[catchall]].js'), 'utf-8');
 
-const basePath = path.resolve('./dist/functions/');
+const basePath = path.resolve('./functions/');
 
 const routes = [
     'index',
