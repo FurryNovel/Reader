@@ -3,10 +3,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node server.js",
-		"build": "pnpm run build:client && pnpm run build:server && pnpm run build:worker",
+		"build": "pnpm run build:client && pnpm run build:server",
 		"build:client": "vite build --outDir dist/client --ssrManifest",
 		"build:server": "vite build --outDir dist/server --ssr src/worker.js",
-		"build:worker": "node worker.js"
+		"build:worker": "vite build --outDir dist --ssrManifest && pnpm run build:server && node worker.js"
 	},
 	"dependencies": {
 		"@duannx/vue-client-only": "^1.0.3",
