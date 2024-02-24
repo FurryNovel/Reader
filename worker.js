@@ -15,12 +15,18 @@ const routes = [
 ];
 
 routes.forEach((route) => {
+    let _worker = worker;
     if (route.endsWith('*')) {
         route = route.slice(0, -1);
         route = route + '[[catchall]]';
     }
+    if (route.split('/').length > 1) {
+        Array.from(route.split('/')).forEach((r) => {
+            _worker = _worker.replace(`'./../`, `'./../../`);
+        });
+    }
     const toPath = path.resolve(basePath, `${route}.js`);
     fs.mkdirSync(path.dirname(toPath), {recursive: true});
-    fs.writeFileSync(toPath, worker);
+    fs.writeFileSync(toPath, _worker);
     console.log(`Created function for route: ${route}.js`);
 });
