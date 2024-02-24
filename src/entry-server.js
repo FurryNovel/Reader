@@ -1,6 +1,5 @@
 import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
-import {basename} from 'path';
 import {renderSSRHead} from '@unhead/ssr'
 import devalue from "@nuxt/devalue";
 import {useServerSideRenderStore} from "@/stores/ssr.js";
@@ -30,7 +29,7 @@ function renderPreloadLinks(modules, manifest) {
             files.forEach((file) => {
                 if (!seen.has(file)) {
                     seen.add(file);
-                    const filename = basename(file);
+                    const filename = new URL(file, 'http://localhost').pathname;
                     if (manifest[filename] ?? null) {
                         for (const depFile of manifest[filename]) {
                             links += renderPreloadLink(depFile);

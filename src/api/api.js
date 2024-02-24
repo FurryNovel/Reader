@@ -1,7 +1,6 @@
 import request from "@/utils/request.js";
 
 import {LRUCache} from 'lru-cache';
-import {createCRC32} from "hash-wasm";
 
 const nil = (args) => args;
 
