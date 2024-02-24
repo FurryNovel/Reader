@@ -6,7 +6,13 @@ import express from 'express';
 
 const app = express();
 
-app.use('/', express.static(path.join('./../client')));
+const assets = express.static(path.join('./../client'));
+app.use('/', async (req, res, next) => {
+    if (req.url.endsWith('/')) {
+        return next();
+    }
+    return assets(req, res, next);
+});
 
 app.get('*', async (req, res) => {
     try {
