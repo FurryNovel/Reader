@@ -15,7 +15,7 @@ const toJson = (data) => {
 }
 
 const service = axios.create({
-    baseURL: (import.meta.env.SSR ? config.base : '') + `/api`,
+    baseURL: ((import.meta.env.SSR || import.meta.env.MODE === 'dev') ? config.base : '') + `/api`,
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
