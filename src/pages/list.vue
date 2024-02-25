@@ -132,7 +132,11 @@ function onInit() {
         data.mode = props.mode;
     }
     if (router.currentRoute.value.query.tags) {
-        data.tags = router.currentRoute.value.query.tags.filter(tag => tag !== '');
+        if (typeof router.currentRoute.value.query.tags === 'string') {
+            data.tags = router.currentRoute.value.query.tags.split(',').filter(tag => tag !== '');
+        } else {
+            data.tags = router.currentRoute.value.query.tags.filter(tag => tag !== '');
+        }
         data.preTags = data.tags.join(',');
     }
     if (router.currentRoute.value.query.type) {
