@@ -440,6 +440,9 @@ function loadData() {
             id: data.id,
             onCache: (novel) => {
                 data.novel = novel;
+                if (data.novel) {
+                    data.novel.desc = data.novel.desc.replace('\r', '');
+                }
                 hitCaches.push('novel');
                 if (hitCaches.length === 2) {
                     data.loading = false;
@@ -448,6 +451,9 @@ function loadData() {
             ignoreReq: import.meta.env.SSR,
         }).then((novel) => {
             data.novel = novel;
+            if (data.novel) {
+                data.novel.desc = data.novel.desc.replace('\r', '');
+            }
         }).catch((e) => {
             data.novel = null;
         })
