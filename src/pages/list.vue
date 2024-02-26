@@ -1,7 +1,7 @@
 <template>
 	<div class="flex h-full w-full flex-col">
-		<NavBar v-if="data.keyword === '' && props.mode === 'search'" :show-in="['mobile']"
-		        :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
+		<NavBar v-if="data.keyword === '' && props.mode === 'search'" :append-buttons="['back', 'home']"
+		        :hide-buttons="['icon']" :show-in="['mobile']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
 				<div class="m-2 flex items-center justify-between pl-2">
@@ -21,16 +21,23 @@
 							热门小说
 						</template>
 					</div>
-					<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="条件筛选" @click="showFilter"
-					        size="small">
-						<i class="mr-2 fa-regular fa-filter"></i>
-						条件筛选
-					</Button>
+					<div class="mr-2 flex gap-3">
+						<SelectButton v-model="data.type" :allowEmpty="false" :options="[{ name: '最新', value: 'latest'},{ name: '热门', value: 'popular'}]"
+						              aria-labelledby="basic"
+						              optionLabel="name"
+						              optionValue="value" size="small"
+						              @change="reloadNovels"/>
+						<Button class="text-sm text-primary-500 dark:text-white" label="条件筛选" size="small"
+						        @click="showFilter">
+							<i class="mr-2 fa-regular fa-filter"></i>
+							条件筛选
+						</Button>
+					</div>
 				</div>
 				<NovelList ref="novelList" v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
-				           :limit="8" :tags="data.tags"
-				           :userId="null" :show-pagination="true"
-				           listStyle="style2" order="desc" :type="data.type"/>
+				           :limit="8" :show-pagination="true"
+				           :tags="data.tags" :type="data.type"
+				           :userId="null" listStyle="style2" order="desc"/>
 			</template>
 			<template v-else>
 				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] max-sm:h-full w-full">
@@ -41,35 +48,33 @@
 						<InputText id="keyword" v-model="data.preKeyword"
 						           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0"
 						           placeholder="请输入关键字：小说名、作者名、简介等"/>
-						<Button label="搜索" @click="data.keyword = data.preKeyword" class="dark:text-white"/>
+						<Button class="dark:text-white" label="搜索" @click="data.keyword = data.preKeyword"/>
 					</InputGroup>
 				</div>
 			</template>
 		</div>
 	</div>
-	<ConfirmPopup group="filters">
-		<template #container="{ message, acceptCallback, rejectCallback }">
-			<div class="rounded-xl p-3 w-[300px]">
-				<div class="mb-2 flex flex-col">
-					<span class="font-bold">名称</span>
-					<InputText id="keyword" v-model="data.preKeyword" size="small"
-					           class="text-sm"
-					           placeholder="请输入关键字：小说名、作者名、简介等"/>
-				</div>
-				<div class="mb-2 flex flex-col">
-					<span class="font-bold">标签</span>
-					<InputText id="keyword" v-model="data.preTags" size="small"
-					           class="text-sm"
-					           placeholder="使用半角逗号间隔多个标签"/>
-				</div>
-				<div class="mt-3 flex items-center justify-end gap-2">
-					<Button label="确定" @click="acceptCallback" size="small"></Button>
-					<Button label="清除" outlined @click="rejectCallback" severity="secondary" size="small"
-					        text></Button>
-				</div>
+	<OverlayPanel ref="filtersPanel">
+		<div class="rounded-xl p-3 w-[300px] flex flex-col gap-3">
+			<div class="flex flex-col gap-2">
+				<span class="font-bold">名称</span>
+				<InputText id="keyword" v-model="data.preKeyword" class="text-sm"
+				           placeholder="请输入关键字：小说名、作者名、简介等"
+				           size="small"/>
 			</div>
-		</template>
-	</ConfirmPopup>
+			<div class="flex flex-col gap-2">
+				<span class="font-bold">标签</span>
+				<InputText id="keyword" v-model="data.preTags" class="text-sm"
+				           placeholder="使用半角逗号间隔多个标签"
+				           size="small"/>
+			</div>
+			<div class="flex items-center justify-end gap-2">
+				<Button class="dark:text-white" label="确定" size="small" @click="applyFilters"></Button>
+				<Button label="清除" outlined severity="secondary" size="small" text
+				        @click="clearFilters"></Button>
+			</div>
+		</div>
+	</OverlayPanel>
 </template>
 
 <script setup>
@@ -77,10 +82,10 @@ import NovelList from "@/components/views/NovelList.vue";
 import InputGroup from "primevue/inputgroup";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import NavBar from "@/components/layout/NavBar.vue";
-import ConfirmPopup from "primevue/confirmpopup";
-import {useConfirm} from "primevue/useconfirm";
+import OverlayPanel from 'primevue/overlaypanel';
+import SelectButton from "primevue/selectbutton";
 
-const confirm = useConfirm();
+const filtersPanel = ref(null);
 const novelList = ref(null);
 const router = useRouter();
 const data = reactive({
@@ -156,32 +161,34 @@ onBeforeRouteLeave((to, from, next) => {
 });
 
 function showFilter(event) {
-    confirm.require({
-        target: event.currentTarget,
-        group: 'filters',
-        position: 'bottomleft',
-        accept: () => {
-            let tags = data.preTags.split(',');
-            if (tags && tags.length > 0) {
-                tags = tags.map(tag => tag.trim());
-            } else {
-                tags = [];
-            }
-            data.keyword = data.preKeyword;
-            data.tags = tags;
-            nextTick(() => {
-                novelList.value?.reload();
-            });
-        },
-        reject: () => {
-            data.preKeyword = '';
-            data.preTags = '';
-            data.keyword = '';
-            data.tags = [];
-            nextTick(() => {
-                novelList.value?.reload();
-            });
-        }
+    filtersPanel.value.toggle(event);
+}
+
+function applyFilters() {
+    let tags = data.preTags.split(',');
+    if (tags && tags.length > 0) {
+        tags = tags.map(tag => tag.trim());
+    } else {
+        tags = [];
+    }
+    data.keyword = data.preKeyword;
+    data.tags = tags;
+    reloadNovels();
+    filtersPanel.value.hide();
+}
+
+function clearFilters() {
+    data.preKeyword = '';
+    data.preTags = '';
+    data.keyword = '';
+    data.tags = [];
+    reloadNovels();
+    filtersPanel.value.hide();
+}
+
+function reloadNovels() {
+    nextTick(() => {
+        novelList.value?.reload();
     });
 }
 </script>
