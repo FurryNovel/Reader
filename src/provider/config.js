@@ -5,7 +5,7 @@ import {useSSRContext} from "vue";
 export const baseConfig = {
     guildVersion: 0,
     chapter: {
-        bgColor: 'rgba(232,232,232,1)',
+        bgColor: '#E8E8E8',
         font: 'MiSans',
         fontColor: '#000000',
         fontSize: 20,
