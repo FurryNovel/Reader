@@ -47,29 +47,27 @@
 			</template>
 		</div>
 	</div>
-	<ConfirmPopup group="filters">
-		<template #container="{ message, acceptCallback, rejectCallback }">
-			<div class="rounded-xl p-3 w-[300px]">
-				<div class="mb-2 flex flex-col">
-					<span class="font-bold">名称</span>
-					<InputText id="keyword" v-model="data.preKeyword" size="small"
-					           class="text-sm"
-					           placeholder="请输入关键字：小说名、作者名、简介等"/>
-				</div>
-				<div class="mb-2 flex flex-col">
-					<span class="font-bold">标签</span>
-					<InputText id="keyword" v-model="data.preTags" size="small"
-					           class="text-sm"
-					           placeholder="使用半角逗号间隔多个标签"/>
-				</div>
-				<div class="mt-3 flex items-center justify-end gap-2">
-					<Button label="确定" @click="acceptCallback" size="small"></Button>
-					<Button label="清除" outlined @click="rejectCallback" severity="secondary" size="small"
-					        text></Button>
-				</div>
+	<OverlayPanel ref="filtersPanel">
+		<div class="rounded-xl p-3 w-[300px] flex flex-col gap-3">
+			<div class="flex flex-col gap-2">
+				<span class="font-bold">名称</span>
+				<InputText id="keyword" v-model="data.preKeyword" size="small"
+				           class="text-sm"
+				           placeholder="请输入关键字：小说名、作者名、简介等"/>
 			</div>
-		</template>
-	</ConfirmPopup>
+			<div class="flex flex-col gap-2">
+				<span class="font-bold">标签</span>
+				<InputText id="keyword" v-model="data.preTags" size="small"
+				           class="text-sm"
+				           placeholder="使用半角逗号间隔多个标签"/>
+			</div>
+			<div class="flex items-center justify-end gap-2">
+				<Button label="确定" @click="applyFilters" size="small" class="dark:text-white"></Button>
+				<Button label="清除" outlined @click="clearFilters" severity="secondary" size="small"
+				        text></Button>
+			</div>
+		</div>
+	</OverlayPanel>
 </template>
 
 <script setup>
@@ -77,10 +75,9 @@ import NovelList from "@/components/views/NovelList.vue";
 import InputGroup from "primevue/inputgroup";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import NavBar from "@/components/layout/NavBar.vue";
-import ConfirmPopup from "primevue/confirmpopup";
-import {useConfirm} from "primevue/useconfirm";
+import OverlayPanel from 'primevue/overlaypanel';
 
-const confirm = useConfirm();
+const filtersPanel = ref(null);
 const novelList = ref(null);
 const router = useRouter();
 const data = reactive({
@@ -156,33 +153,33 @@ onBeforeRouteLeave((to, from, next) => {
 });
 
 function showFilter(event) {
-    confirm.require({
-        target: event.currentTarget,
-        group: 'filters',
-        position: 'bottomleft',
-        accept: () => {
-            let tags = data.preTags.split(',');
-            if (tags && tags.length > 0) {
-                tags = tags.map(tag => tag.trim());
-            } else {
-                tags = [];
-            }
-            data.keyword = data.preKeyword;
-            data.tags = tags;
-            nextTick(() => {
-                novelList.value?.reload();
-            });
-        },
-        reject: () => {
-            data.preKeyword = '';
-            data.preTags = '';
-            data.keyword = '';
-            data.tags = [];
-            nextTick(() => {
-                novelList.value?.reload();
-            });
-        }
+    filtersPanel.value.toggle(event);
+}
+
+function applyFilters() {
+    let tags = data.preTags.split(',');
+    if (tags && tags.length > 0) {
+        tags = tags.map(tag => tag.trim());
+    } else {
+        tags = [];
+    }
+    data.keyword = data.preKeyword;
+    data.tags = tags;
+    nextTick(() => {
+        novelList.value?.reload();
     });
+    filtersPanel.value.hide();
+}
+
+function clearFilters() {
+    data.preKeyword = '';
+    data.preTags = '';
+    data.keyword = '';
+    data.tags = [];
+    nextTick(() => {
+        novelList.value?.reload();
+    });
+    filtersPanel.value.hide();
 }
 </script>
 
