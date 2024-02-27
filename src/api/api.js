@@ -97,6 +97,7 @@ export function defineApi({
             return params[key] ?? data[key] ?? match;
         });
         let id = data[pk] ?? data.id ?? data.pk ?? data;
+        
         if (store) {
             store = store();
         }

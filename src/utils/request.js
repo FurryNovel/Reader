@@ -1,7 +1,8 @@
 // noinspection JSUnresolvedReference
 
-import axios, {AxiosError} from 'axios';
+import axios from 'axios';
 import config from "@/config.js";
+import fetchAdapter from "@haverstack/axios-fetch-adapter";
 
 const toJson = (data) => {
     if (typeof data === 'string') {
@@ -20,9 +21,9 @@ const service = axios.create({
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
     },
+    adapter: (fetchAdapter?.default) ? fetchAdapter.default : fetchAdapter,
     retryCount: 1,
 });
-
 
 service.interceptors.response.use(res => {
     const data = res.data || {code: res.status, msg: '未知错误', data: {}}
