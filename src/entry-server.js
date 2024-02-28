@@ -6,6 +6,7 @@ import {useServerSideRenderStore} from "@/stores/ssr.js";
 
 import template from './../dist/client/index.html?raw';
 import manifest from './../dist/client/.vite/ssr-manifest.json?raw';
+import {initCloudflareEnv as _initCloudflareEnv, useCloudflareEnv as _useCloudflareEnv} from "@/utils/CloudflareEnv.js";
 
 export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head, pinia} = await createApp();
@@ -69,13 +70,15 @@ function renderPreloadLink(file) {
 
 /**
  * @param request{Request}
+ * @param env{Env}
  * @returns {Promise<*>}
  */
-export async function handleRequest(request){
+export async function handleRequest(request, env = null) {
     try {
         const url = new URL(request.url);
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: request.headers.cookie,
+            env: env,
         });
         return new Response(
             template
@@ -91,7 +94,7 @@ export async function handleRequest(request){
             }
         );
     } catch (e) {
-        if (request.url.indexOf('debug') !== -1){
+        if (request.url.indexOf('debug') !== -1) {
             return new Response(e.stack, {status: 500});
         }
         return new Response(
@@ -105,3 +108,6 @@ export async function handleRequest(request){
         );
     }
 }
+
+export const initCloudflareEnv = _initCloudflareEnv;
+export const useCloudflareEnv =  _useCloudflareEnv;

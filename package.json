@@ -39,6 +39,7 @@
 		"workbox-window": "^7.0.0"
 	},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240222.0",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@vitejs/plugin-vue": "latest",
 		"@vitejs/plugin-vue-jsx": "latest",

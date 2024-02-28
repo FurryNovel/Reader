@@ -1,67 +1,6 @@
 import request from "@/utils/request.js";
 
-import {LRUCache} from 'lru-cache';
-
 const nil = (args) => args;
-
-export class CacheStore {
-    store = null;
-    
-    constructor(store = null) {
-        this.store = store;
-    }
-    
-    async find(id) {
-        throw new Error('Please initialize the store first');
-    }
-    
-    save(id, data) {
-        throw new Error('Please initialize the store first');
-    }
-}
-
-export class LRUCacheStore extends CacheStore {
-    constructor(store = null, params = {}) {
-        super(store);
-        if (this.store instanceof LRUCache) {
-            throw new Error('store must be a LRUCache')
-        } else {
-            this.store = new LRUCache({
-                max: 500,
-                ttl: 1000 * 60 * 8,
-                ...params,
-            });
-        }
-    }
-    
-    async find(id) {
-        let data = this.store.get(id);
-        return data ? JSON.parse(data) : null;
-    }
-    
-    save(id, data) {
-        this.store.set(id, JSON.stringify(data));
-    }
-}
-
-export class PiniaCacheStore extends CacheStore {
-    constructor(store = null) {
-        super(store);
-        if (this.store === null) {
-            throw new Error('store must be a Pinia store')
-        }
-    }
-    
-    async find(id) {
-        return this.store.find(id);
-    }
-    
-    save(id, data) {
-        this.store.save(id, data);
-    }
-}
-
-export const defaultCacheStore = new CacheStore();
 
 
 /**
@@ -114,7 +53,7 @@ export function defineApi({
         resolve(request[method](api, {
             data: data,
             params: params,
-        }).then(res => {
+        }).then(async res => {
             let responseData;
             if (type === 'data') {
                 responseData = onSuccess(res?.data) ?? res?.data;
@@ -123,7 +62,7 @@ export function defineApi({
             }
             if (responseData) {
                 if (store) {
-                    store.save(id, responseData);
+                    await store.save(id, responseData);
                 }
                 return responseData;
             }

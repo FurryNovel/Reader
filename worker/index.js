@@ -1,4 +1,7 @@
+//@from "@/entry-server.js";
 import {handleRequest} from "./../dist/server/entry-server.js";
+//@from "@/utils/CloudflareEnv.js";
+import {initCloudflareEnv} from "./../dist/server/entry-server.js";
 
 export default {
     async fetch(request, env) {
@@ -8,6 +11,21 @@ export default {
             return await handleApiRequest(request);
         }
         try {
+            const cache = await caches.default;
+            const cacheWrapper = {
+                put: async (key, value) => {
+                    await cache.put(key, value);
+                },
+                match: async (key) => {
+                    return await cache.match(key);
+                },
+            }
+            
+            initCloudflareEnv({
+                env,
+                cache: cacheWrapper
+            });
+            
             if (isAssetUrl(request.url)) {
                 url.pathname = '/client' + pathname;
                 return await env.ASSETS.fetch(url);
@@ -15,7 +33,7 @@ export default {
         } catch (e) {
             return new Response(e.stack, {status: 500});
         }
-        return await handleRequest(request);
+        return await handleRequest(request, env);
     },
 }
 
