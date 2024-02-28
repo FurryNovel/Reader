@@ -1,10 +1,11 @@
 import {useNovelStore} from "@/stores/novels.js";
-import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
+import {defineApi} from "@/api/api.js";
+import {LRUCacheStore, PiniaCacheStore, SmartCacheStore} from "@/utils/cache.js";
 import {getReqId} from "@/utils/ssr.js";
 
 
-const novelCacheStore = new LRUCacheStore(null, {ttl: 15 * 60000});
-const novelsCacheStore = new LRUCacheStore(null, {ttl: 30 * 60000});
+const novelCacheStore = new SmartCacheStore('novel', {ttl: 15 * 60000});
+const novelsCacheStore = new SmartCacheStore('novels', {ttl: 30 * 60000});
 
 export function loadNovel({id, onCache, ignoreReq}) {
     return defineApi({

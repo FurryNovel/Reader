@@ -4,12 +4,21 @@ import {
     createWebHistory,
 } from 'vue-router';
 
+import Index from './pages/index.vue';
+import Novel from './pages/info.vue';
+import Chapter from './pages/chapter.vue';
+import List from './pages/list.vue';
+import Bookmark from './pages/bookmark.vue';
+import About from './pages/about.vue';
+import Settings from './pages/settings.vue';
+
+
 const items = [
     {
         path: '/',
         alias: '/index',
         name: 'index',
-        component: () => import('./pages/index.vue'),
+        component: Index,
         meta: {
             title: '主页',
             icon: {
@@ -24,7 +33,7 @@ const items = [
     {
         path: '/novel',
         name: 'list',
-        component: () => import('./pages/list.vue'),
+        component: List,
         props: {
             mode: 'list',
         },
@@ -42,7 +51,7 @@ const items = [
     {
         path: '/bookmark',
         name: 'bookmark',
-        component: () => import('./pages/bookmark.vue'),
+        component: Bookmark,
         meta: {
             title: '书架',
             icon: {
@@ -57,7 +66,7 @@ const items = [
     {
         path: '/about',
         name: 'about',
-        component: () => import('./pages/about.vue'),
+        component: About,
         meta: {
             title: '关于',
             icon: {
@@ -72,7 +81,7 @@ const items = [
     {
         path: '/settings',
         name: 'settings',
-        component: () => import('./pages/settings.vue'),
+        component: Settings,
         meta: {
             title: '设置',
             layout: {
@@ -83,7 +92,7 @@ const items = [
     {
         path: '/search',
         name: 'search',
-        component: () => import('./pages/list.vue'),
+        component: List,
         props: {
             mode: 'search'
         },
@@ -105,7 +114,7 @@ const items = [
             {
                 path: 'chapter/:cid(\\d+)',
                 name: 'chapter',
-                component: () => import('./pages/chapter.vue'),
+                component: Chapter,
                 props: {},
                 meta: {
                     title: '章节',
@@ -121,7 +130,7 @@ const items = [
             {
                 path: '',
                 name: 'info',
-                component: () => import('./pages/info.vue'),
+                component: Novel,
                 props: {},
                 meta: {
                     title: '小说详情',

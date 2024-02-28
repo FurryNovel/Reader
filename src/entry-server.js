@@ -4,6 +4,10 @@ import {renderSSRHead} from '@unhead/ssr'
 import devalue from "@nuxt/devalue";
 import {useServerSideRenderStore} from "@/stores/ssr.js";
 
+import template from './../dist/client/index.html?raw';
+import manifest from './../dist/client/.vite/ssr-manifest.json?raw';
+import {initCloudflareEnv as _initCloudflareEnv, useCloudflareEnv as _useCloudflareEnv} from "@/utils/CloudflareEnv.js";
+
 export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head, pinia} = await createApp();
     const ssrStore = useServerSideRenderStore(pinia);
@@ -63,3 +67,47 @@ function renderPreloadLink(file) {
         return '';
     }
 }
+
+/**
+ * @param request{Request}
+ * @param env{Env}
+ * @returns {Promise<*>}
+ */
+export async function handleRequest(request, env = null) {
+    try {
+        const url = new URL(request.url);
+        const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
+            cookies: request.headers.cookie,
+            env: env,
+        });
+        return new Response(
+            template
+            .replace(`<!--app-html-->`, renderRes.html)
+            .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+            .replace(`<!--head-tags-->`, renderRes.headTags)
+            .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+            {
+                status: 200,
+                headers: {
+                    'Content-Type': 'text/html',
+                }
+            }
+        );
+    } catch (e) {
+        if (request.url.indexOf('debug') !== -1) {
+            return new Response(e.stack, {status: 500});
+        }
+        return new Response(
+            template,
+            {
+                status: 200,
+                headers: {
+                    'Content-Type': 'text/html',
+                }
+            }
+        );
+    }
+}
+
+export const initCloudflareEnv = _initCloudflareEnv;
+export const useCloudflareEnv =  _useCloudflareEnv;

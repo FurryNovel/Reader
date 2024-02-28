@@ -1,17 +1,10 @@
 <template>
 	<Main>
-		<router-view v-slot="{ Component }">
-			<Suspense>
-				<component :is="Component"/>
-				<template #fallback>
-					<div class="flex justify-center items-center h-screen w-screen">
-						<Button label="primary">
-							重试
-						</Button>
-					</div>
-				</template>
-			</Suspense>
-		</router-view>
+		<Suspense>
+			<template #default>
+				<router-view></router-view>
+			</template>
+		</Suspense>
 	</Main>
 </template>
 

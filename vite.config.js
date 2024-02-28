@@ -10,6 +10,8 @@ import {PrimeVueResolver} from 'unplugin-vue-components/resolvers';
 import {viteBindSSRPlugin} from "vue-unique-ssr-id";
 import topLevelAwait from "vite-plugin-top-level-await";
 
+import viteCloudflare from "vite-plugin-cloudflare";
+import {vitePagesWrapperPlugin} from "./worker/pages-warpper.js";
 
 export default defineConfig({
     plugins: [
@@ -118,6 +120,14 @@ export default defineConfig({
             // The function to generate import names of top-level await promise in each chunk module
             promiseImportName: i => `__tla_${i}`
         }),
+        {
+            ...viteCloudflare({scriptPath: './worker/index.js'}),
+            enforce: undefined,
+            apply(config, {command}) {
+                return command === 'build' && config.build.ssr
+            }
+        },
+        vitePagesWrapperPlugin({}),
     ],
     server: {
         proxy: {

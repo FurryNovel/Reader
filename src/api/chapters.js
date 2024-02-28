@@ -1,10 +1,11 @@
-import {defineApi, LRUCacheStore, PiniaCacheStore} from "@/api/api.js";
+import {defineApi} from "@/api/api.js";
+import {LRUCacheStore, PiniaCacheStore, SmartCacheStore} from "@/utils/cache.js";
 import {useChapterStore} from "@/stores/chapters.js";
 import {useTableContentStore} from "@/stores/table-contents.js";
 
 
-const defaultLongCacheStore = new LRUCacheStore();
-const defaultCacheStore = new LRUCacheStore(null, {ttl: 10000});
+const defaultLongCacheStore = new SmartCacheStore('chapter');
+const defaultCacheStore = new SmartCacheStore('table-contents', {ttl: 10000});
 
 export function loadChapter({id, novelId, onCache, ignoreReq}) {
     return defineApi({
