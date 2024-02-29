@@ -86,11 +86,15 @@ export default defineConfig({
         VitePWA({
             registerType: 'autoUpdate',
             workbox: {
-                globPatterns: ['**/*.{js,css,ico,png,svg,ttf,woff,woff2,json,webp}'],
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2,json,webp}'],
+                navigateFallback: '/',
                 navigateFallbackDenylist: [
                     /^\/api/,
                     /^\/cdn-cgi/,
                 ],
+            },
+            devOptions: {
+                enabled: true,
             },
             manifest: {
                 'name': '兽人控小说站',
