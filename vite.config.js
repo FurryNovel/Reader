@@ -84,7 +84,7 @@ export default defineConfig({
             ]
         }),
         VitePWA({
-            registerType: 'autoUpdate',
+            registerType: 'prompt',
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2,json,webp}'],
                 navigateFallback: '/index.html',
@@ -94,7 +94,7 @@ export default defineConfig({
                 ],
             },
             devOptions: {
-                enabled: false,
+                enabled: true,
             },
             manifest: {
                 'name': '兽人控小说站',
