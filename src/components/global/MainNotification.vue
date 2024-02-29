@@ -14,7 +14,7 @@
 			        @click="clickBtn('confirm')"></Button>
 		</div>
 	</Dialog>
-	<Toast/>
+	<Toast :position="data.toast.position"/>
 </template>
 <script setup>
 import eventbus from "@/utils/eventbus.js";
@@ -30,25 +30,31 @@ const data = reactive({
         cancelBtn: null,
         confirmBtn: '确定',
         input: null,
+    },
+    toast: {
+        position: 'top-right',
     }
 });
 
-eventbus.on('showDialog', ({title, content, cancelBtn, confirmBtn, input = null}) => {
+eventbus.on('showDialog', params => {
+    const {title, content, cancelBtn, confirmBtn, input = null} = params;
     data.dialog.title = title;
     data.dialog.content = content;
     data.dialog.cancelBtn = cancelBtn;
     data.dialog.confirmBtn = confirmBtn;
     data.dialog.input = input;
-    console.log(input)
     data.dialog.show = true;
 });
 
 
-eventbus.on('showToast', ({title, content, type}) => {
+eventbus.on('showToast', params => {
+    const {title, content, type} = params;
+    data.toast.position = params?.position || 'top-right';
     toast.add({
         severity: type,
         summary: title,
         detail: content,
+        ...params,
     });
 });
 
