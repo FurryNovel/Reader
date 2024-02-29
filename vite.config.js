@@ -12,6 +12,9 @@ import topLevelAwait from "vite-plugin-top-level-await";
 
 import viteCloudflare from "vite-plugin-cloudflare";
 import {vitePagesWrapperPlugin} from "./worker/pages-warpper.js";
+import {xxhash32} from "hash-wasm";
+
+const timeHash = await xxhash32(Date.now().toString());
 
 export default defineConfig({
     plugins: [
@@ -158,7 +161,7 @@ export default defineConfig({
         },
     },
     define: {
-        __APP_VERSION: `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}.${new Date().getHours()}`,
+        __APP_VERSION: `"${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate()}-${timeHash}"`,
     },
     ssr: {
         external: true,
