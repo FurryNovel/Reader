@@ -87,14 +87,14 @@ export default defineConfig({
             registerType: 'autoUpdate',
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2,json,webp}'],
-                navigateFallback: '/',
+                navigateFallback: '/index.html',
                 navigateFallbackDenylist: [
                     /^\/api/,
                     /^\/cdn-cgi/,
                 ],
             },
             devOptions: {
-                enabled: true,
+                enabled: false,
             },
             manifest: {
                 'name': '兽人控小说站',

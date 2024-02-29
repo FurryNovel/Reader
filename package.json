@@ -58,6 +58,10 @@
 		"vite-plugin-cloudflare": "^0.4.1",
 		"vite-plugin-pwa": "^0.17.5",
 		"vite-plugin-top-level-await": "^1.4.1",
+		"workbox-build": "^7.0.0",
+		"workbox-core": "^7.0.0",
+		"workbox-routing": "^7.0.0",
+		"workbox-strategies": "^7.0.0",
 		"wrangler": "^3.29.0"
 	},
 	"pnpm": {

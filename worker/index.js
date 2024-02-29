@@ -10,10 +10,6 @@ export default {
         if (pathname.startsWith('/api')) {
             return await handleApiRequest(request);
         }
-        if (url.searchParams.has('client_source') && Number(url.searchParams.get('client_source')) === 1) {
-            url.pathname = '/client/index.html';
-            return await env.ASSETS.fetch(url);
-        }
         try {
             const cache = await caches.default;
             const cacheWrapper = {
@@ -53,6 +49,7 @@ function isAssetUrl(url) {
     return !!(pathname.startsWith('/assets/')
         || pathname.startsWith('/favicon.ico')
         || pathname.startsWith('/robots.txt')
+        || pathname.startsWith('/index.html')
         || pathname.startsWith('/sitemap.xml')
         || pathname.startsWith('/sw.js')
         || pathname.startsWith('/static')
