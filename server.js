@@ -31,6 +31,12 @@ app.use('*', async (req, res) => {
     try {
         const url = req.originalUrl || req.url;
         const template = await vite.transformIndexHtml(url, fs.readFileSync(resolve('index.html'), 'utf-8'));
+        
+        if (req.query?.client_entry) {
+            res.status(200).set({'Content-Type': 'text/html'}).end(template);
+            return;
+        }
+        
         const render = (await (vite.ssrLoadModule('/src/entry-server'))).render;
         const renderRes = await render(url, manifest, {
             cookies: req.cookies,

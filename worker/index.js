@@ -29,6 +29,9 @@ export default {
             if (isAssetUrl(request.url)) {
                 url.pathname = '/client' + pathname;
                 return await env.ASSETS.fetch(url);
+            } else if (url.searchParams.has('client_entry')) {
+                url.pathname = '/client/index.html';
+                return await env.ASSETS.fetch(url);
             }
         } catch (e) {
             return new Response(e.stack, {status: 500});
