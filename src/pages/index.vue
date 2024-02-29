@@ -13,7 +13,7 @@
 							</Button>
 						</router-link>
 					</div>
-					<NovelList v-ssr type="popular" order="desc" listStyle="style1" :desc="false" :author="false"
+					<NovelList v-ssr type="popular" order="desc" listStyle="style1"
 					           :tags="null"
 					           :limit="15"
 					           :userId="null" :keyword="null" :ids="null"/>
@@ -27,9 +27,8 @@
 							<div class="ml-2 fa-regular fa-rotate-right"></div>
 						</Button>
 					</div>
-					<NovelList ref="randomList" v-ssr type="random" order="desc" listStyle="style2" :desc="false"
-					           :author="false"
-					           :tags="null"
+					<NovelList ref="randomList" v-ssr type="random" order="desc" listStyle="style2"
+					           :tags="null" :image="false"
 					           :limit="4"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
@@ -45,7 +44,7 @@
 					</Button>
 				</router-link>
 			</div>
-			<NovelList v-ssr type="latest" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
+			<NovelList v-ssr type="latest" order="desc" listStyle="style1" :tags="null"
 			           :limit="16"
 			           :userId="null" :keyword="null" :ids="null"/>
 		</div>
@@ -67,7 +66,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['虎']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -84,7 +83,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['龙']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -101,7 +100,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狼']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -120,7 +119,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狗']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -137,7 +136,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['猫']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -154,7 +153,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狐']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>

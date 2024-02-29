@@ -6,17 +6,19 @@
 					<router-link
 							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
 							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
-						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+						<div v-if="props.image"
+						     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
 							{{ item.name }}
 						</div>
-						<div class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+						<div v-if="props.author"
+						     class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
 							{{ item.author.nickname }}
 						</div>
-						<div :class="{
+						<div v-if="props.desc" :class="{
                             'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl dark:bg-surface-500 dark:text-white':true,
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
@@ -48,7 +50,8 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto select-none flex-col rounded-xl transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
-						<div class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+						<div v-if="props.image"
+						     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
 							          height="100%"
 							          width="100%"></Skeleton>
@@ -72,7 +75,8 @@
 				<template v-for="(item,idx) in data.items">
 					<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
 					             class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
-						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
+						<div v-if="props.image"
+						     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
@@ -81,12 +85,13 @@
 								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 									{{ item.name }}
 								</div>
-								<div class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+								<div v-if="props.author"
+								     class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
 									作者：{{ item.author.nickname }}
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col justify-between p-2">
-								<div class="mb-1 text-xs">
+								<div v-if="props.desc" class="mb-1 text-xs">
 									<div v-if="item.desc.length > 0"
 									     class="overflow-hidden whitespace-pre-line line-clamp-[2] text-sm"
 									     v-html="item.desc">
@@ -101,7 +106,7 @@
 										最新章节：{{ item.latest_chapters[0].name }}
 									</div>
 								</div>
-								<div class="overflow-hidden flex1">
+								<div v-if="props.desc" class="overflow-hidden flex1">
 									<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 										<div v-for="tag in item.tags"
 										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
@@ -119,7 +124,8 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="idx in props.limit">
 					<div class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-white transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
-						<div class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
+						<div v-if="props.image"
+						     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<Skeleton borderRadius="10px" class="absolute h-full w-full object-cover aspect-[140/186]"
 							          height="100%"
 							          width="100%"></Skeleton>
@@ -196,6 +202,10 @@ const props = defineProps({
         default: 'style1',
     },
     desc: {
+        type: Boolean,
+        default: true,
+    },
+    image: {
         type: Boolean,
         default: true,
     },
