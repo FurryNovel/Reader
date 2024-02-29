@@ -87,11 +87,18 @@ export default defineConfig({
             registerType: 'prompt',
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2,json,webp}'],
-                navigateFallback: '/index.html',
+                navigateFallback: '/?client_entry=1',
                 navigateFallbackDenylist: [
                     /^\/api/,
                     /^\/cdn-cgi/,
                 ],
+                runtimeCaching: [
+                    {
+                        method: 'GET',
+                        handler: 'CacheFirst',
+                        urlPattern: /api\/media\/image/,
+                    }
+                ]
             },
             devOptions: {
                 enabled: true,
