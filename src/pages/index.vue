@@ -2,7 +2,7 @@
 	<div class="flex h-full w-full flex-col">
 		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 			<div class="flex flex-1 flex-wrap max-sm:flex-col">
-				<div class="flex flex-[2] flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+				<div class="flex flex-1 flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold">热门精选</div>
 						<router-link :to="{name:'list'}" :draggable="false">
@@ -18,7 +18,7 @@
 					           :limit="15"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
-				<div class="flex flex-1 flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+				<div class="flex w-[330px] flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold">随便看看</div>
 						<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="刷新一下" size="small"
