@@ -27,7 +27,17 @@ export default {
         });
     },
     toast({type, content, title = '提示'}) {
-        eventbus.emit('showToast', {type, content, title, ...arguments[0]});
+        return new Promise((resolve, reject) => {
+            eventbus.once('toastClose', data => {
+                const {type} = data;
+                if (type === 'close') {
+                    resolve(data);
+                } else {
+                    reject(data);
+                }
+            });
+            eventbus.emit('showToast', {type, content, title, ...arguments[0]});
+        });
     },
     challenge() {
         eventbus.emit('showChallenge', {});

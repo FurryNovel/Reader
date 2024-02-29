@@ -14,7 +14,10 @@
 			        @click="clickBtn('confirm')"></Button>
 		</div>
 	</Dialog>
-	<Toast :position="data.toast.position"/>
+	<Toast :position="data.toast.position"
+	       @close="e => onToastClose({...e, type:'close'})"
+	       @life-end="e => onToastClose({...e, type:'timeout'})"
+	/>
 </template>
 <script setup>
 import eventbus from "@/utils/eventbus.js";
@@ -64,6 +67,10 @@ function clickBtn(type) {
         type,
         ...data.dialog,
     });
+}
+
+function onToastClose(params) {
+    eventbus.emit('toastClose', params);
 }
 </script>
 
