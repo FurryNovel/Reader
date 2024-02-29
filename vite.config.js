@@ -14,7 +14,14 @@ import viteCloudflare from "vite-plugin-cloudflare";
 import {vitePagesWrapperPlugin} from "./worker/pages-warpper.js";
 import {xxhash32} from "hash-wasm";
 
-const timeHash = await xxhash32(Date.now().toString());
+import {execSync} from 'node:child_process';
+
+const __GIT__ = {
+    GIT_SHA: execSync('git rev-parse --short HEAD').toString().trim(),
+    GIT_COMMIT_DATE: execSync('git log -1 --format=%cI').toString().trim(),
+    GIT_HASH: execSync('git rev-parse HEAD').toString().trim(),
+    GIT_LAST_COMMIT_MESSAGE: execSync('git show -s --format=%s').toString().trim()
+}
 
 export default defineConfig({
     plugins: [
@@ -161,7 +168,7 @@ export default defineConfig({
         },
     },
     define: {
-        __APP_VERSION: `"${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate()}-${timeHash}"`,
+        __APP_VERSION: `"${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate()}-${__GIT__.GIT_SHA}"`,
     },
     ssr: {
         external: true,
