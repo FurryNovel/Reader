@@ -25,6 +25,7 @@
 		"hash-wasm": "^4.11.0",
 		"jquery": "^3.7.1",
 		"localforage": "^1.10.0",
+		"lodash-es": "^4.17.21",
 		"lru-cache": "^10.2.0",
 		"misans": "^4.0.0",
 		"mitt": "^3.0.1",
