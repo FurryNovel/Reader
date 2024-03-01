@@ -105,6 +105,11 @@ export function useConfigProvider() {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
     }
-    globalConfig = merge(globalConfig,baseConfig, state);
+    const targetObject = merge(baseConfig, state);
+    Object.keys(targetObject).forEach((key) => {
+        if (targetObject[key] !== undefined) {
+            globalConfig[key] = targetObject[key];
+        }
+    });
     return globalConfig;
 }
