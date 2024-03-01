@@ -22,6 +22,7 @@ import {vueBindSSRPlugin, vueSSRMarker} from "vue-unique-ssr-id";
 import ConfirmationService from 'primevue/confirmationservice';
 import {initRouterEvent} from "@/utils/router-event.js";
 import Tooltip from "primevue/tooltip";
+import ClientOnly from "@duannx/vue-client-only";
 
 export function createApp() {
     let app = undefined;
@@ -46,6 +47,7 @@ export function createApp() {
     app.use(PrimeVue?.default || PrimeVue, primeVueOptions);
     app.use(ToastService?.default || ToastService);
     app.use(ConfirmationService?.default || ConfirmationService);
+    app.component('ClientOnly', ClientOnly);
     app.use(router);
     app.use(pinia);
     app.use(directivePlugin());

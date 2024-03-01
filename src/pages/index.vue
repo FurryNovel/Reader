@@ -1,5 +1,6 @@
 <template>
 	<div class="flex h-full w-full flex-col">
+		<AppInfo/>
 		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 			<div class="flex flex-1 flex-wrap max-sm:flex-col">
 				<div class="flex flex-1 flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
@@ -167,6 +168,7 @@
 <script setup>
 import dialog from '@/utils/dialog.js';
 import NovelList from '@/components/views/NovelList.vue';
+import AppInfo from "@/components/global/AppInfo.vue";
 
 const randomList = ref(null);
 

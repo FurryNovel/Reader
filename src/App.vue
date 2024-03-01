@@ -17,7 +17,7 @@ import {initMeta} from "@/utils/meta.js";
 import {initCookieManager} from "@/utils/cookie.js";
 import {initRouterEvent} from "@/utils/router-event.js";
 import {initThemeManager, onThemeChange} from "@/utils/theme.js";
-import {checkServerWorker, initServerWorker} from "@/pwa.js";
+import {initServiceWorker} from "@/pwa.js";
 
 initMeta(useRouter());
 initRouterEvent(useRouter());
@@ -25,7 +25,7 @@ onBeforeMount(() => {
     initDeviceEvent();
     initCookieManager();
     initThemeManager();
-    initServerWorker();
+    initServiceWorker();
 });
 
 onThemeChange(({theme}) => {
