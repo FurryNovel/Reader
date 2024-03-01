@@ -14,6 +14,7 @@ export const baseConfig = {
         viewType: 'book',
     },
     global: {
+        pwaInstaller: true,
         themeMode: 'auto',
         safeMode: true,
         autoTranslate: false,
@@ -89,16 +90,16 @@ export function useConfigProvider() {
     let state = null;
     if (!import.meta.env.SSR) {
         const settingStore = useSettingStore();
-        state = Object.assign(base, settingStore.$state);
+        state = Object.assign({},base, settingStore.$state);
     } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
-        state = Object.assign(base, state,);
+        state = Object.assign({},base, state,);
     }
     // noinspection JSUnresolvedReference
-    state.chapter = Object.assign(base.chapter, state.chapter);
+    state.chapter = Object.assign({},base.chapter, state.chapter);
     // noinspection JSUnresolvedReference
-    state.global = Object.assign(base.global, state.global);
+    state.global = Object.assign({},base.global, state.global);
     
     const wrapper = reactive(state);
     if (!import.meta.env.SSR) {
