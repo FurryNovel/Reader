@@ -4,7 +4,7 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items" :key="item.id">
 					<router-link
-							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
+							class="m-2 flex h-auto select-none flex-col overflow-hidden rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
 							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
 						<div v-if="props.image"
 						     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
@@ -74,7 +74,7 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
-					             class="m-2 flex h-auto w-full select-none flex-row rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
+					             class="m-2 flex h-auto w-full select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
 						<div v-if="props.image"
 						     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
@@ -93,7 +93,7 @@
 							<div class="flex flex-1 flex-col justify-between p-2">
 								<div v-if="props.desc" class="mb-1 text-xs">
 									<div v-if="item.desc.length > 0"
-									     class="overflow-hidden whitespace-pre-line line-clamp-[2] text-sm"
+									     class="overflow-hidden whitespace-pre-line text-sm line-clamp-[2]"
 									     v-html="item.desc">
 									</div>
 									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
@@ -102,7 +102,7 @@
 								</div>
 								<div v-if="props.withChapters" class="mb-1">
 									<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
-									     class=" rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 overflow-hidden whitespace-pre-line line-clamp-[2] dark:bg-surface-400 dark:text-white">
+									     class="overflow-hidden whitespace-pre-line rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 line-clamp-[2] dark:bg-surface-400 dark:text-white">
 										最新章节：{{ item.latest_chapters[0].name }}
 									</div>
 								</div>
