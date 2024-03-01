@@ -2,7 +2,7 @@
 	<ClientOnly>
 		<div class="flex flex-col justify-center items-end flex-wrap w-full">
 			<div class="flex-1 fixed top-[64px] z-40 sm:w-84 max-sm:w-full backdrop-blur-sm">
-				<Message v-if="serviceWorker.isNeedRefresh" class="mt-0" severity="success" sticky
+				<Message v-if="serviceWorker.isNeedRefresh" class="mt-0" severity="success"
 				         @click="doUpdate()"
 				         @close.prevent.stop="() => {}">
 					<template #messageicon>
