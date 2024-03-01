@@ -2,7 +2,7 @@
 	<Menubar v-if="showWrapper" :class="wrapperClass" :model="items">
 		<template #start>
 			<Avatar v-if="showIcon && props.showButtons.includes('icon')"
-			        class="mx-4 flex justify-center bg-transparent align-middle"
+			        class="mx-4 flex justify-center align-middle"
 			        image="/static/icon.png" shape="circle"/>
 			<template v-if="showButtons.includes('back') && canBack">
 				<Button v-ripple class="w-[45px] h-[45px]" outlined rounded severity="secondary"
