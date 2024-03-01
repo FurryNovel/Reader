@@ -1,5 +1,24 @@
 <template>
 	<div class="flex h-full w-full flex-col">
+		<div class="relative flex">
+			<div class="flex w-full h-full group justify-center items-center">
+				<div class="rounded-xl">
+					<img src="/banner/3.png" class="w-full h-auto min-h-64 sm:object-contain max-sm:object-cover"
+					     alt="Banner"/>
+				</div>
+				<div class="absolute select-none flex transition-all group-hover:opacity-0 backdrop-blur-sm">
+					<div class="flex items-center text-white">
+						<Avatar size="large"
+						        class="mx-4 flex justify-center align-middle"
+						        image="/static/icon.png" shape="circle"/>
+					</div>
+					<div class="flex flex-col items-center text-white">
+						<div class="text-4xl font-bold">兽人控小说站</div>
+						<div class="text-xl font-bold">最新最全的小说网站</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<AppInfo/>
 		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 			<div class="flex flex-1 flex-wrap max-sm:flex-col">
