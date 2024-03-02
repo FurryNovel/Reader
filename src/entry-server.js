@@ -6,7 +6,10 @@ import {useServerSideRenderStore} from "@/stores/ssr.js";
 
 import template from './../dist/client/index.html?raw';
 import manifest from './../dist/client/.vite/ssr-manifest.json?raw';
-import {initCloudflareEnv as _initCloudflareEnv, useCloudflareEnv as _useCloudflareEnv} from "@/utils/CloudflareEnv.js";
+import {
+    initCloudflareEnv as _initCloudflareEnv,
+    useCloudflareEnv as _useCloudflareEnv
+} from "@/utils/cloudflare-env.js";
 
 export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head, pinia} = await createApp();
@@ -82,10 +85,10 @@ export async function handleRequest(request, env = null) {
         });
         return new Response(
             template
-            .replace(`<!--app-html-->`, renderRes.html)
-            .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-            .replace(`<!--head-tags-->`, renderRes.headTags)
-            .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+                .replace(`<!--app-html-->`, renderRes.html)
+                .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+                .replace(`<!--head-tags-->`, renderRes.headTags)
+                .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
             {
                 status: 200,
                 headers: {
@@ -110,4 +113,4 @@ export async function handleRequest(request, env = null) {
 }
 
 export const initCloudflareEnv = _initCloudflareEnv;
-export const useCloudflareEnv =  _useCloudflareEnv;
+export const useCloudflareEnv = _useCloudflareEnv;

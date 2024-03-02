@@ -1,6 +1,6 @@
 import {LRUCache} from "lru-cache";
 import {useSSRContext} from "vue";
-import {useCloudflareEnv} from "@/utils/CloudflareEnv.js";
+import {useCloudflareEnv} from "@/utils/cloudflare-env.js";
 
 export class CacheStore {
     store = null;
