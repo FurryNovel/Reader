@@ -1,17 +1,17 @@
 export default {
-    root: ({ props }) => ({
+    root: ({props}) => ({
         class: [
             // Spacing and Shape
             'my-4 mx-0',
             'rounded-md',
             'border-solid border-0 border-l-[6px]',
-
+            
             // Colors
             {
-                'bg-blue-100/70 dark:bg-blue-500/20': props.severity == 'info',
-                'bg-green-100/70 dark:bg-green-500/20': props.severity == 'success',
-                'bg-orange-100/70 dark:bg-orange-500/20': props.severity == 'warn',
-                'bg-red-100/70 dark:bg-red-500/20': props.severity == 'error'
+                'bg-blue-100/70 dark:bg-blue-500/70': props.severity == 'info',
+                'bg-green-100/70 dark:bg-green-500/70': props.severity == 'success',
+                'bg-orange-100/70 dark:bg-orange-500/70': props.severity == 'warn',
+                'bg-red-100/70 dark:bg-red-500/70': props.severity == 'error'
             },
             {
                 'border-blue-500 dark:border-blue-400': props.severity == 'info',
@@ -31,7 +31,7 @@ export default {
         class: [
             // Flexbox
             'flex items-center',
-
+            
             // Spacing
             'py-5 px-7'
         ]
@@ -54,25 +54,25 @@ export default {
         class: [
             // Flexbox
             'flex items-center justify-center',
-
+            
             // Size
             'w-8 h-8',
-
+            
             // Spacing and Misc
             'ml-auto  relative',
-
+            
             // Shape
             'rounded-full',
-
+            
             // Colors
             'bg-transparent',
-
+            
             // Transitions
             'transition duration-200 ease-in-out',
-
+            
             // States
             'hover:bg-surface-0/50 dark:hover:bg-surface-0/10',
-
+            
             // Misc
             'overflow-hidden'
         ]
