@@ -105,7 +105,8 @@ export function useConfigProvider() {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
     }
-    const targetObject = merge(baseConfig, state);
+    const targetObject = merge({}, baseConfig, state);
+    targetObject.global.acceptedLanguages = baseConfig.global.acceptedLanguages;
     Object.keys(targetObject).forEach((key) => {
         if (targetObject[key] !== undefined) {
             globalConfig[key] = targetObject[key];
