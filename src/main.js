@@ -1,7 +1,3 @@
-import "./libs/fontawesome-6-pro/css/all.css";
-import "misans/lib/Normal/MiSans-Regular.min.css";
-import "noto-sans-sc/noto_sans_sc_regular/css.css";
-
 import "./assets/main.css";
 import "./assets/base.css";
 
@@ -55,6 +51,7 @@ export function createApp() {
     app.use(vueBindSSRPlugin);
     let asyncPlugins = [];
     if (!import.meta.env.SSR) {
+        loadFonts();
         asyncPlugins.push(createRecoveryStorePlugin());
         app.use(VueCookies, {
             expireTimes: '360d',
@@ -82,4 +79,10 @@ function directivePlugin() {
             app.directive('tooltip', Tooltip);
         }
     }
+}
+
+function loadFonts() {
+    import ("./libs/fontawesome-6-pro/css/all.css");
+    import ("misans/lib/Normal/MiSans-Regular.min.css");
+    import ("noto-sans-sc/noto_sans_sc_regular/css.css");
 }
