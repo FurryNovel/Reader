@@ -25,9 +25,8 @@
 						}" :data-idx="idx">
 							<div class="mb-1">
 								<div class="mb-1 font-bold">简介</div>
-								<div v-if="item.desc.length > 0"
+								<div v-if="item.desc.length > 0" v-safe-html="item.desc"
 								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
-									{{ item.desc.replace(/<[^>]+>/g, '') }}
 								</div>
 								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无
 								</div>
@@ -94,7 +93,7 @@
 								<div v-if="props.desc" class="mb-1 text-xs">
 									<div v-if="item.desc.length > 0"
 									     class="overflow-hidden whitespace-pre-line text-sm line-clamp-[2]"
-									     v-html="item.desc">
+									     v-safe-html="item.desc">
 									</div>
 									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
 										无
