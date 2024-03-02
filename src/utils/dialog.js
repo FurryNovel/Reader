@@ -10,7 +10,7 @@ export default {
                     reject();
                 }
             });
-            eventbus.emit('showDialog', {title, content, cancelBtn, confirmBtn});
+            eventbus.emit('showDialog', {title, content, cancelBtn, confirmBtn, ...arguments[0]});
         });
     },
     input({title, content, cancelBtn, confirmBtn, placeholder = ''}) {
@@ -23,11 +23,21 @@ export default {
                     reject(data);
                 }
             });
-            eventbus.emit('showDialog', {title, content, cancelBtn, confirmBtn, input: placeholder});
+            eventbus.emit('showDialog', {title, content, cancelBtn, confirmBtn, input: placeholder, ...arguments[0]});
         });
     },
     toast({type, content, title = '提示'}) {
-        eventbus.emit('showToast', {type, content, title});
+        return new Promise((resolve, reject) => {
+            eventbus.once('toastClose', data => {
+                const {type} = data;
+                if (type === 'close') {
+                    resolve(data);
+                } else {
+                    reject(data);
+                }
+            });
+            eventbus.emit('showToast', {type, content, title, ...arguments[0]});
+        });
     },
     challenge() {
         eventbus.emit('showChallenge', {});

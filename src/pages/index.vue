@@ -1,8 +1,10 @@
 <template>
 	<div class="flex h-full w-full flex-col">
+		<Slogan/>
+		<AppInfo/>
 		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 			<div class="flex flex-1 flex-wrap max-sm:flex-col">
-				<div class="flex flex-[2] flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+				<div class="flex flex-1 flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold">热门精选</div>
 						<router-link :to="{name:'list'}" :draggable="false">
@@ -13,12 +15,12 @@
 							</Button>
 						</router-link>
 					</div>
-					<NovelList v-ssr type="popular" order="desc" listStyle="style1" :desc="false" :author="false"
+					<NovelList v-ssr type="popular" order="desc" listStyle="style1"
 					           :tags="null"
-					           :limit="15"
+					           :limit="18"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
-				<div class="flex flex-1 flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+				<div class="flex w-[330px] flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold">随便看看</div>
 						<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="刷新一下" size="small"
@@ -27,10 +29,9 @@
 							<div class="ml-2 fa-regular fa-rotate-right"></div>
 						</Button>
 					</div>
-					<NovelList ref="randomList" v-ssr type="random" order="desc" listStyle="style2" :desc="false"
-					           :author="false"
-					           :tags="null"
-					           :limit="4"
+					<NovelList ref="randomList" v-ssr type="random" order="desc" listStyle="style2"
+					           :tags="null" :image="false"
+					           :limit="5"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
 			</div>
@@ -45,7 +46,7 @@
 					</Button>
 				</router-link>
 			</div>
-			<NovelList v-ssr type="latest" order="desc" listStyle="style1" :desc="false" :author="false" :tags="null"
+			<NovelList v-ssr type="latest" order="desc" listStyle="style1" :tags="null"
 			           :limit="16"
 			           :userId="null" :keyword="null" :ids="null"/>
 		</div>
@@ -67,7 +68,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['虎']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -84,7 +85,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['龙']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -101,7 +102,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狼']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -120,7 +121,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狗']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -137,7 +138,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['猫']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -154,7 +155,7 @@
 								</Button>
 							</router-link>
 						</div>
-						<NovelList v-ssr type="popular" order="desc" listStyle="style2" :desc="false" :author="false"
+						<NovelList v-ssr type="popular" order="desc" listStyle="style2"
 						           :tags="['狐']"
 						           :limit="3"
 						           :userId="null" :keyword="null" :ids="null"/>
@@ -168,6 +169,8 @@
 <script setup>
 import dialog from '@/utils/dialog.js';
 import NovelList from '@/components/views/NovelList.vue';
+import AppInfo from "@/components/global/AppInfo.vue";
+import Slogan from "@/components/layout/Slogan.vue";
 
 const randomList = ref(null);
 

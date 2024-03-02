@@ -1,6 +1,7 @@
 import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
+import {merge} from 'lodash-es'
 
 export const baseConfig = {
     guildVersion: 0,
@@ -14,6 +15,7 @@ export const baseConfig = {
         viewType: 'book',
     },
     global: {
+        pwaInstaller: true,
         themeMode: 'auto',
         safeMode: true,
         autoTranslate: false,
@@ -82,31 +84,33 @@ export const baseConfig = {
         return tags;
     },
 }
+export let globalConfig = reactive({
+    ...baseConfig,
+});
+
+if (!import.meta.env.SSR) {
+    watch(globalConfig, () => {
+        const settingStore = useSettingStore();
+        globalConfig.saveToCookie();
+        settingStore.$patch(globalConfig);
+    }, {deep: true});
+}
 
 export function useConfigProvider() {
-    let base = baseConfig;
-    base = Object.fromEntries(Object.entries(base));
     let state = null;
     if (!import.meta.env.SSR) {
         const settingStore = useSettingStore();
-        state = Object.assign(base, settingStore.$state);
+        state = settingStore.$state;
     } else {
         const ctx = useSSRContext();
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
-        state = Object.assign(base, state,);
     }
-    // noinspection JSUnresolvedReference
-    state.chapter = Object.assign(base.chapter, state.chapter);
-    // noinspection JSUnresolvedReference
-    state.global = Object.assign(base.global, state.global);
-    
-    const wrapper = reactive(state);
-    if (!import.meta.env.SSR) {
-        const settingStore = useSettingStore();
-        watch(wrapper, () => {
-            state.saveToCookie();
-            settingStore.$patch(state);
-        }, {deep: true});
-    }
-    return wrapper;
+    const targetObject = merge({}, baseConfig, state);
+    targetObject.global.acceptedLanguages = baseConfig.global.acceptedLanguages;
+    Object.keys(targetObject).forEach((key) => {
+        if (targetObject[key] !== undefined) {
+            globalConfig[key] = targetObject[key];
+        }
+    });
+    return globalConfig;
 }

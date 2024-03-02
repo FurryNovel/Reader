@@ -29,6 +29,9 @@ export default {
             if (isAssetUrl(request.url)) {
                 url.pathname = '/client' + pathname;
                 return await env.ASSETS.fetch(url);
+            } else if (url.searchParams.has('client_entry')) {
+                url.pathname = '/client/index.html';
+                return await env.ASSETS.fetch(url);
             }
         } catch (e) {
             return new Response(e.stack, {status: 500});
@@ -49,6 +52,7 @@ function isAssetUrl(url) {
     return !!(pathname.startsWith('/assets/')
         || pathname.startsWith('/favicon.ico')
         || pathname.startsWith('/robots.txt')
+        || pathname.startsWith('/index.html')
         || pathname.startsWith('/sitemap.xml')
         || pathname.startsWith('/sw.js')
         || pathname.startsWith('/static')

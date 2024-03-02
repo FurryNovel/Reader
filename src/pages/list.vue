@@ -22,7 +22,8 @@
 						</template>
 					</div>
 					<div class="mr-2 flex gap-3">
-						<SelectButton v-model="data.type" :allowEmpty="false" :options="[{ name: '最新', value: 'latest'},{ name: '热门', value: 'popular'}]"
+						<SelectButton v-model="data.type" :allowEmpty="false"
+						              :options="[{ name: '最新', value: 'latest'},{ name: '热门', value: 'popular'}]"
 						              aria-labelledby="basic"
 						              optionLabel="name"
 						              optionValue="value" size="small"
@@ -34,7 +35,7 @@
 						</Button>
 					</div>
 				</div>
-				<NovelList ref="novelList" v-ssr :author="false" :desc="false" :ids="null" :keyword="data.keyword"
+				<NovelList ref="novelList" v-ssr :ids="null" :keyword="data.keyword"
 				           :limit="8" :show-pagination="true"
 				           :tags="data.tags" :type="data.type"
 				           :userId="null" listStyle="style2" order="desc"/>

@@ -1,6 +1,6 @@
 import {LRUCache} from "lru-cache";
 import {useSSRContext} from "vue";
-import {useCloudflareEnv} from "@/utils/CloudflareEnv.js";
+import {useCloudflareEnv} from "@/utils/cloudflare-env.js";
 
 export class CacheStore {
     store = null;
@@ -102,13 +102,15 @@ export class SmartCacheStore extends CacheStore {
         try {
             if (env.value) {
                 const response = await env.value.cache.match(key);
-                if (response){
+                if (response) {
                     data = await (await response.blob()).text();
                 }
             } else {
                 data = this.store.get(id);
             }
-            data = JSON.parse(data);
+            if (data && data !== 'undefined') {
+                data = JSON.parse(data);
+            }
         } catch (e) {
             console.log(e.stack)
         }
