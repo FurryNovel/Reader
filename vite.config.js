@@ -160,7 +160,10 @@ export default defineConfig({
         }
     },
     build: {
-        minify: false,
+        minify: true,
+    },
+    esbuild: {
+        minify: true,
     },
     resolve: {
         alias: {
