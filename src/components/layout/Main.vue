@@ -34,7 +34,13 @@ function changeStyle(to) {
     if (to.meta.style?.navBar !== undefined) {
         wrapperStyle.value = to.meta.style.navBar;
     } else {
-        wrapperStyle.value = 'h-full w-full max-w-screen-xl flex flex-col mx-auto rounded-md bg-surface-50 dark:bg-surface-700 sm:border border-surface-200 dark:border-surface-700';
+        wrapperStyle.value = {
+            'h-full w-full max-w-screen-xl': true,
+            'flex flex-col mx-auto rounded-md bg-surface-50': true,
+            'sm:border border-surface-200': true,
+            'shadow-2xl': true,
+            'dark:bg-surface-700 dark:border-surface-700': true,
+        };
     }
 }
 
