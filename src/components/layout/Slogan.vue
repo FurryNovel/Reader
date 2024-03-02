@@ -24,10 +24,10 @@
 const current = ref(0);
 
 const images = [
-    {src: '/banner/1.png', idx: 0},
-    {src: '/banner/2.png', idx: 1},
-    {src: '/banner/3.png', idx: 2},
-    {src: '/banner/4.png', idx: 3},
+    {src: 'https://media.furrynovel.com/banner/1.png', idx: 0},
+    {src: 'https://media.furrynovel.com/banner/2.png', idx: 1},
+    {src: 'https://media.furrynovel.com/banner/3.png', idx: 2},
+    {src: 'https://media.furrynovel.com/banner/4.png', idx: 3},
 ];
 
 //根据时间和季节更换背景图片
