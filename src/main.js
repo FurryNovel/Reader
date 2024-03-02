@@ -19,6 +19,13 @@ import ConfirmationService from 'primevue/confirmationservice';
 import {initRouterEvent} from "@/utils/router-event.js";
 import Tooltip from "primevue/tooltip";
 import ClientOnly from "@duannx/vue-client-only";
+import {setDefaultOptions} from "date-fns";
+import {zhCN} from "date-fns/locale";
+
+setDefaultOptions({
+    weekStartsOn: 1,
+    locale: zhCN,
+});
 
 export function createApp() {
     let app = undefined;

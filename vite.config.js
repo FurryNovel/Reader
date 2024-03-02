@@ -15,6 +15,7 @@ import {vitePagesWrapperPlugin} from "./worker/pages-warpper.js";
 import {xxhash32} from "hash-wasm";
 
 import {execSync} from 'node:child_process';
+import {format} from "date-fns";
 
 const __GIT__ = {
     GIT_SHA: execSync('git rev-parse --short HEAD').toString().trim(),
@@ -171,7 +172,7 @@ export default defineConfig({
         },
     },
     define: {
-        __APP_VERSION: `"${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate()}-${__GIT__.GIT_SHA}"`,
+        __APP_VERSION: `"${format(new Date(__GIT__.GIT_COMMIT_DATE), 'yyyyMMdd')}-${__GIT__.GIT_SHA}"`,
     },
     ssr: {
         external: true,
