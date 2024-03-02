@@ -7,13 +7,13 @@
 			</div>
 			<div class="absolute select-none flex transition-all group-hover:opacity-0 backdrop-blur-sm rounded-xl">
 				<div class="flex items-center text-white">
-					<Avatar size="large"
+					<Avatar size="xlarge"
 					        class="mx-4 flex justify-center align-middle"
 					        image="/static/icon.png" shape="circle"/>
 				</div>
 				<div class="flex flex-col items-center text-white">
 					<div class="text-4xl font-bold">兽人控小说站</div>
-					<div class="text-xl font-bold">最新最全的小说网站</div>
+					<div class="text-xl">最新最全的小说网站</div>
 				</div>
 			</div>
 		</div>
