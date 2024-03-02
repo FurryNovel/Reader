@@ -35,7 +35,7 @@ const date = new Date();
 const month = date.getMonth();
 const hour = date.getHours();
 const season = month < 3 ? 'spring' : month < 6 ? 'summer' : month < 9 ? 'autumn' : 'winter';
-const idx = (hour / 6).toFixed(0);
+const idx = Math.floor((hour / 6)).toFixed(0);
 
 switch (season) {
     case 'spring':
