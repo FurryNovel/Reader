@@ -33,13 +33,13 @@
 		"noto-sans-sc": "^36.0.1",
 		"pinia": "^2.1.7",
 		"primevue": "^3.49.0",
-		"sanitize-html": "^2.12.1",
 		"swiper": "^11.0.5",
 		"vue": "^3.4.18",
 		"vue-cookies": "^1.8.3",
 		"vue-router": "^4.2.5",
 		"vue-unique-ssr-id": "^0.0.5",
-		"workbox-window": "^7.0.0"
+		"workbox-window": "^7.0.0",
+		"xss": "^1.0.14"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240222.0",

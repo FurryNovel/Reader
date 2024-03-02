@@ -21,7 +21,7 @@ import Tooltip from "primevue/tooltip";
 import ClientOnly from "@duannx/vue-client-only";
 import {setDefaultOptions} from "date-fns";
 import {zhCN} from "date-fns/locale";
-import sanitizeHtml from 'sanitize-html';
+import xss from "xss";
 
 setDefaultOptions({
     weekStartsOn: 1,
@@ -85,10 +85,15 @@ function directiveCommand(app) {
     app.directive('tooltip', Tooltip);
     app.directive('safe-html', {
         beforeMount(el, binding) {
-            el.innerHTML = sanitizeHtml(binding.value.replace(/\r\n/g, ''));
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
         },
         updated(el, binding) {
-            el.innerHTML = sanitizeHtml(binding.value.replace(/\r\n/g, ''));
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
+        },
+        getSSRProps(binding, node) {
+            return {
+                innerHTML: xss(binding.value.replace(/\r\n/g, ''))
+            }
         }
     });
 }
