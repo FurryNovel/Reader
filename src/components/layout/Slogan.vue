@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+import {getHours, getMonth} from "date-fns";
+
 const current = ref(0);
 
 const images = [
@@ -32,8 +34,8 @@ const images = [
 
 //根据时间和季节更换背景图片
 const date = new Date();
-const month = date.getMonth();
-const hour = date.getHours();
+const month = getMonth(date);
+const hour = getHours(date);
 const season = month < 3 ? 'spring' : month < 6 ? 'summer' : month < 9 ? 'autumn' : 'winter';
 const idx = Math.floor((hour / 6)).toFixed(0);
 

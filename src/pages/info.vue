@@ -211,7 +211,7 @@
 						<template v-if="!data.loading && data.novel">
 							<div class="mb-10">
 								<div class="mb-2 text-xl font-bold">简介</div>
-								<div class="" v-html="novelDesc || data.novel.desc"></div>
+								<div class="" v-safe-html="novelDesc || data.novel.desc"></div>
 							</div>
 							<div class="">
 								<div class="mb-2 text-xl font-bold">标签</div>
@@ -440,9 +440,6 @@ function loadData() {
             id: data.id,
             onCache: (novel) => {
                 data.novel = novel;
-                if (data.novel) {
-                    data.novel.desc = data.novel.desc.replace('\r', '');
-                }
                 hitCaches.push('novel');
                 if (hitCaches.length === 2) {
                     data.loading = false;
@@ -451,9 +448,6 @@ function loadData() {
             ignoreReq: import.meta.env.SSR,
         }).then((novel) => {
             data.novel = novel;
-            if (data.novel) {
-                data.novel.desc = data.novel.desc.replace('\r', '');
-            }
         }).catch((e) => {
             data.novel = null;
         })

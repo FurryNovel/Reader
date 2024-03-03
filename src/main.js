@@ -19,6 +19,14 @@ import ConfirmationService from 'primevue/confirmationservice';
 import {initRouterEvent} from "@/utils/router-event.js";
 import Tooltip from "primevue/tooltip";
 import ClientOnly from "@duannx/vue-client-only";
+import {setDefaultOptions} from "date-fns";
+import {zhCN} from "date-fns/locale";
+import xss from "xss";
+
+setDefaultOptions({
+    weekStartsOn: 1,
+    locale: zhCN,
+});
 
 export function createApp() {
     let app = undefined;
@@ -46,7 +54,7 @@ export function createApp() {
     app.component('ClientOnly', ClientOnly);
     app.use(router);
     app.use(pinia);
-    app.use(directivePlugin());
+    directiveCommand(app);
     pinia.use(localDatabase);
     app.use(vueBindSSRPlugin);
     let asyncPlugins = [];
@@ -70,15 +78,24 @@ export function createApp() {
     }));
 }
 
-function directivePlugin() {
-    return {
-        install(app) {
-            app.directive('ripple', Ripple);
-            app.directive('animate-on-scroll', AnimateOnScroll);
-            app.directive('ssr', vueSSRMarker);
-            app.directive('tooltip', Tooltip);
+function directiveCommand(app) {
+    app.directive('ripple', Ripple);
+    app.directive('animate-on-scroll', AnimateOnScroll);
+    app.directive('ssr', vueSSRMarker);
+    app.directive('tooltip', Tooltip);
+    app.directive('safe-html', {
+        beforeMount(el, binding) {
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
+        },
+        updated(el, binding) {
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
+        },
+        getSSRProps(binding, node) {
+            return {
+                innerHTML: xss(binding.value.replace(/\r\n/g, ''))
+            }
         }
-    }
+    });
 }
 
 function loadFonts() {

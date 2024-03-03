@@ -4,8 +4,10 @@
 			<div class="flex items-center justify-center gap-3 pb-2">
 				<div class="flex w-64 flex-col items-center justify-start">
 					<p class="text-lg font-bold text-black dark:text-white pb-2">关于我们</p>
-					<a href="https://github.com/FurryNovel/Reader">Github</a>
-					<a href="mailto:me@tigerkk.me">联系我们</a>
+					<a href="https://github.com/FurryNovel/Reader">
+						<i class="fa-brands fa-github"></i>&nbsp;GitHub
+					</a>
+					<router-link :to="{name:'about'}">联系我们</router-link>
 				</div>
 				<div class="flex w-64 flex-col items-center justify-start">
 					<p class="text-lg font-bold text-black dark:text-white pb-2">友情链接</p>
