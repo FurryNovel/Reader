@@ -7,11 +7,13 @@
 					<a href="https://github.com/FurryNovel/Reader">
 						<i class="fa-brands fa-github"></i>&nbsp;GitHub
 					</a>
+					<a href="https://status.furrynovel.com/">网站状态</a>
 					<router-link :to="{name:'about'}">联系我们</router-link>
 				</div>
 				<div class="flex w-64 flex-col items-center justify-start">
 					<p class="text-lg font-bold text-black dark:text-white pb-2">友情链接</p>
 					<a href="https://www.furrycons.cn/">FEC·兽展日历</a>
+					<a href="/">&nbsp;</a>
 					<a href="/">&nbsp;</a>
 				</div>
 			</div>
