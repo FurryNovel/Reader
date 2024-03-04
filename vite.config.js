@@ -15,7 +15,7 @@ import {vitePagesWrapperPlugin} from "./worker/pages-warpper.js";
 import {xxhash32} from "hash-wasm";
 
 import {execSync} from 'node:child_process';
-import {format} from "date-fns";
+import {format, setDefaultOptions} from "date-fns";
 
 const __GIT__ = {
     GIT_SHA: execSync('git rev-parse --short HEAD').toString().trim(),
@@ -23,6 +23,11 @@ const __GIT__ = {
     GIT_HASH: execSync('git rev-parse HEAD').toString().trim(),
     GIT_LAST_COMMIT_MESSAGE: execSync('git show -s --format=%s').toString().trim()
 }
+
+setDefaultOptions({
+    weekStartsOn: 1,
+    locale: zhCN,
+});
 
 export default defineConfig({
     plugins: [
