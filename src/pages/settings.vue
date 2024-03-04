@@ -65,7 +65,7 @@
 									<div>
 										<SelectButton v-model="config.global.hideLanguages" optionLabel="name" multiple
 										              optionValue="value"
-										              :options="config.global.acceptedLanguages"
+										              :options="config.getAcceptedLanguages()"
 										              aria-labelledby="basic"/>
 									</div>
 								</div>
@@ -100,7 +100,7 @@
 									<div>
 										<SelectButton v-model="config.global.translateTo" optionLabel="name"
 										              optionValue="value"
-										              :options="[{ name: '自动', value: 'auto'}].concat(config.global.acceptedLanguages)"
+										              :options="[{ name: '自动', value: 'auto'}].concat(config.getAcceptedLanguages())"
 										              :allowEmpty="false"
 										              aria-labelledby="basic"/>
 									</div>
