@@ -20,7 +20,11 @@ export const baseConfig = {
         safeMode: true,
         autoTranslate: false,
         translateTo: 'auto',
-        acceptedLanguages: [
+        hideLanguages: ['en', 'ja', 'ko'],
+        hideTags: [],
+    },
+    getAcceptedLanguages(){
+        return [
             {
                 name: '中文',
                 value: 'zh',
@@ -37,9 +41,7 @@ export const baseConfig = {
                 name: '韩语',
                 value: 'ko',
             }
-        ],
-        hideLanguages: ['en', 'ja', 'ko'],
-        hideTags: [],
+        ];
     },
     //保存到cookie
     saveToCookie() {
@@ -48,13 +50,13 @@ export const baseConfig = {
         }))));
     },
     getShowLanguages() {
-        return this.global.acceptedLanguages.filter((lang) => {
+        return this.getAcceptedLanguages().filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
     },
     getHateTags() {
         let tags = [];
-        let showLanguages = this.global.acceptedLanguages.filter((lang) => {
+        let showLanguages = this.getAcceptedLanguages().filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
         if (this.global.safeMode) {
@@ -75,7 +77,7 @@ export const baseConfig = {
     },
     getTags() {
         let tags = [];
-        let showLanguages = this.global.acceptedLanguages.filter((lang) => {
+        let showLanguages = this.getAcceptedLanguages().filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
         if (showLanguages.length === 1) {
@@ -106,7 +108,6 @@ export function useConfigProvider() {
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
     }
     const targetObject = merge({}, baseConfig, state);
-    targetObject.global.acceptedLanguages = baseConfig.global.acceptedLanguages;
     Object.keys(targetObject).forEach((key) => {
         if (targetObject[key] !== undefined) {
             globalConfig[key] = targetObject[key];
