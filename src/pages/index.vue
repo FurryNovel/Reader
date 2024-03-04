@@ -20,7 +20,7 @@
 					           :limit="18"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
-				<div class="flex w-[330px] flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+				<div class="flex w-[330px] max-sm:w-full flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold">随便看看</div>
 						<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="刷新一下" size="small"
