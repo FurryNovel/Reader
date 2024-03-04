@@ -1,21 +1,21 @@
 <template>
-	<div class="flex flex-wrap gap-5 flex-1 rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white p-10 max-sm:p-3 ">
-		<div class="flex">
-			<Menu :model="menus">
+	<div class="flex flex-1 flex-wrap gap-5 rounded bg-white p-10 text-black sm:p-10 dark:bg-surface-600 dark:text-white max-sm:p-3">
+		<div class="flex max-sm:flex-1">
+			<Menu :model="menus" class="max-sm:flex-1 max-sm:w-full">
 				<template #item="{ item, props }">
-					<a v-ripple class="flex align-items-center p-5" :href="item?.href || ''">
+					<a v-ripple :href="item?.href || ''" class="flex p-5 align-items-center">
 						<span class="ml-2">{{ item.label }}</span>
 					</a>
 				</template>
 			</Menu>
 		</div>
-		<div class="flex flex-col flex-1  p-10 max-sm:p-3">
+		<div class="flex flex-1 flex-col p-10 max-sm:p-3">
 			<div class="flex flex-col">
 				<div class="text-2xl font-bold">关于我们</div>
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#起点"># 起点</a></div>
-				<div id="起点" class="p-5 flex flex-col gap-3">
+				<div id="起点" class="flex flex-col gap-3 p-5">
 					<p>初衷是因为B站文章阅读体验太差，
 						<del>实在是太难用了</del>
 						。为什么不自己做一个呢？
@@ -27,7 +27,7 @@
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#关于我们"># 关于我们</a></div>
-				<div id="关于我们" class="p-5 flex flex-col gap-3">
+				<div id="关于我们" class="flex flex-col gap-3 p-5">
 					<p>本项目开始于2023年11月，致力于提升多平台的阅读体验。</p>
 					<p>开发者：TigerKK</p>
 					<p>图标设计：apoto5</p>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#使用域名"># 使用域名</a></div>
-				<div id="使用域名" class="p-5 flex flex-col gap-3">
+				<div id="使用域名" class="flex flex-col gap-3 p-5">
 					<p>FurryNovel.com</p>
 					<p>曾用域名
 						<del>Novel.TigerKK.me</del>
@@ -44,7 +44,7 @@
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#免责申明"># 免责申明</a></div>
-				<div id="免责申明" class="p-5 flex flex-col gap-3">
+				<div id="免责申明" class="flex flex-col gap-3 p-5">
 					<p>
 						{{ config.title }} 以下简称本站。
 					</p>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#QA"># Q&A</a></div>
-				<div id="QA" class="p-5 flex flex-col gap-3">
+				<div id="QA" class="flex flex-col gap-3 p-5">
 					<div>
 						<p>Q：偶尔连不上？</p>
 						<p>A：由于内容特殊性，我们的服务器和域名均部署在国外，所以连不上时请
@@ -84,13 +84,13 @@
 			</div>
 			<div class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#联系我们"># 联系我们</a></div>
-				<div id="联系我们" class="p-5 flex flex-col gap-3">
+				<div id="联系我们" class="flex flex-col gap-3 p-5">
 					<p>您可以给我们
-						<a href="mailto:me@tigerkk.me" class="px-2">
-							<i class="fa-regular fa-envelope "></i>&nbsp;发送邮件
+						<a class="px-2" href="mailto:me@tigerkk.me">
+							<i class="fa-regular fa-envelope"></i>&nbsp;发送邮件
 						</a>
 						或在
-						<a href="https://github.com/FurryNovel/Reader" class="px-2">
+						<a class="px-2" href="https://github.com/FurryNovel/Reader">
 							<i class="fa-brands fa-github"></i>&nbsp;GitHub
 						</a>
 						联系我们。
