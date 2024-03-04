@@ -30,7 +30,7 @@ function getFrame() {
 const observer = import.meta.env.SSR ? null : new ResizeObserver(entries => {
     for (let entry of entries) {
         entry.target.style.minHeight = `${Number(entry.target.style.height.replace('px', '')) + 32}px`;
-        if (Number(entry.target.style.height.replace('px', '')) >= 372) {
+        if (Number(entry.target.style.height.replace('px', '')) >= 80) {
             loading.value = false;
         }
     }
