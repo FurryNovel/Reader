@@ -16,6 +16,7 @@ import {xxhash32} from "hash-wasm";
 
 import {execSync} from 'node:child_process';
 import {format, setDefaultOptions} from "date-fns";
+import {zhCN} from "date-fns/locale";
 
 const __GIT__ = {
     GIT_SHA: execSync('git rev-parse --short HEAD').toString().trim(),
