@@ -131,14 +131,26 @@ export default defineConfig({
                 'icons': [
                     {
                         'sizes': '192x192',
-                        'src': 'static/android-chrome-192x192.png',
+                        'src': 'static/icon-192x192.png',
                         'type': 'image/png'
                     },
                     {
                         'sizes': '512x512',
-                        'src': 'static/android-chrome-512x512.png',
+                        'src': 'static/icon-512x512.png',
                         'type': 'image/png'
-                    }
+                    },
+                    {
+                        'sizes': '192x192',
+                        'src': 'static/maskable_icon_192x192.png',
+                        'type': 'image/png',
+                        'purpose': 'maskable',
+                    },
+                    {
+                        'sizes': '512x512',
+                        'src': 'static/maskable_icon_512x512.png',
+                        'type': 'image/png',
+                        'purpose': 'maskable',
+                    },
                 ]
             }
         }),
