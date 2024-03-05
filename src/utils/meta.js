@@ -39,7 +39,7 @@ export function initMeta(router) {
     });
     useHead({
         title: computed(() => {
-            return data.title;
+            return `${data.title} - ${config.title}`;
         }),
         meta: computed(() => {
             return [
