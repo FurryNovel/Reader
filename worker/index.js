@@ -44,9 +44,16 @@ export default {
 
 
 async function handleApiRequest(request) {
-    return new Response(JSON.stringify({
-        time: new Date().toISOString(),
-    }));
+    let headers = Object.fromEntries(request.headers.entries());
+    let url = new URL(request.url);
+    url.hostname = 'api.furrynovel.com';
+    request = new Request(url, request);
+    return await fetch(request, {
+        headers: {
+            ...headers,
+            'Referer': 'https://www.furrynovel.com',
+        }
+    });
 }
 
 function isAssetUrl(url) {
@@ -57,6 +64,7 @@ function isAssetUrl(url) {
         || pathname.startsWith('/index.html')
         || pathname.startsWith('/sitemap.xml')
         || pathname.startsWith('/sw.js')
+        || pathname.startsWith('/robots.txt')
         || pathname.startsWith('/static')
         || pathname.startsWith('/workbox')
         || pathname.startsWith('/manifest.webmanifest')
