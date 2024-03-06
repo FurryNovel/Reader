@@ -35,12 +35,6 @@ export function vitePagesWrapperPlugin(userOptions) {
                 path.resolve(options.outDir, '_worker.js'),
                 `import worker from './server/worker.js'; export default worker;`
             );
-            
-            console.log('🔥 [WorkerWrapper] Worker Redirects: ' + path.resolve(options.outDir, '_redirects'))
-            fs.writeFileSync(
-                path.resolve(options.outDir, '_redirects'),
-                fs.readFileSync(path.resolve(resolvedConfig.root, 'worker/_redirects'))
-            );
         },
         apply(config, {command}) {
             return command === 'build' && config.build.ssr

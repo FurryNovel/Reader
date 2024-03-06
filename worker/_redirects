@@ -1,2 +1,0 @@
-/pages/novel/info?id=:* /novel/:splat 301
-/pages/novel/chapter?id=:id&novel_id=:novel_id&type=:type /novel/:novel_id/chapter/:id 301
