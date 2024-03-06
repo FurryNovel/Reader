@@ -11,6 +11,7 @@ import List from './pages/list.vue';
 import Bookmark from './pages/bookmark.vue';
 import About from './pages/about.vue';
 import Settings from './pages/settings.vue';
+import Error from "@/pages/Error.vue";
 
 
 const items = [
@@ -140,6 +141,16 @@ const items = [
                 },
             }
         ],
+    },
+    {
+        path: '/:pathMatch(.*)',
+        component: Error,
+        meta: {
+            title: '页面未找到',
+            layout: {
+                showInNavBar: false,
+            },
+        },
     },
 ].map((item) => {
     return Object.assign(item, {
