@@ -14,7 +14,7 @@
 					<p class="text-lg font-bold text-black dark:text-white pb-2">友情链接</p>
 					<a href="https://www.furrycons.cn/">FEC·兽展日历</a>
 					<a href="/">&nbsp;</a>
-					<a href="/">&nbsp;</a>
+					<a href="/api/sitemap/index.xml">站点地图</a>
 				</div>
 			</div>
 			<div class="flex w-full items-center justify-center gap-3 text-xs">
