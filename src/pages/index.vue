@@ -170,7 +170,7 @@
 import dialog from '@/utils/dialog.js';
 import NovelList from '@/components/views/NovelList.vue';
 import AppInfo from "@/components/global/AppInfo.vue";
-import Slogan from "@/components/layout/Slogan.vue";
+import Slogan from "@/components/views/Slogan.vue";
 
 const randomList = ref(null);
 
