@@ -4,4 +4,4 @@ Disallow: /api/
 User-agent: *
 Allow: /api/sitemap/
 
-sitemap: /api/sitemap/index.xml
+sitemap: https://furrynovel.com/api/sitemap/index.xml
