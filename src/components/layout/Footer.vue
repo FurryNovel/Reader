@@ -12,7 +12,9 @@
 				</div>
 				<div class="flex w-64 flex-col items-center justify-start">
 					<p class="text-lg font-bold text-black dark:text-white pb-2">友情链接</p>
-					<a href="https://www.furrycons.cn/">FEC·兽展日历</a>
+					<a v-for="link in config.links" :href="link.link" :title="link.desc">
+						{{link.name}}
+					</a>
 					<a href="/">&nbsp;</a>
 					<a href="/api/sitemap/index.xml">站点地图</a>
 				</div>
