@@ -190,7 +190,10 @@ export default defineConfig({
         },
     },
     define: {
-        __APP_VERSION: `"${format(new Date(__GIT__.GIT_COMMIT_DATE), 'yyyyMMdd')}-${__GIT__.GIT_SHA}"`,
+        __APP_VERSION: `"${format(
+            Date.parse(__GIT__.GIT_COMMIT_DATE) + 8 * 60 * 60 * 1000,
+            'yyyyMMdd',
+        )}-${__GIT__.GIT_SHA}"`,
     },
     ssr: {
         external: true,
