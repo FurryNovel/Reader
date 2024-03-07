@@ -1,5 +1,5 @@
 <template>
-	<div class="flex h-full w-full flex-col">
+	<div class="flex h-[calc(100vh-67px)] max-sm:h-screen w-full flex-col">
 		<NavBar :show-in="['mobile']" :hide-buttons="['icon']" :append-buttons="['back', 'home']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 max-sm:p-5 dark:bg-surface-600 dark:text-white">
 			<div class="m-2 flex items-center justify-between pl-2">

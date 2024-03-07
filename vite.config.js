@@ -20,7 +20,7 @@ import {zhCN} from "date-fns/locale";
 
 const __GIT__ = {
     GIT_SHA: execSync('git rev-parse --short HEAD').toString().trim(),
-    GIT_COMMIT_DATE: execSync('git log -1 --format=%cI').toString().trim(),
+    GIT_COMMIT_DATE: execSync('git log -1 --format=%ct').toString().trim(),
     GIT_HASH: execSync('git rev-parse HEAD').toString().trim(),
     GIT_LAST_COMMIT_MESSAGE: execSync('git show -s --format=%s').toString().trim()
 }
@@ -190,7 +190,10 @@ export default defineConfig({
         },
     },
     define: {
-        __APP_VERSION: `"${format(new Date(__GIT__.GIT_COMMIT_DATE), 'yyyyMMdd')}-${__GIT__.GIT_SHA}"`,
+        __APP_VERSION: `"${format(
+            __GIT__.GIT_COMMIT_DATE * 1000,
+            'yyyyMMdd',
+        )}-${__GIT__.GIT_SHA}"`,
     },
     ssr: {
         external: true,

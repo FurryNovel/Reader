@@ -163,6 +163,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="flex flex-1 flex-col rounded bg-white p-10 text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
+			<div class="m-2 flex items-center justify-between">
+				<div class="text-2xl font-bold">友情链接</div>
+			</div>
+			<LinkExchange/>
+		</div>
 	</div>
 </template>
 
@@ -171,6 +177,7 @@ import dialog from '@/utils/dialog.js';
 import NovelList from '@/components/views/NovelList.vue';
 import AppInfo from "@/components/global/AppInfo.vue";
 import Slogan from "@/components/views/Slogan.vue";
+import LinkExchange from "@/components/views/LinkExchange.vue";
 
 const randomList = ref(null);
 
