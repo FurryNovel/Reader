@@ -1,4 +1,5 @@
 import request from "@/utils/request.js";
+import {useSSRContext} from "vue";
 
 const nil = (args) => args;
 
@@ -31,6 +32,15 @@ export function defineApi({
                               onSuccess = nil,
                               type = 'data',
                           }) {
+    let headers = undefined;
+    if (import.meta.env.SSR) {
+        const ctx = useSSRContext();
+        if (ctx.headers && ctx.headers.has('Accept-Language')){
+            headers = {
+                'Accept-Language': ctx.headers.get('Accept-Language'),
+            };
+        }
+    }
     return new Promise(async (resolve, reject) => {
         api = api.replace(/:(\w+)/g, (match, key) => {
             return params[key] ?? data[key] ?? match;
@@ -53,6 +63,7 @@ export function defineApi({
         resolve(request[method](api, {
             data: data,
             params: params,
+            headers: headers,
         }).then(async res => {
             let responseData;
             if (type === 'data') {
