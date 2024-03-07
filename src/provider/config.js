@@ -23,7 +23,7 @@ export const baseConfig = {
         hideLanguages: ['en', 'ja', 'ko'],
         hideTags: [],
     },
-    getAcceptedLanguages(){
+    getAcceptedLanguages() {
         return [
             {
                 name: '中文',
@@ -108,6 +108,7 @@ export function useConfigProvider() {
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
     }
     const targetObject = merge({}, baseConfig, state);
+    targetObject.global.hideLanguages = state?.global?.hideLanguages || baseConfig.global.hideLanguages;
     Object.keys(targetObject).forEach((key) => {
         if (targetObject[key] !== undefined) {
             globalConfig[key] = targetObject[key];
