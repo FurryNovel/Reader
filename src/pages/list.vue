@@ -85,6 +85,7 @@ import InputGroupAddon from "primevue/inputgroupaddon";
 import NavBar from "@/components/layout/NavBar.vue";
 import OverlayPanel from 'primevue/overlaypanel';
 import SelectButton from "primevue/selectbutton";
+import TagSelect from "@/components/views/TagSelect.vue";
 
 const filtersPanel = ref(null);
 const novelList = ref(null);
