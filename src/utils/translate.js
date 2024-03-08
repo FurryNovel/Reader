@@ -5,7 +5,6 @@ import {useConfigProvider} from "@/provider/config.js";
 import {asyncComputed} from "@vueuse/core";
 
 
-
 export function detectedLanguage() {
     let lang = '中文';
     if (import.meta.env.SSR) {
@@ -34,11 +33,11 @@ export function canTranslate(languages) {
 
 
 export function translate({service, text, from, to = '', remote = false}) {
-    if (!to){
+    if (!to) {
         const config = useConfigProvider();
-        if (config.global.translateTo === 'auto'){
+        if (config.global.translateTo === 'auto') {
             to = navigator.language;
-        }else{
+        } else {
             to = config.global.translateTo;
         }
     }
@@ -66,17 +65,19 @@ export function translate({service, text, from, to = '', remote = false}) {
     }
 }
 
+let translateRequest = Promise.resolve();
 
 /**
  * @param toggleRef{{value: boolean}}
  * @param textRef{{value: string}}
  */
 export function useTranslate(toggleRef, textRef) {
-    return asyncComputed(async() => {
+    return asyncComputed(async () => {
         if (!toggleRef.value || import.meta.env.SSR || !textRef.value) {
             return null;
         }
-        return await translate({
+        await translateRequest;
+        translateRequest = translate({
             service: 'bing',
             text: textRef.value,
         }).catch(err => {
@@ -87,13 +88,9 @@ export function useTranslate(toggleRef, textRef) {
             });
             return textRef.value;
         });
+        return await translateRequest;
     }, null, {lazy: true})
 }
-
-
-
-
-
 
 
 /**
