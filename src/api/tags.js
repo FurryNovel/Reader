@@ -19,5 +19,12 @@ export async function loadTags({ignoreReq}) {
         params: {},
         ignoreReq: ignoreReq,
         type: 'data',
+        onSuccess: (tags) => {
+            const nameMap = new Map();
+            tags.forEach(tag => {
+                nameMap.set(tag.name, tag);
+            });
+            return Array.from(nameMap.values());
+        },
     });
 }

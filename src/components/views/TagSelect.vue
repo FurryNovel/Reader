@@ -2,7 +2,7 @@
 	<MultiSelect v-model="selectedTags"
 	             :maxSelectedLabels="props.max" :options="tags"
 	             class="w-full md:w-20rem" filter
-	             :virtualScrollerOptions="{ itemSize: 44 }"
+	             :virtualScrollerOptions="{ itemSize: 44 ,orientation: 'vertical',class:'!w-full'}"
 	             :showToggleAll="false"
 	             optionLabel="name" optionValue="name" :loading="tags.length === 0"
 	             placeholder="选择标签"
@@ -13,7 +13,7 @@
 import {ref} from 'vue';
 import {useConfigProvider} from "@/provider/config.js";
 import {loadTags} from "@/api/tags.js";
-import {onServerData} from "@/utils/ssr.js";
+import {onServerData, provideServerData} from "@/utils/ssr.js";
 
 const tags = ref([]);
 const config = useConfigProvider();
@@ -25,26 +25,32 @@ const props = defineProps({
     }
 });
 
+const instance = getCurrentInstance();
 onServerPrefetch(async () => {
     await loadData();
-    provideServerData('tags', tags.value);
+    provideServerData({
+        reqId: 'tags',
+        data: tags.value,
+        instance: instance,
+    });
 });
 
 onServerData(_tags => {
     tags.value = _tags;
-    console.log(tags.value);
-}, 'tags');
+}, 'tags').catch(err => {
+    return loadData();
+});
 
 onMounted(async () => {
-	if (tags.value.length === 0) {
-		await loadData();
-	}
+    if (tags.value.length === 0) {
+        await loadData();
+    }
 });
 
 async function loadData() {
-    if (!config.global.safeMode){
+    if (!config.global.safeMode) {
         tags.value = await loadTags({ignoreReq: true});
-    }else{
+    } else {
         tags.value = [
             {
                 name: '兽人',
