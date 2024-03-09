@@ -33,7 +33,7 @@
 							</div>
 							<div class="overflow-hidden flex1">
 								<div class="mb-1 font-bold">标签</div>
-								<div class="flex flex-wrap overflow-hidden max-h-[63px] gap-1">
+								<div class="flex flex-wrap gap-1 overflow-hidden max-h-[63px]">
 									<div v-for="tag in item.tags"
 									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 										{{ tag }}
@@ -80,7 +80,7 @@
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-1 flex-col p-2">
-							<div class="flex max-sm:flex-col sm:items-center">
+							<div class="flex flex-wrap max-sm:flex-col sm:items-center">
 								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 									{{ item.name }}
 								</div>
@@ -106,7 +106,7 @@
 									</div>
 								</div>
 								<div v-if="props.desc" class="overflow-hidden flex1">
-									<div class="flex flex-wrap overflow-hidden max-h-[65px] gap-1">
+									<div class="flex flex-wrap gap-1 overflow-hidden max-h-[65px]">
 										<div v-for="tag in item.tags"
 										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 											{{ tag }}
