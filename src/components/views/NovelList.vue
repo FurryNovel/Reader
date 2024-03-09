@@ -80,7 +80,10 @@
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-1 flex-col p-2">
-							<div class="flex flex-wrap max-sm:flex-col sm:items-center">
+							<div :class="{
+                                'flex max-sm:flex-col sm:items-center': true,
+                                'flex-wrap': !props.image,
+							}">
 								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 									{{ item.name }}
 								</div>
