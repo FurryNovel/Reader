@@ -28,7 +28,7 @@
 						              optionLabel="name"
 						              optionValue="value" size="small"
 						              @change="reloadNovels"/>
-						<Button class="text-sm text-primary-500 dark:text-white" label="条件筛选" size="small"
+						<Button class="text-sm font-bold text-primary-500 dark:text-white" label="条件筛选" size="small"
 						        @click="showFilter">
 							<i class="mr-2 fa-regular fa-filter"></i>
 							条件筛选
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<OverlayPanel ref="filtersPanel">
-		<div class="rounded-xl p-3 w-[300px] flex flex-col gap-3">
+		<div class="flex flex-col gap-3 rounded-xl p-3 w-[300px]">
 			<div class="flex flex-col gap-2">
 				<span class="font-bold">名称</span>
 				<InputText id="keyword" v-model="data.preKeyword" class="text-sm"
