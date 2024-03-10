@@ -10,7 +10,6 @@ const novelsCacheStore = new SmartCacheStore('novels', {ttl: 30 * 60000});
 
 export function loadNovel({id, onCache, ignoreReq}) {
     const headers = getHandleHeaders();
-    console.log(headers)
     return defineApi({
         method: 'get',
         api: `/novel/:id`,
