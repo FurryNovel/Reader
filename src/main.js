@@ -64,9 +64,9 @@ export function createApp() {
         app.use(VueCookies, {
             expireTimes: '360d',
             path: '/',
-            domain: '',
-            secure: true,
-            sameSite: 'Lax'
+            domain: window.location.hostname,
+            secure: false,
+            sameSite: 'Lax',
         });
         pinia.use(initialPinia)
     }
