@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import {getHours, getMonth} from "date-fns";
+import {getHours, getMonth, fromUnixTime} from "date-fns";
 
 const current = ref(0);
 
@@ -33,7 +33,7 @@ const images = ref([
 ]);
 
 //根据时间和季节更换背景图片
-const date = new Date().getTime();
+const date = fromUnixTime(new Date().getTime() / 1000);
 const month = getMonth(date);
 const hour = getHours(date);
 const season = month < 3 ? 'spring' : month < 6 ? 'summer' : month < 9 ? 'autumn' : 'winter';

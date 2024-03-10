@@ -40,6 +40,7 @@ app.use('*', async (req, res) => {
         const render = (await (vite.ssrLoadModule('/src/entry-server'))).render;
         const renderRes = await render(url, manifest, {
             cookies: req.cookies,
+            headers: new Headers(req.headers),
         });
         
         const html = template

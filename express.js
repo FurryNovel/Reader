@@ -1,5 +1,5 @@
 import path from 'node:path';
-import {render} from '@/entry-server.js';
+import {initCloudflareEnv, render} from '@/entry-server.js';
 import template from './dist/client/index.html?raw';
 import manifest from './dist/client/.vite/ssr-manifest.json?raw';
 import express from 'express';
@@ -18,6 +18,7 @@ app.get('*', async (req, res) => {
     try {
         const renderRes = await render(req.originalUrl, manifest, {
             cookies: req.headers.cookie,
+            headers: new Headers(req.headers),
         });
         res.status(200).send(
             template

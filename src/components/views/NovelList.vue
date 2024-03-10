@@ -293,12 +293,6 @@ onServerData((res) => {
 onServerPrefetch(() => {
     const instance = getCurrentInstance();
     return loadData().then((res) => {
-        if (res.data) {
-            res.data = res.data.map(item => {
-                item.desc = item.desc.replace('\r', '');
-                return item;
-            });
-        }
         provideServerData({
             reqId: ssrId,
             data: res,
