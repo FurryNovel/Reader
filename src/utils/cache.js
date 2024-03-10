@@ -122,7 +122,7 @@ export class SmartCacheStore extends CacheStore {
         const env = this.getEnv();
         if (env.value) {
             const response = new Response(JSON.stringify(data));
-            response.headers.append('Cache-Control', `s-maxage=${this.params.ttl / 1000}`);
+            response.headers.append('Cache-Control', `max-age=${Number(this.params.ttl / 1000).toFixed(0)}`);
             env.value.cache.put(key, response);
         } else {
             this.store.set(id, JSON.stringify(data));

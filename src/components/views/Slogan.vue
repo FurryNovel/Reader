@@ -33,7 +33,7 @@ const images = ref([
 ]);
 
 //根据时间和季节更换背景图片
-const date = new Date();
+const date = new Date().getTime();
 const month = getMonth(date);
 const hour = getHours(date);
 const season = month < 3 ? 'spring' : month < 6 ? 'summer' : month < 9 ? 'autumn' : 'winter';

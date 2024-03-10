@@ -28,7 +28,7 @@
 						              optionLabel="name"
 						              optionValue="value" size="small"
 						              @change="reloadNovels"/>
-						<Button class="text-sm text-primary-500 dark:text-white" label="条件筛选" size="small"
+						<Button class="text-sm font-bold text-primary-500 dark:text-white" label="条件筛选" size="small"
 						        @click="showFilter">
 							<i class="mr-2 fa-regular fa-filter"></i>
 							条件筛选
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<OverlayPanel ref="filtersPanel">
-		<div class="rounded-xl p-3 w-[300px] flex flex-col gap-3">
+		<div class="flex flex-col gap-3 rounded-xl p-3 w-[300px]">
 			<div class="flex flex-col gap-2">
 				<span class="font-bold">名称</span>
 				<InputText id="keyword" v-model="data.preKeyword" class="text-sm"
@@ -65,9 +65,7 @@
 			</div>
 			<div class="flex flex-col gap-2">
 				<span class="font-bold">标签</span>
-				<InputText id="keyword" v-model="data.preTags" class="text-sm"
-				           placeholder="使用半角逗号间隔多个标签"
-				           size="small"/>
+				<TagSelect v-model="data.preTags" class="text-sm" size="small"/>
 			</div>
 			<div class="flex items-center justify-end gap-2">
 				<Button class="dark:text-white" label="确定" size="small" @click="applyFilters"></Button>
@@ -85,13 +83,14 @@ import InputGroupAddon from "primevue/inputgroupaddon";
 import NavBar from "@/components/layout/NavBar.vue";
 import OverlayPanel from 'primevue/overlaypanel';
 import SelectButton from "primevue/selectbutton";
+import TagSelect from "@/components/views/TagSelect.vue";
 
 const filtersPanel = ref(null);
 const novelList = ref(null);
 const router = useRouter();
 const data = reactive({
     preKeyword: '',
-    preTags: '',
+    preTags: [],
     keyword: '',
     tags: [],
     type: 'popular',
@@ -143,7 +142,7 @@ function onInit() {
         } else {
             data.tags = router.currentRoute.value.query.tags.filter(tag => tag !== '');
         }
-        data.preTags = data.tags.join(',');
+        data.preTags = data.tags;
     }
     if (router.currentRoute.value.query.type) {
         data.type = router.currentRoute.value.query.type;
@@ -166,9 +165,9 @@ function showFilter(event) {
 }
 
 function applyFilters() {
-    let tags = data.preTags.split(',');
+    let tags = data.preTags;
     if (tags && tags.length > 0) {
-        tags = tags.map(tag => tag.trim());
+        tags = tags.map(tag => tag?.trim() || tag);
     } else {
         tags = [];
     }
@@ -180,7 +179,7 @@ function applyFilters() {
 
 function clearFilters() {
     data.preKeyword = '';
-    data.preTags = '';
+    data.preTags = [];
     data.keyword = '';
     data.tags = [];
     reloadNovels();

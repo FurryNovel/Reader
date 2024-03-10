@@ -33,7 +33,7 @@
 							</div>
 							<div class="overflow-hidden flex1">
 								<div class="mb-1 font-bold">标签</div>
-								<div class="flex flex-wrap overflow-hidden max-h-[63px] gap-1">
+								<div class="flex flex-wrap gap-1 overflow-hidden max-h-[63px]">
 									<div v-for="tag in item.tags"
 									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 										{{ tag }}
@@ -79,17 +79,17 @@
 							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
-						<div class="flex flex-1 flex-col p-2">
-							<div class="flex max-sm:flex-col sm:items-center">
-								<div class="flex justify-center m-2 transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
+						<div class="flex flex-1 flex-col px-4 py-2 gap-2">
+							<div class="flex flex-col justify-start gap-2">
+								<div class="flex justify-center transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 									{{ item.name }}
 								</div>
 								<div v-if="props.author"
-								     class="flex sm:m-2 max-sm:mx-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+								     class="flex transition duration-300 text-xs !line-clamp-1 h-[16px]">
 									作者：{{ item.author.nickname }}
 								</div>
 							</div>
-							<div class="flex flex-1 flex-col justify-between p-2">
+							<div class="flex flex-1 flex-col justify-between gap-1">
 								<div v-if="props.desc" class="mb-1 text-xs">
 									<div v-if="item.desc.length > 0"
 									     class="overflow-hidden whitespace-pre-line text-sm line-clamp-[2]"
@@ -106,7 +106,7 @@
 									</div>
 								</div>
 								<div v-if="props.desc" class="overflow-hidden flex1">
-									<div class="flex flex-wrap overflow-hidden max-h-[65px] gap-1">
+									<div class="flex flex-wrap gap-1 overflow-hidden max-h-[65px]">
 										<div v-for="tag in item.tags"
 										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
 											{{ tag }}
