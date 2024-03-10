@@ -97,7 +97,7 @@ export async function localDatabase({options, store}) {
     });
 }
 
-const globalInstall = [
+const globalInstaller = [
     {sync: true, install: useSettingStore},
     {sync: false, install: useNovelStore},
     {sync: false, install: useBookmarkStore},
@@ -106,7 +106,7 @@ const globalInstall = [
 ];
 
 export function createRecoveryStorePlugin() {
-    return Promise.all(globalInstall.map((installer) => {
+    return Promise.all(globalInstaller.map((installer) => {
         return new Promise((resolve, reject) => {
             const store = installer.install();
             if (installer.sync) {
