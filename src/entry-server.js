@@ -2,6 +2,8 @@ import {createApp} from './main.js';
 import {renderToString} from 'vue/server-renderer';
 import {renderSSRHead} from '@unhead/ssr'
 import devalue from "@nuxt/devalue";
+import {parse} from 'cookie';
+
 import {useServerSideRenderStore} from "@/stores/ssr.js";
 
 import template from './../dist/client/index.html?raw';
@@ -80,7 +82,7 @@ export async function handleRequest(request, env = null) {
     try {
         const url = new URL(request.url);
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
-            cookies: request.headers.cookie,
+            cookies: parse(request.headers.get('cookie') || ''),
             env: env,
         });
         return new Response(
