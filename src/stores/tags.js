@@ -5,7 +5,7 @@ const abstract = defineBaseStore();
 
 export const useTagStore = defineStore(Object.assign(abstract, {
     id: 'tags',
-    lazy: true,
+    lazy: false,
 }));
 
 export default {

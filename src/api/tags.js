@@ -7,6 +7,12 @@ const tagsCacheStore = new SmartCacheStore('tags', {ttl: 30 * 60000});
 
 export async function loadTags({ignoreReq}) {
     const headers = getHandleHeaders();
+    if (!import.meta.env.SSR) {
+        const _store = useTagStore();
+        if (!_store.getExpire()) {
+            _store.setExpire(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        }
+    }
     return defineApi({
         method: 'get',
         api: `/tag`,
