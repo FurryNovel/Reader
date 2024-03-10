@@ -17,6 +17,7 @@ const nil = (args) => args;
  * @param onError {function} 请求失败时的回调
  * @param onSuccess {function} 请求成功时的回调
  * @param type
+ * @param headers
  * @returns {Promise<unknown>}
  */
 export function defineApi({
@@ -31,16 +32,8 @@ export function defineApi({
                               onError = nil,
                               onSuccess = nil,
                               type = 'data',
+                              headers = undefined,
                           }) {
-    let headers = undefined;
-    if (import.meta.env.SSR) {
-        const ctx = useSSRContext();
-        if (ctx.headers && ctx.headers.has('Accept-Language')){
-            headers = {
-                'Accept-Language': ctx.headers.get('Accept-Language'),
-            };
-        }
-    }
     return new Promise(async (resolve, reject) => {
         api = api.replace(/:(\w+)/g, (match, key) => {
             return params[key] ?? data[key] ?? match;
@@ -82,4 +75,17 @@ export function defineApi({
             return Promise.reject(onError(err) ?? err);
         }));
     });
+}
+
+export default function getHandleHeaders() {
+    let headers = undefined;
+    if (import.meta.env.SSR) {
+        const ctx = useSSRContext();
+        if (ctx.headers && ctx.headers.has('Accept-Language')) {
+            headers = {
+                'Accept-Language': ctx.headers.get('Accept-Language'),
+            };
+        }
+    }
+    return headers;
 }
