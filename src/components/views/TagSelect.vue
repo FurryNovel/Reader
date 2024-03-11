@@ -1,6 +1,6 @@
 <template>
 	<MultiSelect v-model="selectedTags"
-	             :maxSelectedLabels="props.max" :options="tags"
+	             :selectionLimit="props.max" :options="tags"
 	             class="w-full md:w-20rem" filter
 	             :virtualScrollerOptions="{ itemSize: 44 ,orientation: 'vertical',class:'!w-full'}"
 	             :showToggleAll="false"
