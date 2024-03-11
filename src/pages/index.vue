@@ -22,7 +22,14 @@
 				</div>
 				<div class="flex w-[330px] max-sm:w-full flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
-						<div class="text-2xl font-bold">随便看看</div>
+						<div class="text-2xl font-bold flex">
+							<template v-if="!randomTag">
+								随便来点<div class="ml-2 underline" @click="toggleTagsPanel">随机</div>
+							</template>
+							<template v-else>
+								随便来点<div class="ml-2 underline" @click="toggleTagsPanel">{{randomTag[0]}}</div>
+							</template>
+						</div>
 						<Button class="mr-2 text-sm text-primary-500 dark:text-white" label="刷新一下" size="small"
 						        text @click="refreshRandomList">
 							刷新一下
@@ -30,7 +37,7 @@
 						</Button>
 					</div>
 					<NovelList ref="randomList" v-ssr type="random" order="desc" listStyle="style2"
-					           :tags="null" :image="false"
+					           :tags="randomTag" :image="false"
 					           :limit="5"
 					           :userId="null" :keyword="null" :ids="null"/>
 				</div>
@@ -167,6 +174,20 @@
 			</div>
 			<LinkExchange/>
 		</div>
+		
+		<OverlayPanel ref="tagsPanel">
+			<div class="flex flex-col gap-3 rounded-xl p-3 w-[300px]">
+				<div class="flex flex-col gap-2">
+					<span class="font-bold">标签</span>
+					<TagSelect v-model="randomTag" class="text-sm" size="small" :max="1"/>
+				</div>
+				<div class="flex items-center justify-end gap-2">
+					<Button class="dark:text-white" label="确定" size="small" @click="applyTags"></Button>
+					<Button label="清除" outlined severity="secondary" size="small" text
+					        @click="clearTags"></Button>
+				</div>
+			</div>
+		</OverlayPanel>
 	</div>
 </template>
 
@@ -176,11 +197,30 @@ import NovelList from '@/components/views/NovelList.vue';
 import AppInfo from "@/components/global/AppInfo.vue";
 import Slogan from "@/components/views/Slogan.vue";
 import LinkExchange from "@/components/views/LinkExchange.vue";
+import TagSelect from "@/components/views/TagSelect.vue";
+import OverlayPanel from "primevue/overlaypanel";
+const tagsPanel = ref(null);
+const randomTag = ref(null);
+
 
 const randomList = ref(null);
 
 function refreshRandomList() {
     randomList.value.reload();
+}
+
+function toggleTagsPanel(e){
+    tagsPanel.value.toggle(e);
+}
+
+function applyTags(){
+    tagsPanel.value.hide();
+    randomList.value.reload();
+}
+
+function clearTags(){
+	randomTag.value = null;
+	tagsPanel.value.hide();
 }
 
 onServerPrefetch(() => {
