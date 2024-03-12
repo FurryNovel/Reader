@@ -69,6 +69,10 @@ async function loadData() {
                 count: 50,
             },
             {
+                name: '熊',
+                count: 50,
+            },
+            {
                 name: '狐',
                 count: 50,
             },
