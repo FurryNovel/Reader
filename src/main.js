@@ -83,16 +83,23 @@ function directiveCommand(app) {
     app.directive('animate-on-scroll', AnimateOnScroll);
     app.directive('ssr', vueSSRMarker);
     app.directive('tooltip', Tooltip);
+    const htmlOptions = {
+        whiteList: {
+            br: [],
+            a: ['href', 'title', 'target'],
+        },
+        stripIgnoreTag: true,
+    };
     app.directive('safe-html', {
         beforeMount(el, binding) {
-            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''), htmlOptions);
         },
         updated(el, binding) {
-            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''));
+            el.innerHTML = xss(binding.value.replace(/\r\n/g, ''), htmlOptions);
         },
         getSSRProps(binding, node) {
             return {
-                innerHTML: xss(binding.value.replace(/\r\n/g, ''))
+                innerHTML: xss(binding.value.replace(/\r\n/g, ''), htmlOptions)
             }
         }
     });
