@@ -8,7 +8,7 @@
 							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
 						<div v-if="props.image"
 						     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
-							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
+							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover" loading="lazy"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
@@ -76,7 +76,7 @@
 					             class="m-2 flex h-auto w-full select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
 						<div v-if="props.image"
 						     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
-							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover"
+							<img :src="item.cover" :alt="`${item.name}(cover)`" :draggable="false" loading="lazy"
 							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 						</div>
 						<div class="flex flex-1 flex-col px-4 py-2 gap-2">
