@@ -23,7 +23,7 @@
 				<div class="flex w-[330px] max-sm:w-full flex-col rounded bg-white text-black max-sm:p-3 dark:bg-surface-600 dark:text-white">
 					<div class="m-2 flex items-center justify-between">
 						<div class="text-2xl font-bold flex">
-							<template v-if="!randomTag">
+							<template v-if="!randomTag || randomTag.length === 0">
 								随便来点<div class="ml-2 underline" @click="toggleTagsPanel">随机</div>
 							</template>
 							<template v-else>
