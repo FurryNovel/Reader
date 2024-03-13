@@ -84,6 +84,7 @@ export async function handleRequest(request, env = null) {
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: parse(request.headers.get('cookie') || ''),
             env: env,
+            headers: request.headers,
         });
         return new Response(
             template
