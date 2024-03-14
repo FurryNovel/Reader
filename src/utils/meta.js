@@ -1,6 +1,7 @@
 import {useHead} from "@unhead/vue";
 import config from "@/config.js";
 import iconUrl from '/static/icon.png?url';
+import {getLocale, useI18n} from "@/i18n/index.js";
 
 const data = reactive({
     route: null,
@@ -33,27 +34,32 @@ function initParams(route) {
 }
 
 export function initMeta(router) {
+    const {t, locale} = useI18n(router);
     initParams(router.currentRoute);
     router.afterEach((to) => {
         data.route = to;
     });
     useHead({
         title: computed(() => {
-            return `${data.title} - ${config.title}`;
+            return `${t(data.title)} - ${t(config.title)}`;
         }),
         meta: computed(() => {
             return [
                 {
                     name: 'description',
-                    content: data.description,
+                    content: t(data.description),
                 },
                 {
                     name: 'keywords',
-                    content: data.keywords,
+                    content: t(data.keywords),
+                },
+                {
+                    name: 'og:site_name',
+                    content: t(config.title),
                 },
                 {
                     name: 'og:title',
-                    content: data.title,
+                    content: t(data.title),
                 },
                 {
                     name: 'og:description',

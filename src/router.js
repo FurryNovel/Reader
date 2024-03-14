@@ -12,9 +12,25 @@ import Bookmark from './pages/bookmark.vue';
 import About from './pages/about.vue';
 import Settings from './pages/settings.vue';
 import Error from "@/pages/Error.vue";
-
+import {getFallbackLocale, supportedLocales, useI18n} from "@/i18n/index.js";
 
 const items = [
+    {
+        path: '/',
+        redirect: to => {
+            // const [locale] =  navigator.language.split('-');
+            // if(supportedLocales.hasOwnProperty(locale)){
+            //     return `/${locale}`;
+            // }
+            const locale = getFallbackLocale();
+            return `/${locale}`;
+        },
+        meta: {
+            layout: {
+                showInNavBar: false,
+            },
+        },
+    },
     {
         path: '/:lang',
         name: 'index',

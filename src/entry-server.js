@@ -12,6 +12,8 @@ import {
     initCloudflareEnv as _initCloudflareEnv,
     useCloudflareEnv as _useCloudflareEnv
 } from "@/utils/cloudflare-env.js";
+import {getFallbackLocale, supportedLocales} from "@/i18n/index.js";
+import parser from 'accept-language-parser';
 
 export async function render(url, manifest = {}, request = {cookies: {}}) {
     const {app, router, head, pinia} = await createApp();
@@ -81,6 +83,16 @@ function renderPreloadLink(file) {
 export async function handleRequest(request, env = null) {
     try {
         const url = new URL(request.url);
+        if (url.pathname === '/') {
+            let languages = request.headers.has('Accept-Language') ? request.headers.get('Accept-Language') : null;
+            const locales = parser.parse(languages).map((locale) => locale.code).filter(code => {
+                return supportedLocales.hasOwnProperty(code);
+            });
+            if (locales.length === 0) {
+                locales.push(getFallbackLocale());
+            }
+            return Response.redirect(`/${locales[0]}`, 307);
+        }
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: parse(request.headers.get('cookie') || ''),
             env: env,

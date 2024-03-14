@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import express from 'express'
 import cookieParser from "cookie-parser";
+import parser from "accept-language-parser";
 
 const resolve = (p) => path.resolve(p)
 
