@@ -24,7 +24,7 @@
 			</template>
 		</template>
 		<template #item="{ item, props, hasSubmenu, root }">
-			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item" custom>
 				<a v-if="item.isActive" v-ripple :draggable="false" :href="href" class="text-primary-500"
 				   v-bind="props.action" @click="navigate">
 					<span v-if="item.icon" :class="{
@@ -158,6 +158,8 @@ const items = computed(() => {
             label: route.meta.title,
             icon: route.meta.icon,
             route: route.path,
+            name: route?.name,
+            params: route.params,
             isActive: route.isActive(router),
         }
     }));

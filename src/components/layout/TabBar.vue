@@ -1,7 +1,7 @@
 <template>
 	<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent">
 		<div v-if="showWrapper" :class="wrapperClass">
-			<router-link v-for="item in items" :to="item.route"
+			<router-link v-for="item in items" :to="item"
 			             class="flex-1 flex flex-col justify-center align-middle text-center">
 				<template v-if="item.isActive">
 					<span v-if="item.icon"
@@ -60,6 +60,8 @@ let items = ref(routes.filter(route => route.meta.layout.showInNavBar).map(route
         label: route.meta.title,
         icon: route.meta.icon,
         route: route.path,
+	    name: route?.name,
+	    params: route.params,
         isActive: computed(() => route.isActive(router)),
     }
 }));
