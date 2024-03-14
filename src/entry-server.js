@@ -91,7 +91,12 @@ export async function handleRequest(request, env = null) {
             if (locales.length === 0) {
                 locales.push(getFallbackLocale());
             }
-            return Response.redirect(`/${locales[0]}`, 307);
+            return new Response(null, {
+                status: 307,
+                headers: {
+                    'Location': `/${locales[0]}`,
+                }
+            });
         }
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: parse(request.headers.get('cookie') || ''),
