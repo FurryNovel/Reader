@@ -5,7 +5,7 @@ import {getReqId} from "@/utils/ssr.js";
 
 const tagsCacheStore = new SmartCacheStore('tags', {ttl: 30 * 60000});
 
-export async function loadTags({ignoreReq}) {
+export async function loadTags({ignoreReq, lang}) {
     const headers = getHandleHeaders();
     if (!import.meta.env.SSR) {
         const _store = useTagStore();
@@ -15,7 +15,7 @@ export async function loadTags({ignoreReq}) {
     }
     return defineApi({
         method: 'get',
-        api: `/tag`,
+        api: `/:lang/tag`,
         store: () => {
             return import.meta.env.SSR ? tagsCacheStore : useTagStore();
         },
@@ -24,6 +24,7 @@ export async function loadTags({ignoreReq}) {
             'req-id': getReqId({
                 ...headers,
             }),
+            lang: lang,
         },
         params: {},
         ignoreReq: ignoreReq,

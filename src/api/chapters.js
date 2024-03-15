@@ -32,11 +32,11 @@ export function loadChapter({id, novelId, onCache, ignoreReq}) {
     });
 }
 
-export async function loadChapters({novelId, onCache, ignoreReq}) {
+export async function loadChapters({novelId, onCache, ignoreReq, lang}) {
     const headers = getHandleHeaders();
     return defineApi({
         method: 'get',
-        api: `/novel/:novelId/chapter`,
+        api: `/:lang/novel/:novelId/chapter`,
         store: () => {
             return import.meta.env.SSR ? defaultCacheStore : new PiniaCacheStore(useTableContentStore());
         },
@@ -47,6 +47,7 @@ export async function loadChapters({novelId, onCache, ignoreReq}) {
                 novelId: novelId,
                 ...headers,
             }),
+            lang: lang,
         },
         ignoreReq: ignoreReq,
         onCache: onCache,

@@ -16,7 +16,7 @@ import {loadTags} from "@/api/tags.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useI18n} from "@/i18n/index.js";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const tags = ref([]);
 const config = useConfigProvider();
@@ -52,7 +52,10 @@ onMounted(async () => {
 
 async function loadData() {
     if (!config.global.safeMode) {
-        tags.value = await loadTags({ignoreReq: true});
+        tags.value = await loadTags({
+            ignoreReq: true,
+            lang: locale(),
+        });
     } else {
         tags.value = [
             {
