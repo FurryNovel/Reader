@@ -30,7 +30,7 @@
 							<Avatar v-if="deviceInfo.isMobile" class="flex justify-center align-middle"
 							        image="/static/icon.png" shape="circle"/>
 							<div class="flex flex-1 flex-col justify-center">
-								<span>{{ config.title }}</span>
+								<span>{{ t(config.title) }}</span>
 								<span class="dark:text-primary-50 text-surface-500">{{ t('PWA版本现已可用') }}</span>
 							</div>
 							<div class="flex sm:flex-wrap gap-1 max-sm:flex-col">
