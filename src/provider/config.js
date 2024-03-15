@@ -1,8 +1,7 @@
 import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
-import {merge} from 'lodash-es'
-import {getLocale, useI18n} from "@/i18n/index.js";
+import {merge} from 'lodash-es';
 
 export const baseConfig = {
     guildVersion: 0,
@@ -110,7 +109,6 @@ export function useConfigProvider() {
     }
     const targetObject = merge({}, baseConfig, state);
     
-    const locale = getLocale(useRouter());
     let hideLanguages = null
     if (state?.global?.hideLanguages) {
         hideLanguages = state.global.hideLanguages;
