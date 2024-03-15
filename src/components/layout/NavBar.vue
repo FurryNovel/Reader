@@ -59,10 +59,18 @@
 					</Button>
 				</router-link>
 				<Button v-if="showButtons.includes('theme')" v-ripple class="w-[45px] h-[45px]" href="/settings"
-				        outlined rounded severity="secondary" @click="toggleTheme"
-				        size="small" text>
+				        outlined rounded severity="secondary" size="small"
+				        text @click="toggleTheme">
 					<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
 					<span v-else class="fa-regular fa-sun-bright"></span>
+				</Button>
+				<Button v-if="showButtons.includes('locale')" v-ripple class="w-[90px] h-[45px]"
+				        outlined rounded severity="secondary" size="small"
+				        text @click="toggleLocaleMenu">
+					<div class="flex gap-3 justify-center items-center mt-[2px]">
+						<span class="fa-regular fa-earth-americas"></span>
+						<span class="">{{ supportedLocales[locale()].shortName }}</span>
+					</div>
 				</Button>
 				<router-link v-if="showButtons.includes('settings')"
 				             v-slot="{ href, navigate }"
@@ -79,6 +87,9 @@
 			</div>
 		</template>
 	</Menubar>
+	<Menu ref="localeMenu"
+	      :model="Object.values(supportedLocales).map(_locale => ({label: _locale.name,command: () => changeLocale(_locale)}))"
+	      :popup="true"/>
 	<div v-if="showWrapper && !props.fixed">
 		<!--<div class="mt-[64px]"></div>-->
 	</div>
@@ -89,12 +100,15 @@
 import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
-import {useI18n} from "@/i18n/index.js";
-const {t} = useI18n();
+import {supportedLocales, useI18n} from "@/i18n/index.js";
+
+const {t, locale} = useI18n();
 
 const showButtons = computed(() => {
     return props.showButtons.filter(button => !props.hideButtons.includes(button)).concat(props.appendButtons);
 });
+
+const localeMenu = ref(null);
 
 const theme = useTheme();
 const themeButton = computed(() => {
@@ -121,7 +135,7 @@ const props = defineProps({
     },
     showButtons: {
         type: Array,
-        default: ['search', 'settings', 'icon', 'theme']
+        default: ['search', 'settings', 'icon', 'theme', 'locale']
     },
     hideButtons: {
         type: Array,
@@ -204,6 +218,21 @@ const canBack = computed(() => {
     return window.history.state.back !== null;
 });
 
+function toggleLocaleMenu(event) {
+    localeMenu.value.toggle(event);
+}
+
+function changeLocale(_locale) {
+    const currentRoute = router.currentRoute.value;
+    router.replace({
+        name: currentRoute.name,
+        query: currentRoute.query,
+        params: {
+            ...currentRoute.params,
+            lang: _locale.id
+        }
+    }).catch(err => {})
+}
 
 onMounted(() => {
     isMounted.value = true;
