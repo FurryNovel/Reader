@@ -1,7 +1,7 @@
 <template>
 	<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent">
 		<div v-if="showWrapper" :class="wrapperClass">
-			<router-link v-for="item in items" :to="item.route"
+			<router-link v-for="item in items" :to="item"
 			             class="flex-1 flex flex-col justify-center align-middle text-center">
 				<template v-if="item.isActive">
 					<span v-if="item.icon"
@@ -10,7 +10,7 @@
                             [item.icon.text]:true,
 					      }">
 					</span>
-					<span class="text-primary-500 text-sm">{{ item.label }}</span>
+					<span class="text-primary-500 text-sm">{{ t(item.label) }}</span>
 				</template>
 				<template v-else>
 					<span v-if="item.icon" :class="{
@@ -19,7 +19,7 @@
 					      }"
 					      :style="{fontSize:item.icon.fontSize}">
 					</span>
-					<span class="text-sm">{{ item.label }}</span>
+					<span class="text-sm">{{ t(item.label) }}</span>
 				</template>
 			</router-link>
 		</div>
@@ -29,6 +29,8 @@
 <script setup>
 import {routes} from "@/router.js";
 import {isMobile} from "@/utils/device.js";
+import {useI18n} from "@/i18n/index.js";
+const {t} = useI18n();
 
 const router = useRouter();
 
@@ -60,6 +62,8 @@ let items = ref(routes.filter(route => route.meta.layout.showInNavBar).map(route
         label: route.meta.title,
         icon: route.meta.icon,
         route: route.path,
+	    name: route?.name,
+	    params: route.params,
         isActive: computed(() => route.isActive(router)),
     }
 }));

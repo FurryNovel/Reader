@@ -12,12 +12,27 @@ import Bookmark from './pages/bookmark.vue';
 import About from './pages/about.vue';
 import Settings from './pages/settings.vue';
 import Error from "@/pages/Error.vue";
-
+import {getFallbackLocale, supportedLocales, useI18n} from "@/i18n/index.js";
 
 const items = [
     {
         path: '/',
-        alias: '/index',
+        redirect: to => {
+            // const [locale] =  navigator.language.split('-');
+            // if(supportedLocales.hasOwnProperty(locale)){
+            //     return `/${locale}`;
+            // }
+            const locale = getFallbackLocale();
+            return `/${locale}`;
+        },
+        meta: {
+            layout: {
+                showInNavBar: false,
+            },
+        },
+    },
+    {
+        path: '/:lang',
         name: 'index',
         component: Index,
         meta: {
@@ -32,7 +47,7 @@ const items = [
         },
     },
     {
-        path: '/novel',
+        path: '/:lang/novel',
         name: 'list',
         component: List,
         props: {
@@ -50,7 +65,7 @@ const items = [
         },
     },
     {
-        path: '/bookmark',
+        path: '/:lang/bookmark',
         name: 'bookmark',
         component: Bookmark,
         meta: {
@@ -65,7 +80,7 @@ const items = [
         },
     },
     {
-        path: '/about',
+        path: '/:lang/about',
         name: 'about',
         component: About,
         meta: {
@@ -80,7 +95,7 @@ const items = [
         },
     },
     {
-        path: '/settings',
+        path: '/:lang/settings',
         name: 'settings',
         component: Settings,
         meta: {
@@ -91,7 +106,7 @@ const items = [
         },
     },
     {
-        path: '/search',
+        path: '/:lang/search',
         name: 'search',
         component: List,
         props: {
@@ -105,7 +120,7 @@ const items = [
         },
     },
     {
-        path: '/novel/:id(\\d+)',
+        path: '/:lang/novel/:id(\\d+)',
         meta: {
             layout: {
                 showInNavBar: false,
@@ -155,7 +170,7 @@ const items = [
 ].map((item) => {
     return Object.assign(item, {
         isActive(router) {
-            return router?.currentRoute?.value?.path === item?.path;
+            return router?.currentRoute?.value?.name === item?.name;
         },
         meta: {
             ...item.meta,

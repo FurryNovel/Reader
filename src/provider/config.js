@@ -1,7 +1,7 @@
 import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
-import {merge} from 'lodash-es'
+import {merge} from 'lodash-es';
 
 export const baseConfig = {
     guildVersion: 0,
@@ -20,7 +20,7 @@ export const baseConfig = {
         safeMode: true,
         autoTranslate: false,
         translateTo: 'auto',
-        hideLanguages: ['en', 'ja', 'ko'],
+        hideLanguages: [],
         hideTags: [],
     },
     getAcceptedLanguages() {
@@ -34,7 +34,7 @@ export const baseConfig = {
                 value: 'en',
             },
             {
-                name: '日語',
+                name: '日语',
                 value: 'ja',
             },
             {
@@ -108,7 +108,28 @@ export function useConfigProvider() {
         state = JSON.parse(ctx.cookies?.settings ?? '{}');
     }
     const targetObject = merge({}, baseConfig, state);
-    targetObject.global.hideLanguages = state?.global?.hideLanguages || baseConfig.global.hideLanguages;
+    
+    let hideLanguages = null
+    if (state?.global?.hideLanguages) {
+        hideLanguages = state.global.hideLanguages;
+    } else {
+        // switch (locale) {
+        //     case 'zh':
+        //         hideLanguages = ['en', 'ja', 'ko'];
+        //         break;
+        //     case 'en':
+        //         hideLanguages = ['zh', 'ja', 'ko'];
+        //         break;
+        //     case 'ja':
+        //         hideLanguages = ['zh', 'en', 'ko'];
+        //         break;
+        //     case 'ko':
+        //         hideLanguages = ['zh', 'en', 'ja'];
+        //         break;
+        // }
+        hideLanguages = [];
+    }
+    targetObject.global.hideLanguages = hideLanguages || baseConfig.global.hideLanguages;
     Object.keys(targetObject).forEach((key) => {
         if (targetObject[key] !== undefined) {
             globalConfig[key] = targetObject[key];

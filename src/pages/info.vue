@@ -12,7 +12,7 @@
 						<div class="flex flex-col gap-3">
 							<div class="flex sm:items-center gap-3 max-sm:flex-col">
 								<div class="text-2xl font-bold">
-									{{ novelTitle || data.novel.name || '小说详情' }}
+									{{ novelTitle || data.novel.name || t('小说详情') }}
 								</div>
 								<div class="flex gap-1">
 									<div class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
@@ -21,39 +21,39 @@
 									<a v-if="data.novel.source === 'bilibili'"
 									   :href="`https://www.bilibili.com/read/readlist/rl${data.novel.source_id}/`"
 									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
-										来源<i class="ml-2 mr-1 fa-brands fa-bilibili"></i>bilibili
+										{{ t('来源') }}<i class="ml-2 mr-1 fa-brands fa-bilibili"></i>bilibili
 									</a>
 									<a v-if="data.novel.source === 'pixiv'"
 									   :href="data.novel.ext_data?.oneshot? `https://www.pixiv.net/novel/show.php?id=${data.novel.source_id}` : `https://www.pixiv.net/novel/series/${data.novel.source_id}`"
 									   class="w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0 text-xs leading-6 text-slate-700 dark:bg-surface-500 dark:text-white">
-										来源<i class="ml-2 mr-1 fa-brands fa-product-hunt"></i>pixiv
+										{{ t('来源') }}<i class="ml-2 mr-1 fa-brands fa-product-hunt"></i>pixiv
 									</a>
 								</div>
 							</div>
 							<div class="text-sm text-gray-500 dark:text-white">
 								<div class="mr-5 inline-block">
 									<i class="fa-regular fa-files"></i>
-									{{ data.chapters.length || 0 }}章
+									{{ t('%d章', data.chapters.length || 0) }}
 								</div>
 								<div class="mr-5 inline-block">
 									<i class="fa-regular fa-eye"></i>
-									{{ data.novel.view_count || 0 }}浏览
+									{{ t('%d浏览', data.novel.view_count || 0) }}
 								</div>
 							</div>
 							<div class="text-sm text-gray-500 dark:text-white">
-								作者：
+								{{ t('作者：') }}
 								<router-link
-										:to="{ name:'search', query:{ keyword:data.novel.author.nickname || '作者未知' }}"
+										:to="{ name:'search', query:{ keyword:data.novel.author.nickname || t('作者未知') }}"
 										class="font-bold text-black dark:text-white">
 									{{
-										data.novel.author.nickname || '作者未知'
+										data.novel.author.nickname || t('作者未知')
 									}}
 								</router-link>
 							</div>
 						</div>
 						<div class="flex gap-3">
 							<div class="flex flex-wrap items-center text-sm text-gray-500 dark:text-white">
-								更新时间：
+								{{ t('更新时间：') }}
 								<span class="font-bold text-black dark:text-white">
 								{{ data.novel.updated_at }}
 								</span>
@@ -62,36 +62,37 @@
 						<div class="flex gap-3 max-sm:hidden">
 							<Button v-if="canTranslate(data.novel?.tags || [])"
 							        class="text-sm text-primary-500 max-sm:w-full dark:text-white"
-							        label="翻译"
+							        :label="t('翻译')"
 							        size="small"
 							        @click="isShowTranslate = !isShowTranslate">
 								<template v-if="isShowTranslate">
 									<div class="mr-2 fa-regular fa-language"></div>
-									原&nbsp;文
+									{{ t('原&nbsp;文') }}
 								</template>
 								<template v-else>
 									<div class="mr-2 fa-regular fa-language"></div>
-									翻&nbsp;译
+									{{ t('翻&nbsp;译') }}
 								</template>
 							</Button>
 							<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white"
-							        label="加入书架"
+							        :label="t('加入书架')"
 							        size="small"
 							        @click="toggleBookmark">
 								<template v-if="!isBookmarked">
 									<div class="mr-2 fa-regular fa-book-bookmark"></div>
-									加入书架
+									{{ t('加入书架') }}
 								</template>
 								<template v-else>
 									<div class="mr-2 fa-regular fa-book-bookmark"></div>
-									从书架移除
+									{{ t('从书架移除') }}
 								</template>
 							</Button>
 							<router-link v-if="currentReadChapter"
 							             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
-								<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white" label="立即阅读"
+								<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white"
+								        :label="t('立即阅读')"
 								        size="small">
-									{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
+									{{ currentReadChapterId ? t(`继续阅读`) : t(`立即阅读`) }}
 									<div class="ml-2 fa-regular fa-chevron-right"></div>
 								</Button>
 							</router-link>
@@ -99,7 +100,7 @@
 					</div>
 				</div>
 				<TabView>
-					<TabPanel header="最新章节">
+					<TabPanel :header="t('最新章节')">
 						<router-link
 								:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
 								class="flex">
@@ -117,33 +118,33 @@
 					<div class="flex flex-1">
 						<div class="flex flex-1 justify-center items-center">
 							<Button class="text-sm text-primary-500 h-full rounded-none flex-1"
-							        label="书架"
+							        :label="t('书架')"
 							        size="small" text
 							        @click="toggleBookmark">
 								<div v-if="!isBookmarked"
 								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
-									加入书架
+									{{ t('加入书架') }}
 								</div>
 								<div v-else
 								     class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<div class="text-lg mb-1 fa-regular fa-book-bookmark"></div>
-									移出书架
+									{{ t('移出书架') }}
 								</div>
 							</Button>
 							<Button v-if="canTranslate(data.novel?.tags || [])"
 							        class="text-sm text-primary-500 h-full rounded-none flex-1"
-							        label="翻译" size="small"
+							        :label="t('翻译')" size="small"
 							        text
 							        @click="isShowTranslate = !isShowTranslate">
 								<div class="flex-1 flex flex-col justify-center align-middle text-center text-surface-600 dark:text-white">
 									<template v-if="isShowTranslate">
 										<div class="text-lg mb-1 fa-regular fa-language"></div>
-										原&nbsp;文
+										{{ t('原&nbsp;文') }}
 									</template>
 									<template v-else>
 										<div class="text-lg mb-1 fa-regular fa-language"></div>
-										翻&nbsp;译
+										{{ t('翻&nbsp;译') }}
 									</template>
 								</div>
 							</Button>
@@ -153,13 +154,13 @@
 						             class="text-sm text-primary-500 w-[50vw] h-full">
 							<Button class="w-full h-full rounded-none dark:!text-white font-bold text-lg"
 							        size="small">
-								{{ currentReadChapterId ? `继续阅读` : `立即阅读` }}
+								{{ currentReadChapterId ? t(`继续阅读`) : t(`立即阅读`) }}
 								<div class="ml-2 fa-regular fa-chevron-right"></div>
 							</Button>
 						</router-link>
 						<Button v-else class="w-[50vw] rounded-none dark:!text-white font-bold text-lg"
 						        size="small">
-							立即阅读
+							{{ t('立即阅读') }}
 							<div class="ml-2 fa-regular fa-chevron-right"></div>
 						</Button>
 					</div>
@@ -207,14 +208,14 @@
 			</template>
 			<div class="">
 				<TabView>
-					<TabPanel header="关于">
+					<TabPanel :header="t('关于')">
 						<template v-if="!data.loading && data.novel">
 							<div class="mb-10">
-								<div class="mb-2 text-xl font-bold">简介</div>
-								<div class="" v-safe-html="novelDesc || data.novel.desc"></div>
+								<div class="mb-2 text-xl font-bold">{{ t('简介') }}</div>
+								<div v-safe-html="novelDesc || data.novel.desc" class=""></div>
 							</div>
 							<div class="">
-								<div class="mb-2 text-xl font-bold">标签</div>
+								<div class="mb-2 text-xl font-bold">{{ t('标签') }}</div>
 								<div class="flex flex-wrap overflow-hidden max-h-[65px]">
 									<div v-for="tag in data.novel.tags"
 									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
@@ -238,7 +239,7 @@
 							</div>
 						</template>
 					</TabPanel>
-					<TabPanel header="目录">
+					<TabPanel :header="t('目录')">
 						<template v-if="!data.loading && data.novel">
 							<div class="flex flex-wrap">
 								<router-link v-for="(chapter,idx) in data.chapters"
@@ -278,7 +279,7 @@
 			</div>
 			<div class="">
 				<TabView>
-					<TabPanel header="评论">
+					<TabPanel :header="t('评论')">
 						<div>
 							<PageComments/>
 						</div>
@@ -305,6 +306,9 @@ import {computedAsync} from "@vueuse/core";
 import {canTranslate, detectedLanguage, useTranslate} from "@/utils/translate.js";
 import {useConfigProvider} from "@/provider/config.js";
 import PageComments from "@/components/global/PageComments.vue";
+import {useI18n} from "@/i18n/index.js";
+
+const {t} = useI18n();
 
 const config = useConfigProvider();
 const historyStore = useHistoryStore();
@@ -347,9 +351,9 @@ const currentReadChapter = computed(() => {
 
 const syncStatus = computed(() => {
     if (data.novel) {
-        return ['同步成功', '同步中', '同步失败'][data.novel.sync_status] ?? '未知';
+        return t(['同步成功', '同步中', '同步失败'][data.novel.sync_status] ?? '未知');
     }
-    return '未知';
+    return t('未知');
 });
 
 const isShowTranslate = ref(config.global.autoTranslate);

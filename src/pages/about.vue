@@ -14,7 +14,7 @@
 				<div class="text-2xl font-bold">关于我们</div>
 			</div>
 			<div id="起点" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#起点"># 起点</a></div>
+				<div class="text-xl font-bold"><a href="#起点"># {{ t('起点') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>初衷是因为B站文章阅读体验太差，
 						<del>实在是太难用了</del>
@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div id="关于我们" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#关于我们"># 关于我们</a></div>
+				<div class="text-xl font-bold"><a href="#关于我们"># {{ t('关于我们') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>本项目开始于2023年11月，致力于提升多平台的阅读体验。</p>
 					<p>开发者：TigerKK</p>
@@ -34,13 +34,13 @@
 				</div>
 			</div>
 			<div id="媒体资源" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#媒体资源"># 媒体资源</a></div>
+				<div class="text-xl font-bold"><a href="#媒体资源"># {{ t('媒体资源') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p><a href="https://media.furrynovel.com/">媒体库</a></p>
 				</div>
 			</div>
 			<div id="使用域名" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#使用域名"># 使用域名</a></div>
+				<div class="text-xl font-bold"><a href="#使用域名"># {{ t('使用域名') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>FurryNovel.com</p>
 					<p>曾用域名
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<div id="免责申明" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#免责申明"># 免责申明</a></div>
+				<div class="text-xl font-bold"><a href="#免责申明"># {{ t('免责申明') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>
 						{{ config.title }} 以下简称本站。
@@ -97,11 +97,11 @@
 				</div>
 			</div>
 			<div id="联系我们" class="mt-5 flex flex-col gap-3">
-				<div class="text-xl font-bold"><a href="#联系我们"># 联系我们</a></div>
+				<div class="text-xl font-bold"><a href="#联系我们"># {{ t('联系我们') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>您可以给我们
 						<a class="px-2" href="mailto:me@tigerkk.me">
-							<i class="fa-regular fa-envelope"></i>&nbsp;发送邮件
+							<i class="fa-regular fa-envelope"></i>&nbsp;{{ t('发送邮件') }}
 						</a>
 						或在
 						<a class="px-2" href="https://github.com/FurryNovel/Reader">
@@ -117,30 +117,33 @@
 
 <script setup>
 import config from "@/config";
+import {useI18n} from "@/i18n/index.js";
+
+const {t} = useI18n();
 
 const menus = ref([
     {
-        label: '起点',
+        label: t('起点'),
         href: '#起点',
     },
     {
-        label: '关于我们',
+        label: t('关于我们'),
         href: '#关于我们',
     },
     {
-        label: '使用域名',
+        label: t('使用域名'),
         href: '#使用域名',
     },
     {
-        label: '免责申明',
+        label: t('免责申明'),
         href: '#免责申明',
     },
     {
-        label: 'Q&A',
+        label: t('Q&A'),
         href: '#QA',
     },
     {
-        label: '联系我们',
+        label: t('联系我们'),
         href: '#联系我们',
     }
 ]);

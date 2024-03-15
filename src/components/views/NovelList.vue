@@ -24,15 +24,16 @@
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
 							<div class="mb-1">
-								<div class="mb-1 font-bold">简介</div>
+								<div class="mb-1 font-bold">{{ t('简介') }}</div>
 								<div v-if="item.desc.length > 0" v-safe-html="item.desc"
 								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
 								</div>
-								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">无
+								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
+									{{ t('无') }}
 								</div>
 							</div>
 							<div class="overflow-hidden flex1">
-								<div class="mb-1 font-bold">标签</div>
+								<div class="mb-1 font-bold">{{ t('标签') }}</div>
 								<div class="flex flex-wrap gap-1 overflow-hidden max-h-[63px]">
 									<div v-for="tag in item.tags"
 									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
@@ -86,7 +87,7 @@
 								</div>
 								<div v-if="props.author"
 								     class="flex transition duration-300 text-xs !line-clamp-1 h-[16px]">
-									作者：{{ item.author.nickname }}
+									{{ t('作者：%s', item.author.nickname) }}
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col justify-between gap-1">
@@ -96,13 +97,13 @@
 									     v-safe-html="item.desc">
 									</div>
 									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
-										无
+										{{ t('无') }}
 									</div>
 								</div>
 								<div v-if="props.withChapters" class="mb-1">
 									<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
 									     class="overflow-hidden whitespace-pre-line rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 line-clamp-[2] dark:bg-surface-400 dark:text-white">
-										最新章节：{{ item.latest_chapters[0].name }}
+										{{ t('最新章节：%s', item.latest_chapters[0].name) }}
 									</div>
 								</div>
 								<div v-if="props.desc" class="overflow-hidden flex1">
@@ -178,7 +179,9 @@ import {loadNovels} from "@/api/novels.js";
 import {useConfigProvider} from "@/provider/config.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useId} from "vue-unique-ssr-id";
+import {useI18n} from "@/i18n/index.js";
 
+const {t} = useI18n();
 const ssrId = useId();
 const parent = ref(null);
 

@@ -1,12 +1,12 @@
 <template>
-	<div ref="parent" class="flex h-full w-full flex-col dark:!bg-surface-700 dark:!text-white"
-	     :style="wrapperStyle">
+	<div ref="parent" :style="wrapperStyle"
+	     class="flex h-full w-full flex-col dark:!bg-surface-700 dark:!text-white">
 		<div :style="{ opacity: data.toggleMobile ? 1 : 0}"
 		     class="fixed top-0 left-0 w-full transition-all duration-300">
-			<NavBar :show-in="['mobile']"
-			        :show-buttons="['back', 'home', 'startSlot']"
-			        fixed
-			        custom>
+			<NavBar :show-buttons="['back', 'home', 'startSlot']"
+			        :show-in="['mobile']"
+			        custom
+			        fixed>
 				<template #start>
 					<div v-if="data.novel && data.toggleMobile" class="inline-block w-[calc(90vw-90px)]">
 						<router-link :to="{name:'info', params:{id: data.novel.id}}" class="flex flex-col">
@@ -22,26 +22,30 @@
 			</NavBar>
 		</div>
 		<div class="flex items-center lg:justify-center max-lg:justify-start" @click="toggleMobile">
-			<div class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white" :style="readerStyle">
-				<div v-for="line in lines" class="select-none" :draggable="false" v-html="line"></div>
+			<div :style="readerStyle" class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white">
+				<div v-for="line in lines" :draggable="false" class="select-none" v-html="line"></div>
 				
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col max-sm:mx-0">
-					<router-link v-if="pervChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
-					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}">
-						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
+					<router-link v-if="pervChapter"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:pervChapter.id}}"
+					             class="flex-1 min-w-[100px] max-sm:w-full"
+					             replace>
+						<Button v-ripple :style="textStyle" class="dark:!text-white !w-full" outlined
 						        severity="secondary">
 							<div>
-								<div class="text-lg font-bold">上一章</div>
+								<div class="text-lg font-bold">{{ t('上一章') }}</div>
 								<div class="text-sm">{{ pervChapter.name }}</div>
 							</div>
 						</Button>
 					</router-link>
-					<router-link v-if="nextChapter" class="flex-1 min-w-[100px] max-sm:w-full" replace
-					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}">
-						<Button v-ripple class="dark:!text-white !w-full" :style="textStyle" outlined
+					<router-link v-if="nextChapter"
+					             :to="{name:'chapter', params:{id:data.novel.id, cid:nextChapter.id}}"
+					             class="flex-1 min-w-[100px] max-sm:w-full"
+					             replace>
+						<Button v-ripple :style="textStyle" class="dark:!text-white !w-full" outlined
 						        severity="secondary">
 							<div>
-								<div class="text-lg font-bold">下一章</div>
+								<div class="text-lg font-bold">{{ t('下一章') }}</div>
 								<div class="text-sm">{{ nextChapter.name }}</div>
 							</div>
 						</Button>
@@ -51,14 +55,14 @@
 			<div class="fixed top-0 right-0 z-50 flex h-screen flex-col items-center justify-center bg-gray-700 w-[48px] max-sm:hidden">
 				<div class="flex flex-1 flex-col">
 					<router-link :to="{name:'index'}">
-						<Button v-tooltip.left="'主页'" class="aspect-square !p-0 text-white" outlined
+						<Button v-tooltip.left="t('主页')" class="aspect-square !p-0 text-white" outlined
 						        severity="secondary"
 						        size="small" text>
 							<span class="fa-regular fa-home"></span>
 						</Button>
 					</router-link>
 					<router-link :to="{name:'info', params:{id: data.novel.id}}">
-						<Button v-tooltip.left="'小说'" class="aspect-square !p-0 text-white" outlined
+						<Button v-tooltip.left="t('小说')" class="aspect-square !p-0 text-white" outlined
 						        severity="secondary"
 						        size="small" text>
 							<span class="fa-regular fa-book-bookmark"></span>
@@ -67,10 +71,10 @@
 				</div>
 				<div class="">
 					<Button v-if="canTranslate(data.novel?.tags || [])"
-					        v-tooltip.left="isShowTranslate ? '原文' : '翻译'" class="aspect-square !p-0 text-white"
+					        v-tooltip.left="t(isShowTranslate ? '原文' : '翻译')" class="aspect-square !p-0 text-white"
 					        outlined severity="secondary"
 					        size="small"
-					        @click="isShowTranslate = !isShowTranslate" text>
+					        text @click="isShowTranslate = !isShowTranslate">
 						<template v-if="isShowTranslate">
 							<span class="fa-regular fa-language"></span>
 						</template>
@@ -78,13 +82,14 @@
 							<span class="fa-regular fa-language"></span>
 						</template>
 					</Button>
-					<Button v-tooltip.left="'目录'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					<Button v-tooltip.left="t('目录')" class="aspect-square !p-0 text-white" outlined
+					        severity="secondary"
 					        size="small"
-					        @click="toggleModal('Chapters')"
-					        text>
+					        text
+					        @click="toggleModal('Chapters')">
 						<span class="fa-regular fa-list"></span>
 					</Button>
-					<Button v-tooltip.left="themeButton === 'light' ? '夜间' : '明亮'"
+					<Button v-tooltip.left="t(themeButton === 'light' ? '夜间' : '明亮')"
 					        class="aspect-square !p-0 text-white"
 					        outlined rounded severity="secondary"
 					        size="small"
@@ -92,10 +97,11 @@
 						<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
 						<span v-else class="fa-regular fa-sun-bright"></span>
 					</Button>
-					<Button v-tooltip.left="'设置'" class="aspect-square !p-0 text-white" outlined severity="secondary"
+					<Button v-tooltip.left="t('设置')" class="aspect-square !p-0 text-white" outlined
+					        severity="secondary"
 					        size="small"
-					        @click="toggleModal('Settings')"
-					        text>
+					        text
+					        @click="toggleModal('Settings')">
 						<span class="fa-regular fa-gear"></span>
 					</Button>
 				</div>
@@ -106,31 +112,31 @@
                 'lg:w-[300px]' : data.toggleSettings,
                 'pointer-events-none' : !data.toggleSettings,
 			 }">
-				<div :style="{
-                    color: `#${config.chapter.fontColor}`,
-                    backgroundColor: `#${config.chapter.bgColor}`,
-				}" :class="{
+				<div :class="{
                     'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl max-lg:right-[48px] max-sm:right-0 dark:!bg-surface-600 dark:!text-white': true,
                     'opacity-100 z-[51]' : data.toggleSettings,
+				}" :style="{
+                    color: `#${config.chapter.fontColor}`,
+                    backgroundColor: `#${config.chapter.bgColor}`,
 				}">
 					<div v-if="data.toggleSettings" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
-							设置
+							{{ t('设置') }}
 						</div>
 						<div class="mt-5">
 							<div class="flex flex-col justify-between pb-5">
 								<div class="mb-5">
 									<div class="mb-2 font-bold">
-										字体
+										{{ t('字体') }}
 									</div>
 									<div class="flex w-full">
 										<ClientOnly>
-											<Dropdown v-model="config.chapter.font" :options="fonts" optionLabel="name"
-											          option-value="value" class="flex-1">
+											<Dropdown v-model="config.chapter.font" :options="fonts" class="flex-1"
+											          option-value="value" optionLabel="name">
 												<template #option="slotProps">
 													<div class="flex align-items-center">
-													<span class="select-none"
-													      :style="{fontFamily: `${slotProps.option.value}`}">
+													<span :style="{fontFamily: `${slotProps.option.value}`}"
+													      class="select-none">
 														{{
 															slotProps.option.name
 														}}
@@ -143,15 +149,15 @@
 								</div>
 								<div class="mb-5">
 									<div class="mb-2 font-bold">
-										字体大小
+										{{ t('字体大小') }}
 									</div>
 									<div class="w-full">
-										<InputNumber v-model="config.chapter.fontSize" showButtons
-										             buttonLayout="horizontal"
-										             :inputStyle="{
+										<InputNumber v-model="config.chapter.fontSize" :inputStyle="{
 													width: '100%',
 												}"
-										             :min="12" :max="99">
+										             :max="99"
+										             :min="12"
+										             buttonLayout="horizontal" showButtons>
 											<template #incrementbuttonicon>
 												<span class="fa-regular fa-plus"/>
 											</template>
@@ -163,7 +169,7 @@
 								</div>
 								<div class="mb-5">
 									<div class="mb-2 font-bold">
-										背景颜色
+										{{ t('背景颜色') }}
 									</div>
 									<div class="w-full">
 										<ColorPicker v-model="config.chapter.bgColor" :baseZIndex="50"/>
@@ -171,7 +177,7 @@
 								</div>
 								<div class="mb-5">
 									<div class="mb-2 font-bold">
-										字体颜色
+										{{ t('字体颜色') }}
 									</div>
 									<div class="w-full">
 										<ColorPicker v-model="config.chapter.fontColor" :baseZIndex="50"/>
@@ -179,15 +185,15 @@
 								</div>
 								<div class="mb-5">
 									<div class="mb-2 font-bold">
-										边距
+										{{ t('边距') }}
 									</div>
 									<div class="w-full">
-										<InputNumber v-model="config.chapter.padding" showButtons
-										             buttonLayout="horizontal"
-										             :inputStyle="{
+										<InputNumber v-model="config.chapter.padding" :inputStyle="{
 													width: '100%',
 												}"
-										             :min="0" :max="99">
+										             :max="99"
+										             :min="0"
+										             buttonLayout="horizontal" showButtons>
 											<template #incrementbuttonicon>
 												<span class="fa-regular fa-plus"/>
 											</template>
@@ -207,16 +213,16 @@
                 'lg:w-[300px]' : data.toggleChapters,
                 'pointer-events-none' : !data.toggleChapters,
 			 }">
-				<div class="chapters-wrapper" :style="{
-                    color: `#${config.chapter.fontColor}`,
-                    backgroundColor: `#${config.chapter.bgColor}`,
-				}" :class="{
+				<div :class="{
                     'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0 dark:!bg-surface-600 dark:!text-white': true,
                     'opacity-100 z-[51]' : data.toggleChapters,
-				}">
+				}" :style="{
+                    color: `#${config.chapter.fontColor}`,
+                    backgroundColor: `#${config.chapter.bgColor}`,
+				}" class="chapters-wrapper">
 					<div v-if="data.toggleChapters" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
-							目录
+							{{ t('目录') }}
 						</div>
 						<div class="mt-5">
 							<div class="flex flex-col justify-between pb-5">
@@ -252,14 +258,14 @@
 			<div class="flex h-20 flex-1 items-center justify-center gap-3">
 				<Button v-if="canTranslate(data.novel?.tags || [])"
 				        class="h-full" outlined severity="secondary"
-				        @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;" text>
+				        text @click="isShowTranslate = !isShowTranslate; data.toggleMobile = false;">
 					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-language"></span>
 						<template v-if="isShowTranslate">
-							<span class="text-sm">原文</span>
+							<span class="text-sm">{{ t('原文') }}</span>
 						</template>
 						<template v-else>
-							<span class="text-sm">翻译</span>
+							<span class="text-sm">{{ t('翻译') }}</span>
 						</template>
 					</div>
 				</Button>
@@ -268,37 +274,37 @@
 					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<template v-if="themeButton === 'light'">
 							<span class="mb-1 text-xl fa-regular fa-moon-stars"></span>
-							<span class="text-sm">夜间</span>
+							<span class="text-sm">{{ t('夜间') }}</span>
 						</template>
 						<template v-else>
 							<span class="mb-1 text-xl fa-regular fa-sun-bright"></span>
-							<span class="text-sm">明亮</span>
+							<span class="text-sm">{{ t('明亮') }}</span>
 						</template>
 					</div>
 				</Button>
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
-				        @click="toggleModal('Chapters')" text>
+				        text @click="toggleModal('Chapters')">
 					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-list"></span>
-						<span class="text-sm">目录</span>
+						<span class="text-sm">{{ t('目录') }}</span>
 					</div>
 				</Button>
 				<Button class="h-full" href="/settings" outlined
 				        severity="secondary"
-				        @click="toggleModal('Settings')" text>
+				        text @click="toggleModal('Settings')">
 					<div class="flex h-full flex-col items-center justify-center text-black dark:text-white text-surface-600">
 						<span class="mb-1 text-xl fa-regular fa-gear"></span>
-						<span class="text-sm">设置</span>
+						<span class="text-sm">{{ t('设置') }}</span>
 					</div>
 				</Button>
 			</div>
 		</div>
 		<Dialog v-model:visible="data.loading" :pt="{root: 'border-none', mask: {style: 'backdrop-filter: blur(2px)'}}">
 			<template #container="{ closeCallback }">
-				<div class="flex h-full flex-col items-center justify-center dark:!text-white" :style="textStyle">
+				<div :style="textStyle" class="flex h-full flex-col items-center justify-center dark:!text-white">
 					<i class="fa-regular fa-loader fa-spin"></i>
-					<div class="mt-5">加载中...</div>
+					<div class="mt-5">{{ t('加载中...') }}</div>
 				</div>
 			</template>
 		</Dialog>
@@ -319,6 +325,9 @@ import {isMobile} from "@/utils/device.js";
 import {useHistoryStore} from "@/stores/histories.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
 import {canTranslate, useTranslate} from "@/utils/translate.js";
+import {useI18n} from "@/i18n/index.js";
+
+const {t} = useI18n();
 
 const historyStore = useHistoryStore();
 
@@ -392,14 +401,14 @@ const textStyle = computed(() => {
 
 const fonts = computed(() => {
     let fonts = [
-        {name: '微软雅黑', value: '微软雅黑', default: false, lineHeight: 1.3},
-        {name: 'MiSans', value: 'MiSans', default: true, lineHeight: 1.3},
-        {name: '思源黑体', value: 'Noto Sans SC', default: true, lineHeight: 1.4},
-        {name: '黑体', value: '黑体', default: false, lineHeight: 1.2},
-        {name: '宋体', value: '宋体', default: false, lineHeight: 1.1},
-        {name: '楷体', value: '楷体', default: false, lineHeight: 1.1},
-        {name: '仿宋', value: '仿宋', default: false, lineHeight: 1.1},
-        {name: 'Helvetica', value: 'Helvetica', default: true, lineHeight: 1.2},
+        {name: t('微软雅黑'), value: '微软雅黑', default: false, lineHeight: 1.3},
+        {name: t('MiSans'), value: 'MiSans', default: true, lineHeight: 1.3},
+        {name: t('思源黑体'), value: 'Noto Sans SC', default: true, lineHeight: 1.4},
+        {name: t('黑体'), value: '黑体', default: false, lineHeight: 1.2},
+        {name: t('宋体'), value: '宋体', default: false, lineHeight: 1.1},
+        {name: t('楷体'), value: '楷体', default: false, lineHeight: 1.1},
+        {name: t('仿宋'), value: '仿宋', default: false, lineHeight: 1.1},
+        {name: t('Helvetica'), value: 'Helvetica', default: true, lineHeight: 1.2},
     ];
     fonts = fonts.filter((font) => {
         let result = false;
