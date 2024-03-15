@@ -7,7 +7,7 @@
 						{{ t('书架') }}
 					</div>
 				</div>
-				<NovelList ref="novelList" v-ssr :author="false" :desc="false" :ids="novelIds"
+				<NovelList ref="novelList" v-ssr :author="true" :desc="false" :ids="novelIds"
 				           :show-pagination="true" :userId="null" :with-chapters="true"
 				           listStyle="style2" order="desc" type="popular"/>
 			</template>
