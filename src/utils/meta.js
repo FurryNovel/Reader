@@ -1,7 +1,7 @@
 import {useHead} from "@unhead/vue";
 import config from "@/config.js";
 import iconUrl from '/static/icon.png?url';
-import {getLocale, useI18n} from "@/i18n/index.js";
+import {getLocale, supportedLocales, useI18n} from "@/i18n/index.js";
 
 const data = reactive({
     route: null,
@@ -74,6 +74,16 @@ export function initMeta(router) {
                     content: data.url
                 },
             ];
+        }),
+        link: computed(() => {
+            let _locale = locale();
+            return Object.values(supportedLocales).map(locale => {
+                return {
+                    rel: 'alternate',
+                    href: data.url.replace(`/${_locale}`, `/${locale.id}`),
+                    hreflang: locale.id,
+                };
+            })
         }),
     });
 }

@@ -4,13 +4,13 @@ import {sprintf} from 'sprintf-js';
 
 export const supportedLocales = {
     'zh': {
-        id:'zh',
+        id: 'zh',
         name: '简体中文',
         shortName: '中文',
         translation: ZH,
     },
     'en': {
-        id:'en',
+        id: 'en',
         name: 'English',
         shortName: 'EN',
         translation: EN,
