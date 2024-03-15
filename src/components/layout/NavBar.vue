@@ -31,19 +31,19 @@
                             [item.icon.text]:true,
 					     }" aria-hidden="true">
 					</span>
-					<span class="ml-2">{{ item.label }}</span>
+					<span class="ml-2">{{ t(item.label) }}</span>
 				</a>
 				<a v-else v-ripple :draggable="false" :href="href" v-bind="props.action" @click="navigate">
 					<span v-if="item.icon" :class="{
                             [item.icon.text]:true,
 					      }" aria-hidden="true">
 					</span>
-					<span class="ml-2">{{ item.label }}</span>
+					<span class="ml-2">{{ t(item.label) }}</span>
 				</a>
 			</router-link>
 			<a v-else v-ripple :draggable="false" :href="item.url" :target="item.target" v-bind="props.action">
 				<span v-if="item.icon" class="fa-regular">{{ item.icon.text }}</span>
-				<span class="ml-2">{{ item.label }}</span>
+				<span class="ml-2">{{ t(item.label) }}</span>
 				<span v-if="hasSubmenu" class="ml-2 pi pi-fw pi-angle-down"/>
 			</a>
 		</template>
@@ -89,6 +89,8 @@
 import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
+import {useI18n} from "@/i18n/index.js";
+const {t} = useI18n();
 
 const showButtons = computed(() => {
     return props.showButtons.filter(button => !props.hideButtons.includes(button)).concat(props.appendButtons);

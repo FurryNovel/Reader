@@ -19,6 +19,21 @@ export default {
     '标签': 'Tags',
     '友情链接': 'Links',
     
+    '原文': 'Original Text',
+    '翻译': 'Translation',
+    '夜间': 'Night',
+    '明亮': 'Bright',
+    '自动': 'Automatic',
+    
+    '中文': 'Chinese',
+    '英语': 'English',
+    '日语': 'Japanese',
+    '韩语': 'Korean',
+    
+    '添加': 'Add',
+    '删除': 'Delete',
+    
+    //index.vue
     '热门精选': 'Popular Selections',
     '查看更多': 'View More',
     '随便来点': 'Random',
@@ -26,10 +41,114 @@ export default {
     '刷新一下': 'Refresh',
     '最新小说': 'Latest Novels',
     '种族': 'Race',
+    
+    // Default Tags
+    '兽人': 'Furry',
+    'AI生成': 'AI Generated',
+    '冒险': 'Adventure',
+    '同人': 'Fan Fiction',
+    '爪子': 'Claw',
+    '动物': 'Animal',
+    '恋爱': 'Romance',
+    '纯爱': 'Pure Love',
+    '日常': 'Daily Life',
+    '清水': 'Clear Water',
+    '幻想': 'Fantasy',
     '虎': 'Tiger',
     '龙': 'Dragon',
     '狼': 'Wolf',
     '熊': 'Bear',
     '狗': 'Dog',
     '猫': 'Cat',
+
+    // bookmark.vue
+    '书架为空': 'Bookshelf is empty',
+    '书架为空，快去添加一些小说吧！': 'Bookshelf is empty, go add some novels!',
+
+    // chapter.vue
+    '加载中...': 'Loading...',
+    '上一章': 'Previous Chapter',
+    '下一章': 'Next Chapter',
+    '目录': 'Table of Contents',
+    '字体': 'Font',
+    '字体大小': 'Font Size',
+    '背景颜色': 'Background Color',
+    '字体颜色': 'Font Color',
+    '边距': 'Margin',
+    '微软雅黑': 'Microsoft YaHei',
+    'MiSans': 'MiSans',
+    '思源黑体': 'Source Han Sans',
+    '黑体': 'SimHei',
+    '宋体': 'Songti',
+    '楷体': 'Kaiti',
+    '仿宋': 'FangSong',
+
+    // error.vue
+    '我们可能遇到了一些问题，无法找到这个页面。': 'We may have encountered some problems and cannot find this page.',
+    '请再试一次或': 'Please try again or',
+    '返回主页': 'Return to the homepage',
+    '猜你喜欢': 'Guess you like',
+
+    // info.vue
+    '来源': 'Source',
+    '%d章': '%d Chapters',
+    '%d浏览': '%d Views',
+    '作者：': 'Author:',
+    '作者：%s': 'Author: %s',
+    '作者未知': 'Author Unknown',
+    '更新时间：': 'Updated Time:',
+    '原&nbsp;文': 'Original&nbsp;Text',
+    '翻&nbsp;译': 'Translation',
+    '加入书架': 'Add to Bookshelf',
+    '从书架移除': 'Remove from Bookshelf',
+    '立即阅读': 'Read Now',
+    '继续阅读': 'Continue Reading',
+    '最新章节': 'Latest Chapter',
+    '简介': 'Introduction',
+    '评论': 'Comments',
+
+    // list.vue
+    '热门小说': 'Popular Novels',
+    '最新': 'Latest',
+    '热门': 'Popular',
+    '条件筛选': 'Filter Conditions',
+    '请输入关键字：小说名、作者名、简介等': 'Please enter keywords: novel name, author name, introduction, etc.',
+
+    // settings.vue
+    '偏好设置': 'Preference Settings',
+    '基本设置': 'Basic Settings',
+    '安全模式': 'Safe Mode',
+    '列表将不会显示不适合工作时间的内容': 'The list will not display content that is not suitable for work time',
+    '主题模式': 'Theme Mode',
+    '自动切换主题模式': 'Automatically switch theme mode',
+    '语言偏好': 'Language Preference',
+    '隐藏语言': 'Hide Language',
+    '选择不想看到的语言': 'Choose the language you don\'t want to see',
+    '自动翻译': 'Automatic Translation',
+    '自动翻译小说内容': 'Automatically translate novel content',
+    '翻译到...': 'Translate to...',
+    '选择翻译到的语言': 'Choose the language to translate to',
+    '内容偏好': 'Content Preference',
+    '隐藏标签': 'Hide Tags',
+    '添加不想看到的标签': 'Add tags you don\'t want to see',
+
+    // AppInfo.vue
+    '发现新的版本，点击更新': 'Found a new version, click to update',
+    '当前处于离线状态': 'Currently offline',
+    'PWA版本现已可用': 'PWA version is now available',
+    '立即安装': 'Install Now',
+    '不再提示': 'No Longer Prompt',
+
+    // Footer.vue
+    '关于我们': 'About Us',
+    '网站状态': 'Website Status',
+    '联系我们': 'Contact Us',
+    '站点地图': 'SiteMap',
+
+    // NovelList.vue
+    '无': 'None',
+    '最新章节：%s': 'Latest Chapter: %s',
+
+    // Slogan.vue
+    '最新最全的小说网站': 'The latest and most complete novel website',
 }

@@ -23,15 +23,17 @@
 import eventbus from "@/utils/eventbus.js";
 import Toast from 'primevue/toast';
 import {useToast} from "primevue/usetoast";
+import {useI18n} from "@/i18n/index.js";
 
+const {t} = useI18n();
 const toast = useToast();
 const data = reactive({
     dialog: {
         show: false,
-        title: '信息',
-        content: '内容',
+        title: t('信息'),
+        content: t('内容'),
         cancelBtn: null,
-        confirmBtn: '确定',
+        confirmBtn: t('确定'),
         input: null,
     },
     toast: {

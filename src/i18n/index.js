@@ -1,5 +1,6 @@
 import ZH from './zh';
 import EN from './en';
+import {sprintf} from 'sprintf-js';
 
 export const supportedLocales = {
     'zh': {
@@ -31,11 +32,12 @@ export function useI18n(router = null) {
     return {
         /**
          * @param key {string}
+         * @param args
          * @returns {string}
          */
-        t: key => {
+        t(key, ...args) {
             const locale = getLocale(router);
-            return supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key;
+            return sprintf(supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key, ...args);
         },
         locale() {
             const route = useRoute();

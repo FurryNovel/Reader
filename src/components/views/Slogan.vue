@@ -12,8 +12,8 @@
 					        shape="circle" size="xlarge"/>
 				</div>
 				<div class="flex flex-col items-center text-white">
-					<div class="text-4xl font-bold">兽人控小说站</div>
-					<div class="text-xl">最新最全的小说网站</div>
+					<div class="text-4xl font-bold">{{ t('兽人控小说站') }}</div>
+					<div class="text-xl">{{ t('最新最全的小说网站') }}</div>
 				</div>
 			</div>
 		</div>
@@ -22,6 +22,8 @@
 
 <script setup>
 import {getHours, getMonth, fromUnixTime} from "date-fns";
+import {useI18n} from "@/i18n/index.js";
+const {t} = useI18n();
 
 const current = ref(0);
 

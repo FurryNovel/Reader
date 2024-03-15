@@ -10,7 +10,7 @@
                             [item.icon.text]:true,
 					      }">
 					</span>
-					<span class="text-primary-500 text-sm">{{ item.label }}</span>
+					<span class="text-primary-500 text-sm">{{ t(item.label) }}</span>
 				</template>
 				<template v-else>
 					<span v-if="item.icon" :class="{
@@ -19,7 +19,7 @@
 					      }"
 					      :style="{fontSize:item.icon.fontSize}">
 					</span>
-					<span class="text-sm">{{ item.label }}</span>
+					<span class="text-sm">{{ t(item.label) }}</span>
 				</template>
 			</router-link>
 		</div>
@@ -29,6 +29,8 @@
 <script setup>
 import {routes} from "@/router.js";
 import {isMobile} from "@/utils/device.js";
+import {useI18n} from "@/i18n/index.js";
+const {t} = useI18n();
 
 const router = useRouter();
 
