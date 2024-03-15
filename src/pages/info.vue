@@ -308,7 +308,7 @@ import {useConfigProvider} from "@/provider/config.js";
 import PageComments from "@/components/global/PageComments.vue";
 import {useI18n} from "@/i18n/index.js";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const config = useConfigProvider();
 const historyStore = useHistoryStore();
@@ -450,6 +450,7 @@ function loadData() {
                 }
             },
             ignoreReq: import.meta.env.SSR,
+            lang: locale(),
         }).then((novel) => {
             data.novel = novel;
         }).catch((e) => {
@@ -467,6 +468,7 @@ function loadData() {
                 }
             },
             ignoreReq: import.meta.env.SSR,
+            lang: locale(),
         }).then((chapters) => {
             data.chapters = chapters;
         }).catch((e) => {

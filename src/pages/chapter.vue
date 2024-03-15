@@ -327,7 +327,7 @@ import {toggleTheme, useTheme} from "@/utils/theme.js";
 import {canTranslate, useTranslate} from "@/utils/translate.js";
 import {useI18n} from "@/i18n/index.js";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const historyStore = useHistoryStore();
 
@@ -574,6 +574,7 @@ function loadData() {
                     data.novel = novel;
                 },
                 ignoreReq: import.meta.env.SSR,
+                lang: locale(),
             }).then((novel) => {
                 data.novel = novel;
             }).catch((e) => {
@@ -589,6 +590,7 @@ function loadData() {
                     data.chapters = chapters;
                 },
                 ignoreReq: import.meta.env.SSR,
+                lang: locale(),
             }).then((chapters) => {
                 data.chapters = chapters;
             }).catch((e) => {

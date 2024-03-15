@@ -181,7 +181,7 @@ import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useId} from "vue-unique-ssr-id";
 import {useI18n} from "@/i18n/index.js";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 const ssrId = useId();
 const parent = ref(null);
 
@@ -336,7 +336,11 @@ function loadData() {
         hate_tags: props.applyFilter ? hateTags.value : null,
         limit: props.limit,
     };
-    return loadNovels({params, ignoreReq: import.meta.env.SSR}).then((res) => {
+    return loadNovels({
+        params,
+        ignoreReq: import.meta.env.SSR,
+        lang: locale(),
+    }).then((res) => {
         data.loading = false;
         return {
             data: res.data,
