@@ -4,11 +4,15 @@ import {sprintf} from 'sprintf-js';
 
 export const supportedLocales = {
     'zh': {
+        id:'zh',
         name: '简体中文',
+        shortName: '中文',
         translation: ZH,
     },
     'en': {
+        id:'en',
         name: 'English',
+        shortName: 'EN',
         translation: EN,
     },
 }
@@ -40,12 +44,7 @@ export function useI18n(router = null) {
             return sprintf(supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key, ...args);
         },
         locale() {
-            const route = useRoute();
-            let locale = route?.params?.lang?.toString().toLowerCase();
-            if (!locale || !supportedLocales.hasOwnProperty(locale)) {
-                locale = getFallbackLocale();
-            }
-            return locale;
+            return getLocale(router);
         },
     }
 }
