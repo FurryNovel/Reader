@@ -34,10 +34,10 @@ export default {
     '删除': 'Delete',
     
     //index.vue
-    '热门精选': 'Popular Selections',
+    '热门精选': 'Popular Novels',
     '查看更多': 'View More',
     '随便来点': 'Random',
-    '随机': 'Random',
+    '随机': 'All',
     '刷新一下': 'Refresh',
     '最新小说': 'Latest Novels',
     '种族': 'Race',
@@ -60,11 +60,11 @@ export default {
     '熊': 'Bear',
     '狗': 'Dog',
     '猫': 'Cat',
-
+    
     // bookmark.vue
     '书架为空': 'Bookshelf is empty',
     '书架为空，快去添加一些小说吧！': 'Bookshelf is empty, go add some novels!',
-
+    
     // chapter.vue
     '加载中...': 'Loading...',
     '上一章': 'Previous Chapter',
@@ -77,18 +77,18 @@ export default {
     '边距': 'Margin',
     '微软雅黑': 'Microsoft YaHei',
     'MiSans': 'MiSans',
-    '思源黑体': 'Source Han Sans',
+    '思源黑体': 'Noto Sans',
     '黑体': 'SimHei',
     '宋体': 'Songti',
     '楷体': 'Kaiti',
     '仿宋': 'FangSong',
-
+    
     // error.vue
     '我们可能遇到了一些问题，无法找到这个页面。': 'We may have encountered some problems and cannot find this page.',
     '请再试一次或': 'Please try again or',
     '返回主页': 'Return to the homepage',
     '猜你喜欢': 'Guess you like',
-
+    
     // info.vue
     '来源': 'Source',
     '%d章': '%d Chapters',
@@ -106,14 +106,17 @@ export default {
     '最新章节': 'Latest Chapter',
     '简介': 'Introduction',
     '评论': 'Comments',
-
+    '同步成功': 'Sync Success',
+    '同步失败': 'Sync Failed',
+    '同步中': 'Syncing',
+    
     // list.vue
     '热门小说': 'Popular Novels',
     '最新': 'Latest',
     '热门': 'Popular',
-    '条件筛选': 'Filter Conditions',
+    '条件筛选': 'Filter',
     '请输入关键字：小说名、作者名、简介等': 'Please enter keywords: novel name, author name, introduction, etc.',
-
+    
     // settings.vue
     '偏好设置': 'Preference Settings',
     '基本设置': 'Basic Settings',
@@ -131,24 +134,35 @@ export default {
     '内容偏好': 'Content Preference',
     '隐藏标签': 'Hide Tags',
     '添加不想看到的标签': 'Add tags you don\'t want to see',
-
+    
+    //about.vue
+    '起点': 'Start',
+    '使用域名': 'Use Domain',
+    '免责申明': 'Disclaimer',
+    'Q&A': 'Q&A',
+    '发送邮件': 'Send Email',
+    '媒体资源': 'Media Resources',
+    
     // AppInfo.vue
     '发现新的版本，点击更新': 'Found a new version, click to update',
     '当前处于离线状态': 'Currently offline',
     'PWA版本现已可用': 'PWA version is now available',
     '立即安装': 'Install Now',
     '不再提示': 'No Longer Prompt',
-
+    
     // Footer.vue
     '关于我们': 'About Us',
     '网站状态': 'Website Status',
     '联系我们': 'Contact Us',
     '站点地图': 'SiteMap',
-
+    
     // NovelList.vue
     '无': 'None',
     '最新章节：%s': 'Latest Chapter: %s',
-
+    
     // Slogan.vue
     '最新最全的小说网站': 'The latest and most complete novel website',
+    
+    //TagSelect.vue
+    '选择标签': 'Select Tags',
 }

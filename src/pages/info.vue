@@ -89,7 +89,8 @@
 							</Button>
 							<router-link v-if="currentReadChapter"
 							             :to="{name:'chapter', params:{id:data.novel.id, cid:currentReadChapter.id}}">
-								<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white" :label="t('立即阅读')"
+								<Button class="text-sm text-primary-500 max-sm:w-full dark:text-white"
+								        :label="t('立即阅读')"
 								        size="small">
 									{{ currentReadChapterId ? t(`继续阅读`) : t(`立即阅读`) }}
 									<div class="ml-2 fa-regular fa-chevron-right"></div>
@@ -350,9 +351,9 @@ const currentReadChapter = computed(() => {
 
 const syncStatus = computed(() => {
     if (data.novel) {
-        return ['同步成功', '同步中', '同步失败'][data.novel.sync_status] ?? '未知';
+        return t(['同步成功', '同步中', '同步失败'][data.novel.sync_status] ?? '未知');
     }
-    return '未知';
+    return t('未知');
 });
 
 const isShowTranslate = ref(config.global.autoTranslate);
