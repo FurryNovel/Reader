@@ -97,6 +97,18 @@ export async function handleRequest(request, env = null) {
                     'Location': `/${locales[0]}`,
                 }
             });
+        } else {
+            const locales = Object.keys(supportedLocales).filter((locale) => {
+                return url.pathname.startsWith(`/${locale}`);
+            });
+            if (locales.length === 0) {
+                return new Response(null, {
+                    status: 307,
+                    headers: {
+                        'Location': `/${getFallbackLocale()}${url.pathname}${url.search}`,
+                    }
+                });
+            }
         }
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: parse(request.headers.get('cookie') || ''),
@@ -105,10 +117,10 @@ export async function handleRequest(request, env = null) {
         });
         return new Response(
             template
-                .replace(`<!--app-html-->`, renderRes.html)
-                .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-                .replace(`<!--head-tags-->`, renderRes.headTags)
-                .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+            .replace(`<!--app-html-->`, renderRes.html)
+            .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+            .replace(`<!--head-tags-->`, renderRes.headTags)
+            .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
             {
                 status: 200,
                 headers: {
