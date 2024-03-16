@@ -98,14 +98,21 @@ export async function handleRequest(request, env = null) {
                 }
             });
         } else {
-            const locales = Object.keys(supportedLocales).filter((locale) => {
+            let locales = Object.keys(supportedLocales).filter((locale) => {
                 return url.pathname.startsWith(`/${locale}`);
             });
             if (locales.length === 0) {
+                let languages = request.headers.has('Accept-Language') ? request.headers.get('Accept-Language') : null;
+                locales = parser.parse(languages).map((locale) => locale.code).filter(code => {
+                    return supportedLocales.hasOwnProperty(code);
+                });
+                if (locales.length === 0) {
+                    locales.push(getFallbackLocale());
+                }
                 return new Response(null, {
                     status: 307,
                     headers: {
-                        'Location': `/${getFallbackLocale()}${url.pathname}${url.search}`,
+                        'Location': `/${locales[0]}${url.pathname}${url.search}`,
                     }
                 });
             }
@@ -117,10 +124,10 @@ export async function handleRequest(request, env = null) {
         });
         return new Response(
             template
-            .replace(`<!--app-html-->`, renderRes.html)
-            .replace(`<!--preload-links-->`, renderRes.preloadLinks)
-            .replace(`<!--head-tags-->`, renderRes.headTags)
-            .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
+                .replace(`<!--app-html-->`, renderRes.html)
+                .replace(`<!--preload-links-->`, renderRes.preloadLinks)
+                .replace(`<!--head-tags-->`, renderRes.headTags)
+                .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
             {
                 status: 200,
                 headers: {
