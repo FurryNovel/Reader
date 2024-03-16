@@ -21,6 +21,7 @@ export function loadNovel({id, onCache, ignoreReq, lang}) {
             id: id,
             lang: lang,
             'req-id': getReqId({
+                lang: lang,
                 id: id,
                 ...headers,
             }),
@@ -57,6 +58,7 @@ export async function loadNovels({params, ignoreReq, lang}) {
         data: {
             lang: lang,
             'req-id': getReqId({
+                lang: lang,
                 ...params,
                 ...headers,
             }),
