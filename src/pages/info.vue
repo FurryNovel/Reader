@@ -294,7 +294,7 @@
 <script setup>
 import ClientOnly from "@duannx/vue-client-only";
 import NavBar from "@/components/layout/NavBar.vue";
-import {loadNovel} from "@/api/novels.js";
+import {doNovelAction, loadNovel} from "@/api/novels.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {loadChapter, loadChapters} from "@/api/chapters.js";
 import {useMeta} from "@/utils/meta.js";
@@ -424,6 +424,10 @@ onServerPrefetch(() => {
 
 onMounted(() => {
     isMounted.value = true;
+    doNovelAction({
+        id: data.id,
+        action: 'view',
+    });
 });
 
 watchEffect(() => {

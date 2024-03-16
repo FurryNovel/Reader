@@ -31,6 +31,20 @@ export function loadNovel({id, onCache, ignoreReq, lang}) {
     });
 }
 
+export async function doNovelAction({id, action}) {
+    const headers = getHandleHeaders();
+    return defineApi({
+        method: 'post',
+        api: `/novel/:id/action/:action`,
+        store: () => null,
+        data: {
+            id: id,
+            action: action,
+        },
+        headers: headers,
+    });
+}
+
 export async function loadNovels({params, ignoreReq, lang}) {
     const headers = getHandleHeaders();
     return defineApi({
