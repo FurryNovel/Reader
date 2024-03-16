@@ -45,6 +45,7 @@ export async function loadChapters({novelId, onCache, ignoreReq, lang}) {
             novelId: novelId,
             'req-id': getReqId({
                 novelId: novelId,
+                lang: lang,
                 ...headers,
             }),
             lang: lang,

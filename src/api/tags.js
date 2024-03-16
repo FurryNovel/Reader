@@ -22,6 +22,7 @@ export async function loadTags({ignoreReq, lang}) {
         pk: 'req-id',
         data: {
             'req-id': getReqId({
+                lang: lang,
                 ...headers,
             }),
             lang: lang,
