@@ -83,9 +83,12 @@ function renderPreloadLink(file) {
 export async function handleRequest(request, env = null) {
     try {
         const url = new URL(request.url);
-        if (url.pathname === '/') {
+        let locales = Object.keys(supportedLocales).filter((locale) => {
+            return url.pathname.startsWith(`/${locale}`);
+        });
+        if (locales.length === 0) {
             let languages = request.headers.has('Accept-Language') ? request.headers.get('Accept-Language') : null;
-            const locales = parser.parse(languages).map((locale) => locale.code).filter(code => {
+            locales = parser.parse(languages).map((locale) => locale.code).filter(code => {
                 return supportedLocales.hasOwnProperty(code);
             });
             if (locales.length === 0) {
@@ -94,28 +97,9 @@ export async function handleRequest(request, env = null) {
             return new Response(null, {
                 status: 307,
                 headers: {
-                    'Location': `/${locales[0]}`,
+                    'Location': `/${locales[0]}${url.pathname}${url.search}`,
                 }
             });
-        } else {
-            let locales = Object.keys(supportedLocales).filter((locale) => {
-                return url.pathname.startsWith(`/${locale}`);
-            });
-            if (locales.length === 0) {
-                let languages = request.headers.has('Accept-Language') ? request.headers.get('Accept-Language') : null;
-                locales = parser.parse(languages).map((locale) => locale.code).filter(code => {
-                    return supportedLocales.hasOwnProperty(code);
-                });
-                if (locales.length === 0) {
-                    locales.push(getFallbackLocale());
-                }
-                return new Response(null, {
-                    status: 307,
-                    headers: {
-                        'Location': `/${locales[0]}${url.pathname}${url.search}`,
-                    }
-                });
-            }
         }
         const renderRes = await render(`${url.pathname}${url.search}`, manifest, {
             cookies: parse(request.headers.get('cookie') || ''),

@@ -86,7 +86,8 @@ function directiveCommand(app) {
     const htmlOptions = {
         whiteList: {
             br: [],
-            a: ['href', 'title', 'target'],
+            del: [],
+            strong: [],
         },
         stripIgnoreTag: true,
     };
