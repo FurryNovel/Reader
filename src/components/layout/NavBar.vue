@@ -64,12 +64,12 @@
 					<span v-if="themeButton === 'light'" class="fa-regular fa-moon-stars"></span>
 					<span v-else class="fa-regular fa-sun-bright"></span>
 				</Button>
-				<Button v-if="showButtons.includes('locale')" v-ripple class="w-[90px] h-[45px]"
+				<Button v-if="showButtons.includes('locale')" v-ripple class="w-auto min-w-[45px] h-[45px]"
 				        outlined rounded severity="secondary" size="small"
 				        text @click="toggleLocaleMenu">
 					<div class="flex gap-3 justify-center items-center mt-[2px]">
 						<span class="fa-regular fa-earth-americas"></span>
-						<span class="">{{ supportedLocales[locale()].shortName }}</span>
+						<span class="max-sm:hidden">{{ supportedLocales[locale()].shortName }}</span>
 					</div>
 				</Button>
 				<router-link v-if="showButtons.includes('settings')"
@@ -231,7 +231,8 @@ function changeLocale(_locale) {
             ...currentRoute.params,
             lang: _locale.id
         }
-    }).catch(err => {})
+    }).catch(err => {
+    })
 }
 
 onMounted(() => {
