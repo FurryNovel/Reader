@@ -26,6 +26,11 @@ export default {
                     cache: cacheWrapper
                 });
                 if (isAssetUrl(request.url)) {
+                    if (url.hostname.startsWith('dev.')){
+                        if (pathname.endsWith('robots.txt')) {
+                            return new Response('User-agent: *\nDisallow: /', {status: 200});
+                        }
+                    }
                     url.pathname = '/client' + pathname;
                     return env.ASSETS.fetch(url);
                 } else if (url.searchParams.has('client_entry')) {
