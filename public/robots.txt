@@ -1,8 +1,7 @@
+sitemap: https://furrynovel.com/api/sitemap/index.xml
+
 User-agent: *
 Disallow: /api/
-Disallow: https://dev.furrynovel.com/
 
 User-agent: *
 Allow: /api/sitemap/
-
-sitemap: https://furrynovel.com/api/sitemap/index.xml
