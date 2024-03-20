@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /api/
+Disallow: https://dev.furrynovel.com/
 
 User-agent: *
 Allow: /api/sitemap/
