@@ -26,10 +26,15 @@ export default {
                     cache: cacheWrapper
                 });
                 if (isAssetUrl(request.url)) {
-                    if (url.hostname.startsWith('dev.')){
-                        if (pathname.endsWith('robots.txt')) {
-                            return new Response('User-agent: *\nDisallow: /', {status: 200});
+                    try {
+                        if (url?.hostname?.startsWith('dev.')) {
+                            if (pathname?.endsWith('robots.txt')) {
+                                return new Response('User-agent: *\nDisallow: /', {status: 200});
+                            }
                         }
+                    } catch (e) {
+                        url.pathname = '/client/index.html';
+                        return env.ASSETS.fetch(url);
                     }
                     url.pathname = '/client' + pathname;
                     return env.ASSETS.fetch(url);
@@ -124,7 +129,7 @@ function checkRedirects(request) {
             break;
         }
     }
-    if (redirectTo){
+    if (redirectTo) {
         if (typeof redirectTo.to === 'function') {
             redirectTo = redirectTo.to();
         } else {
