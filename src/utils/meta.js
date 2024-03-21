@@ -10,6 +10,7 @@ const data = reactive({
     description: null,
     image: null,
     url: null,
+    append: {},
 });
 
 const computeParams = computed(() => {
@@ -38,42 +39,34 @@ export function initMeta(router) {
     initParams(router.currentRoute);
     router.afterEach((to) => {
         data.route = to;
+        data.append = {};
     });
     useHead({
         title: computed(() => {
             return `${t(data.title)} - ${t(config.title)}`;
         }),
         meta: computed(() => {
-            return [
+            console.log(data.append);
+            return Object.entries({
+                'description': t(data.description),
+                'keywords': t(data.keywords),
+                'og:site_name': t(config.title),
+                'og:title': t(data.title),
+                'og:description': data.description,
+                'og:image': data.image,
+                'og:url': data.url,
+                ...data.append,
+            }).map(([name, content]) => {
+                return {
+                    name,
+                    content,
+                };
+            }).concat([
                 {
-                    name: 'description',
-                    content: t(data.description),
+                    'http-equiv': 'content-language',
+                    content: locale(),
                 },
-                {
-                    name: 'keywords',
-                    content: t(data.keywords),
-                },
-                {
-                    name: 'og:site_name',
-                    content: t(config.title),
-                },
-                {
-                    name: 'og:title',
-                    content: t(data.title),
-                },
-                {
-                    name: 'og:description',
-                    content: data.description,
-                },
-                {
-                    name: 'og:image',
-                    content: data.image,
-                },
-                {
-                    name: 'og:url',
-                    content: data.url
-                },
-            ];
+            ]);
         }),
         link: computed(() => {
             let _locale = locale();
@@ -83,7 +76,7 @@ export function initMeta(router) {
                     href: data.url.replace(`/${_locale}`, `/${locale.id}`),
                     hreflang: locale.id,
                 };
-            })
+            });
         }),
     });
 }
@@ -100,4 +93,5 @@ export function useMeta(params) {
     data.description = params.description ? params.description : config.description;
     data.image = params.image ? params.image : iconUrl;
     data.url = params.url ? params.url : `${config.base}${data.route?.path || ''}`;
+    data.append = params.append ? params.append : {};
 }
