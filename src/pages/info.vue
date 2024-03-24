@@ -396,9 +396,20 @@ onServerPrefetch(() => {
         });
         if (data.novel) {
             useMeta({
-                title: `${data.novel.name} - ${data.novel?.author?.nickname || '铁名'}`,
-                description: data.novel.desc,
+                title: `${data.novel.name} - ${data.novel.author?.nickname || '铁名'}`,
+                description: `${data.novel.name}是由${data.novel.author?.nickname || '铁名'}创作的小说。\n简介：${data.novel.desc}`,
+                keywords: data.novel.tags?.join(',') || '',
                 image: data.novel.cover,
+                append: {
+                    'og:type': 'article',
+                    'og:title': `${data.novel.name}`,
+                    'og:description': `${data.novel.desc}`,
+                    'article:author': data.novel.author?.nickname || '铁名',
+                    'article:published_time': data.novel.created_at,
+                    'article:modified_time': data.novel.updated_at,
+                    'article:section': data.novel.tags?.join(',') || '',
+                    'article:tag': data.novel.tags?.join(',') || '',
+                },
             });
         }
     });
@@ -433,9 +444,20 @@ onMounted(() => {
 watchEffect(() => {
     if (data.novel) {
         useMeta({
-            title: `${data.novel.name} - ${data.novel?.author?.nickname || '铁名'}`,
-            description: data.novel.desc,
+            title: `${data.novel.name} - ${data.novel.author?.nickname || '铁名'}`,
+            description: `${data.novel.name}是由${data.novel.author?.nickname || '铁名'}创作的小说。\n简介：${data.novel.desc}`,
+            keywords: data.novel.tags?.join(',') || '',
             image: data.novel.cover,
+            append: {
+                'og:type': 'article',
+	            'og:title': `${data.novel.name}`,
+	            'og:description': `${data.novel.desc}`,
+				'article:author': data.novel.author?.nickname || '铁名',
+				'article:published_time': data.novel.created_at,
+				'article:modified_time': data.novel.updated_at,
+				'article:section': data.novel.tags?.join(',') || '',
+				'article:tag': data.novel.tags?.join(',') || '',
+            },
         });
     }
 });
