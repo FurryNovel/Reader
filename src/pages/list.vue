@@ -35,22 +35,36 @@
 						</Button>
 					</div>
 				</div>
-				<NovelList ref="novelList" v-ssr :ids="null" :keyword="data.keyword"
+				<NovelList ref="novelList" v-if="data.searchMode === 'keyword'"
+				           v-ssr :ids="null" :keyword="data.keyword"
 				           :limit="8" :show-pagination="true"
 				           :tags="data.tags" :type="data.type"
 				           :userId="null" listStyle="style2" order="desc"/>
+				<NovelList ref="novelList" v-if="data.searchMode === 'tag'"
+				           v-ssr :ids="null"
+				           :limit="8" :show-pagination="true"
+				           :tags="[data.keyword]" :type="data.type"
+				           :userId="null" listStyle="style2" order="desc"/>
 			</template>
 			<template v-else>
-				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-208px)] max-sm:h-full w-full">
-					<InputGroup class="flex w-full flex-row items-center justify-center duration-200 group">
-						<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500">
-							<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
-						</InputGroupAddon>
-						<InputText id="keyword" v-model="data.preKeyword"
-						           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0"
-						           :placeholder="t('请输入关键字：小说名、作者名、简介等')"/>
-						<Button class="dark:text-white" :label="t('搜索')" @click="data.keyword = data.preKeyword"/>
-					</InputGroup>
+				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-146px)] max-sm:h-[calc(100vh-64px)]">
+					<div class=" w-full p-10 max-w-[800px]">
+						<TabView @tabChange="e => data.searchMode = searchModes[e.index].value"
+						         :activeIndex="searchModes.findIndex(v => v.value === data.searchMode)">
+							<TabPanel v-for="mode in searchModes" :header="mode.name"></TabPanel>
+						</TabView>
+						<InputGroup
+								class="flex w-full flex-row items-center justify-center duration-200 mt-[-30px]">
+							<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
+								<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
+							</InputGroupAddon>
+							<InputText id="keyword" v-model="data.preKeyword"
+							           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
+							           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
+							<Button class="dark:text-white px-5" :label="t('搜索')"
+							        @click="applyFilters"/>
+						</InputGroup>
+					</div>
 				</div>
 			</template>
 		</div>
@@ -90,7 +104,18 @@ const {t} = useI18n();
 const filtersPanel = ref(null);
 const novelList = ref(null);
 const router = useRouter();
+const searchModes = [
+    {
+        name: '关键字',
+        value: 'keyword',
+    },
+    {
+        name: '标签',
+        value: 'tag',
+    },
+];
 const data = reactive({
+    searchMode: 'keyword',
     preKeyword: '',
     preTags: [],
     keyword: '',
@@ -121,6 +146,9 @@ watchEffect(() => {
     if (data.type) {
         next.type = data.type;
     }
+    if (data.searchMode) {
+        next.searchMode = data.searchMode;
+    }
     data.keyword = next?.keyword || '';
     data.mode = next.mode;
     router.replace({
@@ -150,6 +178,11 @@ function onInit() {
         data.type = router.currentRoute.value.query.type;
     } else {
         data.type = 'popular';
+    }
+    if (router.currentRoute.value.query.searchMode) {
+        data.searchMode = router.currentRoute.value.query.searchMode;
+    } else {
+        data.searchMode = 'keyword';
     }
 }
 
