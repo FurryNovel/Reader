@@ -103,6 +103,10 @@
 						<a class="px-2" href="mailto:me@tigerkk.me">
 							<i class="fa-regular fa-envelope"></i>&nbsp;{{ t('发送邮件') }}
 						</a>
+						、
+						<a class="px-2" href="https://t.me/FurryNovel">
+							<i class="fa-brands fa-telegram"></i>&nbsp;{{ t('Telegram群组') }}
+						</a>
 						或在
 						<a class="px-2" href="https://github.com/FurryNovel/Reader">
 							<i class="fa-brands fa-github"></i>&nbsp;GitHub

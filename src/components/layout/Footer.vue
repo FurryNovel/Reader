@@ -8,12 +8,12 @@
 						<i class="fa-brands fa-github"></i>&nbsp;GitHub
 					</a>
 					<a href="https://status.furrynovel.com/">{{ t('网站状态') }}</a>
-					<router-link :to="{name:'about'}">{{ t('联系我们') }}</router-link>
+					<router-link :to="{name:'about', hash:'#联系我们'}">{{ t('联系我们') }}</router-link>
 				</div>
 				<div class="flex w-64 flex-col items-center justify-start">
 					<p class="text-lg font-bold text-black dark:text-white pb-2">{{ t('友情链接') }}</p>
 					<a v-for="link in config.links" :href="link.link" :title="link.desc">
-						{{link.name}}
+						{{ link.name }}
 					</a>
 					<a href="#">&nbsp;</a>
 					<a href="/api/sitemap/index.xml">{{ t('站点地图') }}</a>
@@ -37,6 +37,7 @@ import {routes} from "@/router.js";
 
 import config from "@/config.js";
 import {useI18n} from "@/i18n/index.js";
+
 const {t} = useI18n();
 
 const APP_VERSION = __APP_VERSION;
