@@ -46,7 +46,6 @@ export function initMeta(router) {
             return `${t(data.title)} - ${t(config.title)}`;
         }),
         meta: computed(() => {
-            console.log(data.append);
             return Object.entries({
                 'description': t(data.description),
                 'keywords': t(data.keywords),
