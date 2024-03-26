@@ -51,7 +51,7 @@
 					<div class=" w-full p-10 max-w-[800px]">
 						<TabView @tabChange="e => data.searchMode = searchModes[e.index].value"
 						         :activeIndex="searchModes.findIndex(v => v.value === data.searchMode)">
-							<TabPanel v-for="mode in searchModes" :header="mode.name"></TabPanel>
+							<TabPanel v-for="mode in searchModes" :header="t(mode.name)"></TabPanel>
 						</TabView>
 						<InputGroup
 								class="flex w-full flex-row items-center justify-center duration-200 mt-[-30px]">

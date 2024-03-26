@@ -13,6 +13,9 @@ export default {
     '小说详情': 'Novel Details',
     '页面未找到': 'Page Not Found',
     
+    '兽人控, 兽人小说, 兽人同人, 兽人文学, 兽人同人小说, 兽人同人站, 福瑞控, 福瑞控小说, 福瑞控文学, 虎兽人小说, 龙兽人小说, 狼兽人小说, 熊兽人小说': 'furry, furry fiction, furry fanwork, furry literature, furry fan fiction, furry fansite, furry, furry fiction, furry literature, tiger furry fiction, dragon furry fiction, wolf furry fiction, bear furry fiction, fanwork, fan fiction, fansite',
+    '兽人控小说站是一个专为兽人控打造的聚合在线阅读平台。在这里，你可以找到各种平台各种兽人相关的小说，从兽人与人类的爱恨情仇，到兽人之间的种族斗争，从兽人的历史文化，到兽人的奇幻冒险，应有尽有。你可以随时随地享受阅读的乐趣，无需下载或安装任何软件。还可以自由切换翻译，选择你喜欢的阅读模式。': 'FurryNovel is a specially created online reading platform for furry lovers. Here, you can find all kinds of furry-related novels from various platforms, including love and hate between furries and humans, racial struggles between furries, furry history and culture, and furry fantasy adventures. You can enjoy the fun of reading anytime, anywhere, without downloading or installing any software. You can also freely switch translations and choose your preferred reading mode.',
+    
     '确定': 'OK',
     '清除': 'Clear',
     
@@ -116,6 +119,8 @@ export default {
     '热门': 'Popular',
     '条件筛选': 'Filter',
     '请输入关键字：小说名、作者名、简介等': 'Please enter keywords: novel name, author name, introduction, etc.',
+    '请输入标签': 'Please enter tags',
+    '关键字': 'Keywords',
     
     // settings.vue
     '偏好设置': 'Preference Settings',
