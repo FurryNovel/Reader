@@ -26,14 +26,15 @@
 		<template #item="{ item, props, hasSubmenu, root }">
 			<router-link v-if="item.route" v-slot="{ href, navigate }" :to="item" custom>
 				<a v-if="item.isActive" v-ripple :draggable="false" :href="href" class="text-primary-500"
-				   v-bind="props.action" @click="navigate">
+				   v-bind="props.action" @click="e => { if(!item.isActive) changeKeepAlive(); navigate(e); }">
 					<span v-if="item.icon" :class="{
                             [item.icon.text]:true,
 					     }" aria-hidden="true">
 					</span>
 					<span class="ml-2">{{ t(item.label) }}</span>
 				</a>
-				<a v-else v-ripple :draggable="false" :href="href" v-bind="props.action" @click="navigate">
+				<a v-else v-ripple :draggable="false" :href="href"
+				   v-bind="props.action" @click="e => { if(!item.isActive) changeKeepAlive(); navigate(e); }">
 					<span v-if="item.icon" :class="{
                             [item.icon.text]:true,
 					      }" aria-hidden="true">
@@ -101,6 +102,7 @@ import {routes} from "@/router.js";
 import {useDeviceInfo} from "@/utils/device.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
 import {supportedLocales, useI18n} from "@/i18n/index.js";
+import eventbus from "@/utils/eventbus.js";
 
 const {t, locale} = useI18n();
 
@@ -220,6 +222,10 @@ const canBack = computed(() => {
 
 function toggleLocaleMenu(event) {
     localeMenu.value.toggle(event);
+}
+
+function changeKeepAlive(){
+    eventbus.emit('onKeepAliveStatus', false);
 }
 
 function changeLocale(_locale) {

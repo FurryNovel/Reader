@@ -397,7 +397,13 @@ onServerPrefetch(() => {
         if (data.novel) {
             useMeta({
                 title: `${data.novel.name} - ${data.novel.author?.nickname || '铁名'}`,
-                description: `${data.novel.name}是由${data.novel.author?.nickname || '铁名'}创作的小说。\n简介：${data.novel.desc}`,
+                description: t(
+                    '%s是由%s创作的%s小说。小说简介：%s',
+                    data.novel.name,
+                    data.novel.author?.nickname || '铁名',
+                    data.novel.tags?.[0] || t('兽人'),
+                    data.novel.desc
+                ),
                 keywords: data.novel.tags?.join(',') || '',
                 image: data.novel.cover,
                 append: {
@@ -407,8 +413,8 @@ onServerPrefetch(() => {
                     'article:author': data.novel.author?.nickname || '铁名',
                     'article:published_time': data.novel.created_at,
                     'article:modified_time': data.novel.updated_at,
-                    'article:section': data.novel.tags?.join(',') || '',
-                    'article:tag': data.novel.tags?.join(',') || '',
+                    'article:section': data.novel.tags?.join(', ') || '',
+                    'article:tag': data.novel.tags?.join(', ') || '',
                 },
             });
         }
@@ -445,7 +451,13 @@ watchEffect(() => {
     if (data.novel) {
         useMeta({
             title: `${data.novel.name} - ${data.novel.author?.nickname || '铁名'}`,
-            description: `${data.novel.name}是由${data.novel.author?.nickname || '铁名'}创作的小说。\n简介：${data.novel.desc}`,
+            description: t(
+                '%s是由%s创作的%s小说。小说简介：%s',
+	            data.novel.name,
+                data.novel.author?.nickname || '铁名',
+                data.novel.tags?.[0] || t('兽人'),
+                data.novel.desc
+            ),
             keywords: data.novel.tags?.join(',') || '',
             image: data.novel.cover,
             append: {
@@ -455,8 +467,8 @@ watchEffect(() => {
 				'article:author': data.novel.author?.nickname || '铁名',
 				'article:published_time': data.novel.created_at,
 				'article:modified_time': data.novel.updated_at,
-				'article:section': data.novel.tags?.join(',') || '',
-				'article:tag': data.novel.tags?.join(',') || '',
+				'article:section': data.novel.tags?.join(', ') || '',
+				'article:tag': data.novel.tags?.join(', ') || '',
             },
         });
     }

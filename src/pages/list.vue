@@ -4,11 +4,11 @@
 		        :hide-buttons="['icon']" :show-in="['mobile']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
-				<div class="m-2 flex items-center justify-between pl-2">
-					<div class="text-2xl font-bold">
+				<div class="m-2 flex items-center justify-between pl-2 flex-wrap gap-3">
+					<div class="text-2xl font-bold flex gap-3">
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
-						        @click="data.keyword = ''">
+						        @click="clearFilters">
 							<i class="fa-regular fa-chevron-left"></i>
 						</Button>
 						<template v-if="data.mode === 'search'">
@@ -51,19 +51,32 @@
 					<div class=" w-full p-10 max-w-[800px]">
 						<TabView @tabChange="e => data.searchMode = searchModes[e.index].value"
 						         :activeIndex="searchModes.findIndex(v => v.value === data.searchMode)">
-							<TabPanel v-for="mode in searchModes" :header="mode.name"></TabPanel>
+							<TabPanel v-for="mode in searchModes" :header="t(mode.name)">
+								<InputGroup
+										class="max-sm:hidden flex w-full flex-row items-center justify-center duration-200">
+									<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
+										<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
+									</InputGroupAddon>
+									<InputText id="keyword" v-model="data.preKeyword"
+									           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
+									           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
+									<Button class="dark:text-white px-5" :label="t('搜索')"
+									        @click="applyFilters"/>
+								</InputGroup>
+								<div class="hidden max-sm:flex w-full flex-col items-center justify-center duration-200">
+									<InputGroup class="flex w-full flex-row py-10">
+										<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
+											<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
+										</InputGroupAddon>
+										<InputText id="keyword" v-model="data.preKeyword"
+										           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
+										           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
+									</InputGroup>
+									<Button class="dark:text-white w-full" :label="t('搜索')"
+									        @click="applyFilters"/>
+								</div>
+							</TabPanel>
 						</TabView>
-						<InputGroup
-								class="flex w-full flex-row items-center justify-center duration-200 mt-[-30px]">
-							<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
-								<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
-							</InputGroupAddon>
-							<InputText id="keyword" v-model="data.preKeyword"
-							           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
-							           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
-							<Button class="dark:text-white px-5" :label="t('搜索')"
-							        @click="applyFilters"/>
-						</InputGroup>
 					</div>
 				</div>
 			</template>
@@ -132,8 +145,8 @@ const props = defineProps({
     },
 });
 
+let next = {};
 watchEffect(() => {
-    let next = {};
     if (data.keyword !== '') {
         next.keyword = data.keyword;
     }
@@ -151,10 +164,13 @@ watchEffect(() => {
     }
     data.keyword = next?.keyword || '';
     data.mode = next.mode;
+});
+
+function updateRoute(){
     router.replace({
         query: next,
     });
-});
+}
 
 function onInit() {
     if (router.currentRoute.value.query.keyword) {
@@ -187,13 +203,13 @@ function onInit() {
 }
 
 onInit();
-
-onBeforeRouteLeave((to, from, next) => {
-    next();
-    if (to.name !== from.name && ['list', 'search'].includes(to.name)) {
-        onInit();
-    }
-});
+//
+// onBeforeRouteLeave((to, from, next) => {
+//     next();
+//     if (to.name !== from.name && ['list', 'search'].includes(to.name)) {
+//         onInit();
+//     }
+// });
 
 function showFilter(event) {
     filtersPanel.value.toggle(event);
@@ -208,8 +224,10 @@ function applyFilters() {
     }
     data.keyword = data.preKeyword;
     data.tags = tags;
-    reloadNovels();
-    filtersPanel.value.hide();
+    nextTick(() => {
+        reloadNovels();
+        filtersPanel.value.hide();
+    });
 }
 
 function clearFilters() {
@@ -217,11 +235,18 @@ function clearFilters() {
     data.preTags = [];
     data.keyword = '';
     data.tags = [];
-    reloadNovels();
-    filtersPanel.value.hide();
+    
+    next.keyword = '';
+    next.tags = '';
+    
+    nextTick(() => {
+        reloadNovels();
+        filtersPanel.value.hide();
+    });
 }
 
 function reloadNovels() {
+    updateRoute();
     nextTick(() => {
         novelList.value?.reload();
     });
