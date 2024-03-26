@@ -1,10 +1,11 @@
 <template>
 	<Main>
-		<Suspense>
-			<template #default>
-				<router-view></router-view>
-			</template>
-		</Suspense>
+		<router-view v-slot="{ Component, route }">
+			<keep-alive v-if="keepAlive" :max="10">
+				<component :is="Component"/>
+			</keep-alive>
+			<component :is="Component" v-else/>
+		</router-view>
 	</Main>
 </template>
 
@@ -15,12 +16,16 @@
 import {initDeviceEvent} from "@/utils/device.js";
 import {initMeta} from "@/utils/meta.js";
 import {initCookieManager} from "@/utils/cookie.js";
-import {initRouterEvent} from "@/utils/router-event.js";
+import {initRouterEvent, onRouteChange} from "@/utils/router-event.js";
 import {initThemeManager, onThemeChange} from "@/utils/theme.js";
 import {initServiceWorker} from "@/pwa.js";
+import eventbus from "@/utils/eventbus.js";
 
-initMeta(useRouter());
-initRouterEvent(useRouter());
+const keepAlive = ref(true);
+const router = useRouter();
+
+initMeta(router);
+initRouterEvent(router);
 onBeforeMount(() => {
     initDeviceEvent();
     initCookieManager();
@@ -32,5 +37,13 @@ onThemeChange(({theme}) => {
     if (!import.meta.env.SSR) {
         document.documentElement.classList = [theme]
     }
+});
+
+eventbus.on('onKeepAliveStatus', (status) => {
+    keepAlive.value = !!status;
+});
+
+router.afterEach((to,from) => {
+    keepAlive.value = true;
 });
 </script>

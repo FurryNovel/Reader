@@ -8,7 +8,7 @@
 					<div class="text-2xl font-bold">
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
-						        @click="data.keyword = ''">
+						        @click="clearFilters">
 							<i class="fa-regular fa-chevron-left"></i>
 						</Button>
 						<template v-if="data.mode === 'search'">
@@ -132,8 +132,8 @@ const props = defineProps({
     },
 });
 
+let next = {};
 watchEffect(() => {
-    let next = {};
     if (data.keyword !== '') {
         next.keyword = data.keyword;
     }
@@ -151,10 +151,13 @@ watchEffect(() => {
     }
     data.keyword = next?.keyword || '';
     data.mode = next.mode;
+});
+
+function updateRoute(){
     router.replace({
         query: next,
     });
-});
+}
 
 function onInit() {
     if (router.currentRoute.value.query.keyword) {
@@ -187,13 +190,13 @@ function onInit() {
 }
 
 onInit();
-
-onBeforeRouteLeave((to, from, next) => {
-    next();
-    if (to.name !== from.name && ['list', 'search'].includes(to.name)) {
-        onInit();
-    }
-});
+//
+// onBeforeRouteLeave((to, from, next) => {
+//     next();
+//     if (to.name !== from.name && ['list', 'search'].includes(to.name)) {
+//         onInit();
+//     }
+// });
 
 function showFilter(event) {
     filtersPanel.value.toggle(event);
@@ -208,8 +211,10 @@ function applyFilters() {
     }
     data.keyword = data.preKeyword;
     data.tags = tags;
-    reloadNovels();
-    filtersPanel.value.hide();
+    nextTick(() => {
+        reloadNovels();
+        filtersPanel.value.hide();
+    });
 }
 
 function clearFilters() {
@@ -217,11 +222,18 @@ function clearFilters() {
     data.preTags = [];
     data.keyword = '';
     data.tags = [];
-    reloadNovels();
-    filtersPanel.value.hide();
+    
+    next.keyword = '';
+    next.tags = '';
+    
+    nextTick(() => {
+        reloadNovels();
+        filtersPanel.value.hide();
+    });
 }
 
 function reloadNovels() {
+    updateRoute();
     nextTick(() => {
         novelList.value?.reload();
     });
