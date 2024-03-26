@@ -2,7 +2,7 @@
 	<Main>
 		<router-view v-slot="{ Component, route }">
 			<keep-alive v-if="keepAlive" :max="10">
-				<component :is="Component"/>
+				<component :is="Component" :key="route.fullPath"/>
 			</keep-alive>
 			<component :is="Component" v-else/>
 		</router-view>
