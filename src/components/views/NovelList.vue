@@ -6,7 +6,7 @@
 					<div class="relative flex h-auto group">
 						<div v-if="item.local_status && item.local_status !== true"
 						     @click="onClickBlurContent(item, isMobile)"
-						     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
+						     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent/5 transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
 							<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17,10 +17,10 @@
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-								<p class="text-center text-xs"
+								<p class="text-center text-xs text-gray-700"
 								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 								<div class="flex items-center justify-center px-5 py-3">
-									<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
+									<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
 									        @click="item.local_status = true;">
 										{{ t('显示') }}
 									</Button>
@@ -100,11 +100,11 @@
 				<template v-for="(item,idx) in data.items">
 					<div class="relative flex h-auto w-full flex-col group">
 						<div v-if="item.local_status && item.local_status !== true"
-						     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 bg-transparent z-[41]">
+						     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 rounded-xl bg-transparent/5 z-[41]">
 							<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
-								<p class="text-center text-xs"
+								<p class="text-center text-xs text-gray-700"
 								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
-								<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
+								<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
 								        @click="item.local_status = true;">
 									{{ t('显示') }}
 								</Button>
