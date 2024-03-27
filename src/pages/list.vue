@@ -4,8 +4,8 @@
 		        :hide-buttons="['icon']" :show-in="['mobile']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
-				<div class="m-2 flex items-center justify-between pl-2 flex-wrap gap-3">
-					<div class="text-2xl font-bold flex gap-3">
+				<div class="m-2 flex flex-wrap items-center justify-between gap-3 pl-2">
+					<div class="flex gap-3 text-2xl font-bold">
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
 						        @click="clearFilters">
@@ -48,22 +48,22 @@
 			</template>
 			<template v-else>
 				<div class="flex flex-col items-center justify-center min-h-[calc(100vh-146px)] max-sm:h-[calc(100vh-64px)]">
-					<div class=" w-full p-10 max-w-[800px]">
+					<div class="w-full p-10 max-w-[800px]">
 						<TabView @tabChange="e => data.searchMode = searchModes[e.index].value"
 						         :activeIndex="searchModes.findIndex(v => v.value === data.searchMode)">
 							<TabPanel v-for="mode in searchModes" :header="t(mode.name)">
 								<InputGroup
-										class="max-sm:hidden flex w-full flex-row items-center justify-center duration-200">
+										class="flex w-full flex-row items-center justify-center duration-200 max-sm:hidden">
 									<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
 										<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
 									</InputGroupAddon>
 									<InputText id="keyword" v-model="data.preKeyword"
 									           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
 									           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
-									<Button class="dark:text-white px-5" :label="t('搜索')"
+									<Button class="px-5 dark:text-white" :label="t('搜索')"
 									        @click="applyFilters"/>
 								</InputGroup>
-								<div class="hidden max-sm:flex w-full flex-col items-center justify-center duration-200">
+								<div class="hidden w-full flex-col items-center justify-center duration-200 max-sm:flex">
 									<InputGroup class="flex w-full flex-row py-10">
 										<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
 											<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
@@ -72,7 +72,7 @@
 										           class="w-5/12 max-sm:w-max !border-l-0 focus:ring-0 hover:border-surface-300 group-hover:border-primary-500 !duration-0 flex-1"
 										           :placeholder="t(data.searchMode === 'keyword' ? '请输入关键字：小说名、作者名、简介等' : '请输入标签')"/>
 									</InputGroup>
-									<Button class="dark:text-white w-full" :label="t('搜索')"
+									<Button class="w-full dark:text-white" :label="t('搜索')"
 									        @click="applyFilters"/>
 								</div>
 							</TabPanel>

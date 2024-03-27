@@ -3,10 +3,10 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items" :key="item.id">
-					<div class="flex h-auto relative group">
+					<div class="relative flex h-auto group">
 						<div v-if="item.local_status && item.local_status !== true" @click="onClickBlurContent(item, isMobile)"
-						     class="absolute z-40 m-2 top-0 left-0 flex flex-col rounded-lg max-h-[242px] min-h-[242px] select-none bg-transparent transition duration-300 justify-center align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
-							<div class="backdrop-blur flex-1 w-full z-30 rounded-lg">
+						     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
+							<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -16,9 +16,9 @@
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-								<p class="text-xs text-center" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
-								<div class="px-5 py-3 flex justify-center items-center">
-									<Button class="text-xs  font-bold text-primary-500 dark:text-white" size="small"
+								<p class="text-center text-xs" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<div class="flex items-center justify-center px-5 py-3">
+									<Button class="text-xs font-bold text-primary-500 dark:text-white" size="small"
 									        @click="item.local_status = true;">
 										{{ t('显示') }}
 									</Button>
@@ -96,24 +96,24 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
-					<div class="relative flex flex-col h-auto w-full group">
-						<div v-if="item.local_status && item.local_status !== true" class="z-[41] absolute flex-1 flex m-2 top-0 left-0 right-0 bottom-0 bg-transparent">
-							<div class="backdrop-blur flex-1 flex flex-col justify-center items-center h-full z-30 rounded-lg gap-3">
-								<p class="text-xs text-center" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
-								<Button class="text-xs font-bold text-primary-500 dark:text-white w-32" size="small"
+					<div class="relative flex h-auto w-full flex-col group">
+						<div v-if="item.local_status && item.local_status !== true" class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 bg-transparent z-[41]">
+							<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
+								<p class="text-center text-xs" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
 								        @click="item.local_status = true;">
 									{{ t('显示') }}
 								</Button>
 							</div>
 						</div>
 						<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
-						             class="m-2 flex flex-1 h-auto select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 align-items-center sm:group-hover:shadow-2xl sm:group-hover:z-40 dark:bg-surface-500 dark:text-white">
+						             class="m-2 flex h-auto flex-1 select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 align-items-center sm:group-hover:shadow-2xl sm:group-hover:z-40 dark:bg-surface-500 dark:text-white">
 							<div v-if="props.image"
 							     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
 								<img :src="item.cover" :alt="`${item.name}(cover)`" :draggable="false" loading="lazy"
 								     class="absolute h-full w-full object-cover aspect-[140/186]"/>
 							</div>
-							<div class="flex flex-1 flex-col px-4 py-2 gap-2">
+							<div class="flex flex-1 flex-col gap-2 px-4 py-2">
 								<div class="flex flex-col justify-start gap-2">
 									<div class="flex justify-center transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
 										{{ item.name }}
