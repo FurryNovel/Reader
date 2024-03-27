@@ -3,46 +3,69 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items" :key="item.id">
-					<router-link
-							class="m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] group align-items-center sm:hover:-translate-y-2 sm:hover:scale-110 sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white"
-							:to="{name:'info',params:{ id:item.id }}" :draggable="false">
-						<div v-if="props.image"
-						     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
-							<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover" loading="lazy"
-							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
+					<div class="flex h-auto relative group">
+						<div v-if="item.local_status && item.local_status !== true" @click="onClickBlurContent(item, isMobile)"
+						     class="absolute z-40 m-2 top-0 left-0 flex flex-col rounded-lg max-h-[242px] min-h-[242px] select-none bg-transparent transition duration-300 justify-center align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
+							<div class="backdrop-blur flex-1 w-full z-30 rounded-lg">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div v-if="props.desc" :class="{
+                            'z-51 flex-col justify-center hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl backdrop-blur p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl dark:text-white':true,
+                            'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
+                            'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
+						}" :data-idx="idx">
+								<p class="text-xs text-center" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<div class="px-5 py-3 flex justify-center items-center">
+									<Button class="text-xs  font-bold text-primary-500 dark:text-white" size="small"
+									        @click="item.local_status = true;">
+										{{ t('显示') }}
+									</Button>
+								</div>
+							</div>
 						</div>
-						<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
-							{{ item.name }}
-						</div>
-						<div v-if="props.author"
-						     class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
-							{{ item.author.nickname }}
-						</div>
-						<div v-if="props.desc" :class="{
+						<router-link
+								class="top-0 left-0 m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-[41] dark:bg-surface-500 dark:text-white"
+								:to="{name:'info',params:{ id:item.id }}" :draggable="false">
+							<div v-if="props.image"
+							     class="relative flex w-32 flex-1 flex-col items-center justify-between overflow-hidden rounded-xl max-h-[178px] min-h-[178px] aspect-[10/16]">
+								<img :alt="`${item.name}(cover)`" :draggable="false" :src="item.cover" loading="lazy"
+								     class="absolute h-full w-full object-cover aspect-[140/186]"/>
+							</div>
+							<div class="flex flex-col items-center justify-center m-2 transition duration-300 text-xs font-bold !line-clamp-1 h-[16px] leading-[16px]">
+								{{ item.name }}
+							</div>
+							<div v-if="props.author"
+							     class="flex flex-col m-2 transition duration-300 text-xs !line-clamp-1 h-[16px]">
+								{{ item.author.nickname }}
+							</div>
+							<div v-if="props.desc" :class="{
                             'z-50 flex-col justify-between hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl bg-gray-50 p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl dark:bg-surface-500 dark:text-white':true,
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-							<div class="mb-1">
-								<div class="mb-1 font-bold">{{ t('简介') }}</div>
-								<div v-if="item.desc.length > 0" v-safe-html="item.desc"
-								     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
+								<div class="mb-1">
+									<div class="mb-1 font-bold">{{ t('简介') }}</div>
+									<div v-if="item.desc.length > 0" v-safe-html="item.desc"
+									     class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
+									</div>
+									<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
+										{{ t('无') }}
+									</div>
 								</div>
-								<div v-else class="overflow-hidden whitespace-pre-line h-[80px] line-clamp-[4]">
-									{{ t('无') }}
-								</div>
-							</div>
-							<div class="overflow-hidden flex1">
-								<div class="mb-1 font-bold">{{ t('标签') }}</div>
-								<div class="flex flex-wrap gap-1 overflow-hidden max-h-[63px]">
-									<div v-for="tag in item.tags"
-									     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
-										{{ tag }}
+								<div class="overflow-hidden flex1">
+									<div class="mb-1 font-bold">{{ t('标签') }}</div>
+									<div class="flex flex-wrap gap-1 overflow-hidden max-h-[63px]">
+										<div v-for="tag in item.tags"
+										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
+											{{ tag }}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</router-link>
+						</router-link>
+					</div>
 				</template>
 			</div>
 		</div>
@@ -73,50 +96,61 @@
 		<div v-if="!data.loading" ref="parent" class="h-full w-full flex-col">
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
-					<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
-					             class="m-2 flex h-auto w-full select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 group align-items-center sm:hover:shadow-2xl sm:hover:z-40 dark:bg-surface-500 dark:text-white">
-						<div v-if="props.image"
-						     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
-							<img :src="item.cover" :alt="`${item.name}(cover)`" :draggable="false" loading="lazy"
-							     class="absolute h-full w-full object-cover aspect-[140/186]"/>
-						</div>
-						<div class="flex flex-1 flex-col px-4 py-2 gap-2">
-							<div class="flex flex-col justify-start gap-2">
-								<div class="flex justify-center transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
-									{{ item.name }}
-								</div>
-								<div v-if="props.author"
-								     class="flex transition duration-300 text-xs !line-clamp-1 h-[16px]">
-									{{ t('作者：%s', item.author.nickname) }}
-								</div>
+					<div class="relative flex flex-col h-auto w-full group">
+						<div v-if="item.local_status && item.local_status !== true" class="z-[41] absolute flex-1 flex m-2 top-0 left-0 right-0 bottom-0 bg-transparent">
+							<div class="backdrop-blur flex-1 flex flex-col justify-center items-center h-full z-30 rounded-lg gap-3">
+								<p class="text-xs text-center" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<Button class="text-xs font-bold text-primary-500 dark:text-white w-32" size="small"
+								        @click="item.local_status = true;">
+									{{ t('显示') }}
+								</Button>
 							</div>
-							<div class="flex flex-1 flex-col justify-between gap-1">
-								<div v-if="props.desc" class="mb-1 text-xs">
-									<div v-if="item.desc.length > 0"
-									     class="overflow-hidden whitespace-pre-line text-sm line-clamp-[2]"
-									     v-safe-html="item.desc">
+						</div>
+						<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
+						             class="m-2 flex flex-1 h-auto select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 align-items-center sm:group-hover:shadow-2xl sm:group-hover:z-40 dark:bg-surface-500 dark:text-white">
+							<div v-if="props.image"
+							     class="relative flex w-32 flex-col items-center justify-between overflow-hidden rounded-xl max-sm:hidden max-h-[178px] min-h-[178px] aspect-[10/16]">
+								<img :src="item.cover" :alt="`${item.name}(cover)`" :draggable="false" loading="lazy"
+								     class="absolute h-full w-full object-cover aspect-[140/186]"/>
+							</div>
+							<div class="flex flex-1 flex-col px-4 py-2 gap-2">
+								<div class="flex flex-col justify-start gap-2">
+									<div class="flex justify-center transition duration-300 text-lg font-bold !line-clamp-1 h-[20px] leading-[20px]">
+										{{ item.name }}
 									</div>
-									<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
-										{{ t('无') }}
+									<div v-if="props.author"
+									     class="flex transition duration-300 text-xs !line-clamp-1 h-[16px]">
+										{{ t('作者：%s', item.author.nickname) }}
 									</div>
 								</div>
-								<div v-if="props.withChapters" class="mb-1">
-									<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
-									     class="overflow-hidden whitespace-pre-line rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 line-clamp-[2] dark:bg-surface-400 dark:text-white">
-										{{ t('最新章节：%s', item.latest_chapters[0].name) }}
+								<div class="flex flex-1 flex-col justify-between gap-1">
+									<div v-if="props.desc" class="mb-1 text-xs">
+										<div v-if="item.desc.length > 0"
+										     class="overflow-hidden whitespace-pre-line text-sm line-clamp-[2]"
+										     v-safe-html="item.desc">
+										</div>
+										<div v-else class="overflow-hidden whitespace-pre-line line-clamp-[2]">
+											{{ t('无') }}
+										</div>
 									</div>
-								</div>
-								<div v-if="props.desc" class="overflow-hidden flex1">
-									<div class="flex flex-wrap gap-1 overflow-hidden max-h-[65px]">
-										<div v-for="tag in item.tags"
-										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
-											{{ tag }}
+									<div v-if="props.withChapters" class="mb-1">
+										<div v-if="item.latest_chapters && item.latest_chapters.length > 0"
+										     class="overflow-hidden whitespace-pre-line rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 line-clamp-[2] dark:bg-surface-400 dark:text-white">
+											{{ t('最新章节：%s', item.latest_chapters[0].name) }}
+										</div>
+									</div>
+									<div v-if="props.desc" class="overflow-hidden flex1">
+										<div class="flex flex-wrap gap-1 overflow-hidden max-h-[65px]">
+											<div v-for="tag in item.tags"
+											     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-400 dark:text-white">
+												{{ tag }}
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</router-link>
+						</router-link>
+					</div>
 				</template>
 			</div>
 		</div>
@@ -180,6 +214,8 @@ import {useConfigProvider} from "@/provider/config.js";
 import {onServerData, provideServerData} from "@/utils/ssr.js";
 import {useId} from "vue-unique-ssr-id";
 import {useI18n} from "@/i18n/index.js";
+import {isMobile} from "@/utils/device.js";
+import dialog from "@/utils/dialog.js";
 
 const {t, locale} = useI18n();
 const ssrId = useId();
@@ -287,7 +323,10 @@ onServerData((res) => {
 }).catch(() => {
     data.loading = true;
     return loadData().then((res) => {
-        data.items = res.data;
+        data.items = res.data.map(item => {
+            item.local_status = configProvider.checkTagsHideStatus(item.tags);
+            return item;
+        });
         data.page = res.page;
         data.maxPage = res.maxPage;
     });
@@ -296,6 +335,10 @@ onServerData((res) => {
 onServerPrefetch(() => {
     const instance = getCurrentInstance();
     return loadData().then((res) => {
+        res.data = res.data.map(item => {
+            item.local_status = configProvider.checkTagsHideStatus(item.tags);
+            return item;
+        });
         provideServerData({
             reqId: ssrId,
             data: res,
@@ -359,6 +402,39 @@ function onChangePage({page}) {
         data.page = res.page;
         data.maxPage = res.maxPage;
     });
+}
+
+function convertLocalStatusToMessage(status){
+    let content = '';
+    switch(status){
+        case 'user':
+            content = t('已根据您的偏好设置隐藏该内容。');
+            break;
+	    case 'r18':
+            content = t('已根据您的安全模式设置隐藏该内容。');
+            break;
+	    case true:
+            return '';
+	    default:
+            content = '';
+    }
+    content += (content ? '<br>' : '') + t('您可以在设置中修改内容过滤。');
+    return content;
+}
+
+function onClickBlurContent(item, showAlert) {
+    if (showAlert){
+        dialog.alert({
+            title: t('提示'),
+            content: convertLocalStatusToMessage(item.local_status),
+            confirmBtn: t('显示'),
+            cancelBtn: t('取消'),
+        }).then(() => {
+            item.local_status = true
+        }).catch(() => {
+        
+        })
+    }
 }
 
 function scrollToTop() {

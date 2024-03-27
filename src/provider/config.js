@@ -59,19 +59,12 @@ export const baseConfig = {
         let showLanguages = this.getAcceptedLanguages().filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
-        if (this.global.safeMode) {
-            tags.push('r-18');
-            tags.push('R18');
-        }
         if (showLanguages.length > 1 || showLanguages.length === 0) {
             if (this.global.hideLanguages.length > 0) {
                 tags = tags.concat(this.global.hideLanguages.map((lang) => {
                     return lang;
                 }));
             }
-        }
-        if (this.global.hideTags.length > 0) {
-            tags = tags.concat(this.global.hideTags);
         }
         return tags;
     },
@@ -85,6 +78,31 @@ export const baseConfig = {
         }
         return tags;
     },
+    checkTagsHideStatus(targetTags) {
+        const rules = [
+            {
+                tags: this.global.hideTags,
+                reason: 'user',
+            }
+        ];
+        if (this.global.safeMode) {
+            rules.push({
+                tags: [
+                    'R18', 'r-18',
+                    'NSFW', 'nsfw',
+                ],
+                reason: 'r18',
+            });
+        }
+        for (const rule of rules) {
+            for (const tag of targetTags) {
+                if (rule.tags.includes(tag)){
+                    return rule.reason;
+                }
+            }
+        }
+        return true;
+    }
 }
 export let globalConfig = reactive({
     ...baseConfig,
