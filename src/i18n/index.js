@@ -21,7 +21,7 @@ export const getFallbackLocale = () => 'en';
 
 
 export function getLocale(router) {
-    let locale = router.currentRoute?.value?.params?.lang?.toString().toLowerCase();
+    let locale = router?.currentRoute?.value?.params?.lang?.toString().toLowerCase();
     if (!locale || !supportedLocales.hasOwnProperty(locale)) {
         locale = getFallbackLocale();
     }
