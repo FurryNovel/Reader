@@ -18,7 +18,7 @@
 						}" :data-idx="idx">
 								<p class="text-center text-xs" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 								<div class="flex items-center justify-center px-5 py-3">
-									<Button class="text-xs font-bold text-primary-500 dark:text-white" size="small"
+									<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
 									        @click="item.local_status = true;">
 										{{ t('显示') }}
 									</Button>
