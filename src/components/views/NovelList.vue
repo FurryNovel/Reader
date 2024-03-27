@@ -4,7 +4,8 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items" :key="item.id">
 					<div class="relative flex h-auto group">
-						<div v-if="item.local_status && item.local_status !== true" @click="onClickBlurContent(item, isMobile)"
+						<div v-if="item.local_status && item.local_status !== true"
+						     @click="onClickBlurContent(item, isMobile)"
 						     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
 							<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -16,7 +17,8 @@
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-								<p class="text-center text-xs" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<p class="text-center text-xs"
+								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 								<div class="flex items-center justify-center px-5 py-3">
 									<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
 									        @click="item.local_status = true;">
@@ -97,9 +99,11 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<div class="relative flex h-auto w-full flex-col group">
-						<div v-if="item.local_status && item.local_status !== true" class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 bg-transparent z-[41]">
+						<div v-if="item.local_status && item.local_status !== true"
+						     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 bg-transparent z-[41]">
 							<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
-								<p class="text-center text-xs" v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+								<p class="text-center text-xs"
+								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 								<Button class="w-32 text-xs font-bold text-primary-500 dark:text-white" size="small"
 								        @click="item.local_status = true;">
 									{{ t('显示') }}
@@ -317,16 +321,13 @@ const dialogRightPerLineCount = computed(() => {
 });
 
 onServerData((res) => {
-    data.items = res.data;
+    data.items = filterNovels(res.data);
     data.page = res.page;
     data.maxPage = res.maxPage;
 }).catch(() => {
     data.loading = true;
     return loadData().then((res) => {
-        data.items = res.data.map(item => {
-            item.local_status = configProvider.checkTagsHideStatus(item.tags);
-            return item;
-        });
+        data.items = filterNovels(res.data);
         data.page = res.page;
         data.maxPage = res.maxPage;
     });
@@ -335,10 +336,6 @@ onServerData((res) => {
 onServerPrefetch(() => {
     const instance = getCurrentInstance();
     return loadData().then((res) => {
-        res.data = res.data.map(item => {
-            item.local_status = configProvider.checkTagsHideStatus(item.tags);
-            return item;
-        });
         provideServerData({
             reqId: ssrId,
             data: res,
@@ -376,7 +373,8 @@ function loadData() {
         ids: props.ids,
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
-        hate_tags: props.applyFilter ? hateTags.value : null,
+        //服务端不过滤语言Tags优化性能
+        hate_tags: (props.applyFilter && !import.meta.env.SSR) ? hateTags.value : null,
         limit: props.limit,
     };
     return loadNovels({
@@ -398,24 +396,24 @@ function onChangePage({page}) {
     data.page = page + 1;
     scrollToTop();
     loadData().then((res) => {
-        data.items = res.data;
+        data.items = filterNovels(res.data);
         data.page = res.page;
         data.maxPage = res.maxPage;
     });
 }
 
-function convertLocalStatusToMessage(status){
+function convertLocalStatusToMessage(status) {
     let content = '';
-    switch(status){
+    switch (status) {
         case 'user':
             content = t('已根据您的偏好设置隐藏该内容。');
             break;
-	    case 'r18':
+        case 'r18':
             content = t('已根据您的安全模式设置隐藏该内容。');
             break;
-	    case true:
+        case true:
             return '';
-	    default:
+        default:
             content = '';
     }
     content += (content ? '<br>' : '') + t('您可以在设置中修改内容过滤。');
@@ -423,7 +421,7 @@ function convertLocalStatusToMessage(status){
 }
 
 function onClickBlurContent(item, showAlert) {
-    if (showAlert){
+    if (showAlert) {
         dialog.alert({
             title: t('提示'),
             content: convertLocalStatusToMessage(item.local_status),
@@ -449,12 +447,20 @@ defineExpose({
     reload() {
         data.loading = true;
         loadData().then((res) => {
-            data.items = res.data;
+            data.items = filterNovels(res.data);
             data.page = res.page;
             data.maxPage = res.maxPage;
         });
     },
 });
+
+
+function filterNovels(items) {
+    return items.map(item => {
+        item.local_status = configProvider.checkTagsHideStatus(item.tags);
+        return item;
+    });
+}
 </script>
 
 <style scoped>
