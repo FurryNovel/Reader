@@ -1,5 +1,5 @@
 <template>
-	<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent">
+	<div class="sm:hidden fixed bottom-0 left-0 w-screen bg-transparent z-50">
 		<div v-if="showWrapper" :class="wrapperClass">
 			<router-link v-for="item in items" v-slot="{ href, navigate }" :to="item" custom>
 				<a v-ripple :draggable="false" :href="href"
