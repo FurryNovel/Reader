@@ -2,6 +2,7 @@ import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
 import {merge} from 'lodash-es';
+import {useI18n} from "@/i18n/index.js";
 
 export const baseConfig = {
     guildVersion: 0,
@@ -79,7 +80,12 @@ export const baseConfig = {
         return tags;
     },
     checkTagsHideStatus(targetTags) {
+        const {t, locale} = useI18n();
         const rules = [
+            {
+                tags: this.global.hideLanguages.map(lang => t(lang)),
+                reason: 'language',
+            },
             {
                 tags: this.global.hideTags,
                 reason: 'user',
@@ -96,7 +102,7 @@ export const baseConfig = {
         }
         for (const rule of rules) {
             for (const tag of targetTags) {
-                if (rule.tags.includes(tag)){
+                if (rule.tags.includes(tag)) {
                     return rule.reason;
                 }
             }

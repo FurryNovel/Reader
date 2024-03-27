@@ -4,29 +4,31 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-evenly">
 				<template v-for="(item,idx) in data.items" :key="item.id">
 					<div class="relative flex h-auto group">
-						<div v-if="item.local_status && item.local_status !== true"
-						     @click="onClickBlurContent(item, isMobile)"
-						     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent/5 transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
-							<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</div>
-							<div v-if="props.desc" :class="{
+						<ClientOnly>
+							<div v-if="item.local_status && item.local_status !== true"
+							     @click="onClickBlurContent(item, isMobile)"
+							     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent/5 transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
+								<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
+								<div v-if="props.desc" :class="{
                             'z-51 flex-col justify-center hidden group-hover:max-sm:hidden transition duration-300 w-0 rounded-xl backdrop-blur p-5 text-sm group-hover:w-[256px] max-h-[242px] min-h-[242px] group-hover:fixed group-hover:flex group-hover:shadow-2xl dark:text-white':true,
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-								<p class="text-center text-xs text-gray-700"
-								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
-								<div class="flex items-center justify-center px-5 py-3">
-									<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
-									        @click="item.local_status = true;">
-										{{ t('显示') }}
-									</Button>
+									<p class="text-center text-xs text-gray-700"
+									   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+									<div class="flex items-center justify-center px-5 py-3">
+										<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
+										        @click="item.local_status = true;">
+											{{ t('显示') }}
+										</Button>
+									</div>
 								</div>
 							</div>
-						</div>
+						</ClientOnly>
 						<router-link
 								class="top-0 left-0 m-2 flex h-auto select-none flex-col rounded-xl bg-gray-50 transition duration-300 w-[128px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-[41] dark:bg-surface-500 dark:text-white"
 								:to="{name:'info',params:{ id:item.id }}" :draggable="false">
@@ -99,17 +101,19 @@
 			<div class="mb-4 flex flex-row flex-wrap items-center max-sm:justify-center">
 				<template v-for="(item,idx) in data.items">
 					<div class="relative flex h-auto w-full flex-col group">
-						<div v-if="item.local_status && item.local_status !== true"
-						     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 rounded-xl bg-transparent/5 z-[41]">
-							<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
-								<p class="text-center text-xs text-gray-700"
-								   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
-								<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
-								        @click="item.local_status = true;">
-									{{ t('显示') }}
-								</Button>
+						<ClientOnly>
+							<div v-if="item.local_status && item.local_status !== true"
+							     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 rounded-xl bg-transparent/5 z-[41]">
+								<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
+									<p class="text-center text-xs text-gray-700"
+									   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
+									<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
+									        @click="item.local_status = true;">
+										{{ t('显示') }}
+									</Button>
+								</div>
 							</div>
-						</div>
+						</ClientOnly>
 						<router-link :to="{name:'info',params:{ id:item.id }}" :draggable="false"
 						             class="m-2 flex h-auto flex-1 select-none flex-row overflow-hidden rounded-xl bg-gray-50 transition duration-300 align-items-center sm:group-hover:shadow-2xl sm:group-hover:z-40 dark:bg-surface-500 dark:text-white">
 							<div v-if="props.image"
@@ -373,8 +377,7 @@ function loadData() {
         ids: props.ids,
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
-        //服务端不过滤语言Tags优化性能
-        hate_tags: (props.applyFilter && !import.meta.env.SSR) ? hateTags.value : null,
+        hate_tags: null,
         limit: props.limit,
     };
     return loadNovels({
@@ -405,6 +408,9 @@ function onChangePage({page}) {
 function convertLocalStatusToMessage(status) {
     let content = '';
     switch (status) {
+        case 'language':
+            content = t('已根据您的语言设置隐藏该内容。');
+            break;
         case 'user':
             content = t('已根据您的偏好设置隐藏该内容。');
             break;

@@ -63,6 +63,10 @@ export default {
     '熊': 'Bear',
     '狗': 'Dog',
     '猫': 'Cat',
+    'zh': 'zh',
+    'en': 'en',
+    'ja': 'ja',
+    'ko': 'ko',
     
     // bookmark.vue
     '书架为空': 'Bookshelf is empty',
@@ -170,4 +174,10 @@ export default {
     
     //TagSelect.vue
     '选择标签': 'Select Tags',
+    
+    //Tooltips
+    '已根据您的语言设置隐藏该内容。': 'According to your language settings, this content has been hidden.',
+    '已根据您的偏好设置隐藏该内容。': 'According to your preference settings, this content has been hidden.',
+    '已根据您的安全模式设置隐藏该内容。': 'According to your safe mode settings, this content has been hidden.',
+    '您可以在设置中修改内容过滤。': 'You can modify content filtering in the settings.',
 }
