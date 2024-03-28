@@ -63,6 +63,10 @@ export default {
     '熊': 'Bear',
     '狗': 'Dog',
     '猫': 'Cat',
+    'zh': 'zh',
+    'en': 'en',
+    'ja': 'ja',
+    'ko': 'ko',
     
     // bookmark.vue
     '书架为空': 'Bookshelf is empty',
@@ -139,6 +143,10 @@ export default {
     '内容偏好': 'Content Preference',
     '隐藏标签': 'Hide Tags',
     '添加不想看到的标签': 'Add tags you don\'t want to see',
+    '添加标签': 'Add Tags',
+    '请输入标签名称': 'Please enter the tag name',
+    '严格模式': 'Strict Mode',
+    '开启后将禁用模糊效果（不建议网络环境较差时使用）': 'Enabling this will disable the blur effect (not recommended for poor network environments)',
     
     //about.vue
     '起点': 'Start',
@@ -170,4 +178,10 @@ export default {
     
     //TagSelect.vue
     '选择标签': 'Select Tags',
+    
+    //Tooltips
+    '已根据您的语言设置隐藏该内容。': 'According to your language settings, this content has been hidden.',
+    '已根据您的偏好设置隐藏该内容。': 'According to your preference settings, this content has been hidden.',
+    '已根据您的安全模式设置隐藏该内容。': 'According to your safe mode settings, this content has been hidden.',
+    '您可以在设置中修改内容过滤。': 'You can modify content filtering in the settings.',
 }

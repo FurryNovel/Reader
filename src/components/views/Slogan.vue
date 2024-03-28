@@ -1,11 +1,11 @@
 <template>
 	<div class="relative flex">
-		<div class="flex w-full h-full group justify-center items-center">
+		<div class="flex h-full w-full items-center justify-center group">
 			<div class="rounded-xl">
 				<img :src="images[current].src" alt="Banner"
-				     class="w-full h-auto min-h-64 sm:object-contain max-sm:object-cover"/>
+				     class="h-auto w-full min-h-64 sm:object-contain max-sm:object-cover"/>
 			</div>
-			<div class="absolute select-none flex transition-all group-hover:opacity-0 backdrop-blur-sm rounded-xl">
+			<div class="absolute flex select-none rounded-xl backdrop-blur-sm transition-all group-hover:opacity-0">
 				<div class="flex items-center text-white">
 					<Avatar class="mx-4 flex justify-center align-middle"
 					        image="/static/icon.png"

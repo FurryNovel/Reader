@@ -11,134 +11,156 @@
 				<ClientOnly>
 					<TabView>
 						<TabPanel :header="t('基本设置')">
-							<div class="mt-5 mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div @click="config.global.safeMode = !config.global.safeMode"
-									     class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('安全模式') }}
-										</div>
-										<span class="text-sm text-gray-500">
+							<div class="flex flex-col gap-5">
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div @click="config.global.safeMode = !config.global.safeMode"
+										     class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('安全模式') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('列表将不会显示不适合工作时间的内容') }}
 										</span>
-									</div>
-									<div>
-										<InputSwitch v-model="config.global.safeMode"/>
+										</div>
+										<div>
+											<InputSwitch v-model="config.global.safeMode"/>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('主题模式') }}
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div @click="config.filter.strictMode = !config.filter.strictMode"
+										     class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('严格模式') }}
+											</div>
+											<span class="text-sm text-gray-500">
+												{{ t('开启后将禁用模糊效果（不建议网络环境较差时使用）') }}
+											</span>
 										</div>
-										<span class="text-sm text-gray-500">
+										<div>
+											<InputSwitch v-model="config.filter.strictMode"/>
+										</div>
+									</div>
+								</div>
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('主题模式') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('自动切换主题模式') }}
 										</span>
-									</div>
-									<div>
-										<SelectButton v-model="config.global.themeMode" optionLabel="name"
-										              optionValue="value"
-										              :options="[
+										</div>
+										<div>
+											<SelectButton v-model="config.global.themeMode" optionLabel="name"
+											              optionValue="value"
+											              :options="[
                                                           { name: t('自动'), value: 'auto' },
                                                           { name: t('明亮'), value: 'light' },
 														  { name: t('夜间'), value: 'dark' }
                                                       ]"
-										              :allowEmpty="false"
-										              aria-labelledby="basic"/>
+											              :allowEmpty="false"
+											              aria-labelledby="basic"/>
+										</div>
 									</div>
 								</div>
 							</div>
 						</TabPanel>
 						<TabPanel :header="t('语言偏好')">
-							<div class="mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('隐藏语言') }}
-										</div>
-										<span class="text-sm text-gray-500">
+							<div class="flex flex-col gap-5">
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('隐藏语言') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('选择不想看到的语言') }}
 										</span>
-									</div>
-									<div>
-										<SelectButton v-model="config.global.hideLanguages" optionLabel="name" multiple
-										              optionValue="value"
-										              :options="config.getAcceptedLanguages().map(item => {
+										</div>
+										<div>
+											<SelectButton v-model="config.global.hideLanguages" optionLabel="name" multiple
+											              optionValue="value"
+											              :options="config.getAcceptedLanguages().map(item => {
 														  return { name: t(item.name), value: item.value }
 													  })"
-										              aria-labelledby="basic"/>
-									</div>
-								</div>
-							</div>
-							<Divider/>
-							<div class="mt-5 mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div @click="config.global.autoTranslate = !config.global.autoTranslate"
-									     class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('自动翻译') }}
+											              aria-labelledby="basic"/>
 										</div>
-										<span class="text-sm text-gray-500">
+									</div>
+									<Divider/>
+								</div>
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div @click="config.global.autoTranslate = !config.global.autoTranslate"
+										     class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('自动翻译') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('自动翻译小说内容') }}
 										</span>
-									</div>
-									<div>
-										<InputSwitch v-model="config.global.autoTranslate"/>
+										</div>
+										<div>
+											<InputSwitch v-model="config.global.autoTranslate"/>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('翻译到...') }}
-										</div>
-										<span class="text-sm text-gray-500">
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('翻译到...') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('选择翻译到的语言') }}
 										</span>
-									</div>
-									<div>
-										<SelectButton v-model="config.global.translateTo" optionLabel="name"
-										              optionValue="value"
-										              :options="[{ name: '自动', value: 'auto'}].concat(config.getAcceptedLanguages()).map(item => {
+										</div>
+										<div>
+											<SelectButton v-model="config.global.translateTo" optionLabel="name"
+											              optionValue="value"
+											              :options="[{ name: '自动', value: 'auto'}].concat(config.getAcceptedLanguages()).map(item => {
 														  return { name: t(item.name), value: item.value }
 													  })"
-										              :allowEmpty="false"
-										              aria-labelledby="basic"/>
+											              :allowEmpty="false"
+											              aria-labelledby="basic"/>
+										</div>
 									</div>
 								</div>
 							</div>
 						</TabPanel>
 						<TabPanel :header="t('内容偏好')">
-							<div class="mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div class="cursor-pointer">
-										<div class="text-lg font-bold">
-											{{ t('隐藏标签') }}
-										</div>
-										<span class="text-sm text-gray-500">
+							<div class="flex flex-col gap-5">
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('隐藏标签') }}
+											</div>
+											<span class="text-sm text-gray-500">
 											{{ t('添加不想看到的标签') }}
 										</span>
-									</div>
-									<div>
-										<Button :label="t('添加')" size="small" @click="showTagInput"></Button>
-									</div>
-								</div>
-							</div>
-							<Divider/>
-							<div v-for="(tag,idx) in config.global.hideTags" class="mb-5 flex flex-col">
-								<div class="flex flex-wrap items-center justify-between pl-2">
-									<div class="cursor-pointer">
-										<div class="text-lg font-bold text-gray-500">
-											{{ tag }}
+										</div>
+										<div>
+											<Button :label="t('添加')" size="small" @click="showTagInput"></Button>
 										</div>
 									</div>
-									<div>
-										<Button :label="t('删除')" size="small" severity="danger"
-										        @click="config.global.hideTags.splice(idx,1)">
-										</Button>
+									<Divider/>
+								</div>
+								<div v-for="(tag,idx) in config.global.hideTags" class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div class="cursor-pointer">
+											<div class="text-lg font-bold text-gray-500">
+												{{ tag }}
+											</div>
+										</div>
+										<div>
+											<Button :label="t('删除')" size="small" severity="danger"
+											        @click="config.global.hideTags.splice(idx,1)">
+											</Button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -165,10 +187,10 @@ const data = reactive({})
 
 function showTagInput() {
     dialog.input({
-        title: '添加标签',
-        content: '请输入标签名称',
-        confirmBtn: '添加',
-        cancelBtn: '取消',
+        title: t('添加标签'),
+        content: t('请输入标签名称'),
+        confirmBtn: t('添加'),
+        cancelBtn: t('取消'),
     }).then(data => {
         if (data.input) {
             config.global.hideTags.push(data.input);

@@ -1,8 +1,6 @@
 <template>
-	<Dialog v-model:visible="data.dialog.show" :header="data.dialog.title" modal :style="{ width: '25rem' }">
-		<span class="p-text-secondary block mb-5 select-none">
-			{{ data.dialog.content }}
-		</span>
+	<Dialog v-model:visible="data.dialog.show" :header="data.dialog.title" modal :style="{ width: '25rem' }" :block-scroll="false">
+		<span class="p-text-secondary block mb-5 select-none" v-html="data.dialog.content"></span>
 		<div v-if="data.dialog.input !== null" class=" mb-5 ">
 			<InputText v-model="data.dialog.input" size="small" class="text-sm w-full"
 			           :placeholder="data.dialog.input"/>

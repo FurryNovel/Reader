@@ -56,3 +56,12 @@ body {
 :root.dark {
     background-color: rgb(var(--surface-700));
 }
+
+:focus-visible {
+    outline: none;
+}
+
+/** 修复block-scroll无效 */
+.p-overflow-hidden{
+    overflow: visible !important;
+}

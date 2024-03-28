@@ -1,9 +1,9 @@
 <template>
 	<template v-if="showWrapper">
-		<footer class="mt-1 flex min-h-32 w-full flex-col gap-3 rounded border-t bg-white p-5 text-sm text-surface-600 dark:bg-surface-600 dark:text-white border-surface-200 dark:border-surface-600">
+		<footer class="mt-1 flex w-full flex-col gap-3 rounded border-t bg-white p-5 text-sm min-h-32 text-surface-600 dark:bg-surface-600 dark:text-white border-surface-200 dark:border-surface-600">
 			<div class="flex items-center justify-center gap-3 pb-2">
 				<div class="flex w-64 flex-col items-center justify-start">
-					<p class="text-lg font-bold text-black dark:text-white pb-2">{{ t('关于我们') }}</p>
+					<p class="pb-2 text-lg font-bold text-black dark:text-white">{{ t('关于我们') }}</p>
 					<a href="https://github.com/FurryNovel/Reader">
 						<i class="fa-brands fa-github"></i>&nbsp;GitHub
 					</a>
@@ -11,7 +11,7 @@
 					<router-link :to="{name:'about', hash:'#联系我们'}">{{ t('联系我们') }}</router-link>
 				</div>
 				<div class="flex w-64 flex-col items-center justify-start">
-					<p class="text-lg font-bold text-black dark:text-white pb-2">{{ t('友情链接') }}</p>
+					<p class="pb-2 text-lg font-bold text-black dark:text-white">{{ t('友情链接') }}</p>
 					<a v-for="link in config.links" :href="link.link" :title="link.desc">
 						{{ link.name }}
 					</a>

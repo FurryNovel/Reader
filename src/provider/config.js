@@ -2,6 +2,7 @@ import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
 import {merge} from 'lodash-es';
+import {useI18n} from "@/i18n/index.js";
 
 export const baseConfig = {
     guildVersion: 0,
@@ -22,6 +23,9 @@ export const baseConfig = {
         translateTo: 'auto',
         hideLanguages: [],
         hideTags: [],
+    },
+    filter: {
+        strictMode: false,
     },
     getAcceptedLanguages() {
         return [
@@ -85,6 +89,40 @@ export const baseConfig = {
         }
         return tags;
     },
+    checkTagsHideStatus(targetTags, i18nFn = null) {
+        if (i18nFn) {
+            const t = i18nFn;
+        } else {
+            const {t} = useI18n();
+        }
+        const rules = [
+            {
+                tags: this.global.hideLanguages.map(lang => t(lang)),
+                reason: 'language',
+            },
+            {
+                tags: this.global.hideTags,
+                reason: 'user',
+            }
+        ];
+        if (this.global.safeMode) {
+            rules.push({
+                tags: [
+                    'R18', 'r-18',
+                    'NSFW', 'nsfw',
+                ],
+                reason: 'r18',
+            });
+        }
+        for (const rule of rules) {
+            for (const tag of targetTags) {
+                if (rule.tags.includes(tag)) {
+                    return rule.reason;
+                }
+            }
+        }
+        return true;
+    }
 }
 export let globalConfig = reactive({
     ...baseConfig,
