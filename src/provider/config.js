@@ -90,14 +90,13 @@ export const baseConfig = {
         return tags;
     },
     checkTagsHideStatus(targetTags, i18nFn = null) {
-        if (i18nFn) {
-            const t = i18nFn;
-        } else {
-            const {t} = useI18n();
+        if (!i18nFn) {
+            const i18n = useI18n();
+            i18nFn = i18n.t;
         }
         const rules = [
             {
-                tags: this.global.hideLanguages.map(lang => t(lang)),
+                tags: this.global.hideLanguages.map(lang => i18nFn(lang)),
                 reason: 'language',
             },
             {
