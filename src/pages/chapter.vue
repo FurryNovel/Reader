@@ -217,8 +217,8 @@
                     'fixed top-0 h-screen w-[300px] transition-all duration-300 opacity-0 shadow-2xl overflow-y-auto max-lg:right-[48px] max-sm:right-0 dark:!bg-surface-600 dark:!text-white': true,
                     'opacity-100 z-[51]' : data.toggleChapters,
 				}" :style="{
-                    color: `#${config.chapter.fontColor}`,
-                    backgroundColor: `#${config.chapter.bgColor}`,
+                    color: `#${config.chapter.fontColor.replace('#','')}`,
+                    backgroundColor: `#${config.chapter.bgColor.replace('#','')}`,
 				}" class="chapters-wrapper">
 					<div v-if="data.toggleChapters" class="flex flex-col p-5" @click.stop="() => {}">
 						<div class="text-xl font-bold">
