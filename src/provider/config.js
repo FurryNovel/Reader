@@ -24,6 +24,9 @@ export const baseConfig = {
         hideLanguages: [],
         hideTags: [],
     },
+    filter: {
+        strictMode: false,
+    },
     getAcceptedLanguages() {
         return [
             {
@@ -60,12 +63,19 @@ export const baseConfig = {
         let showLanguages = this.getAcceptedLanguages().filter((lang) => {
             return !this.global.hideLanguages.includes(lang.value);
         });
+        if (this.global.safeMode) {
+            tags.push('r-18');
+            tags.push('R18');
+        }
         if (showLanguages.length > 1 || showLanguages.length === 0) {
             if (this.global.hideLanguages.length > 0) {
                 tags = tags.concat(this.global.hideLanguages.map((lang) => {
                     return lang;
                 }));
             }
+        }
+        if (this.global.hideTags.length > 0) {
+            tags = tags.concat(this.global.hideTags);
         }
         return tags;
     },
@@ -79,8 +89,12 @@ export const baseConfig = {
         }
         return tags;
     },
-    checkTagsHideStatus(targetTags) {
-        const {t, locale} = useI18n();
+    checkTagsHideStatus(targetTags, i18nFn = null) {
+        if (i18nFn) {
+            const t = i18nFn;
+        } else {
+            const {t} = useI18n();
+        }
         const rules = [
             {
                 tags: this.global.hideLanguages.map(lang => t(lang)),

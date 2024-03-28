@@ -143,6 +143,10 @@ export default {
     '内容偏好': 'Content Preference',
     '隐藏标签': 'Hide Tags',
     '添加不想看到的标签': 'Add tags you don\'t want to see',
+    '添加标签': 'Add Tags',
+    '请输入标签名称': 'Please enter the tag name',
+    '严格模式': 'Strict Mode',
+    '开启后将禁用模糊效果（不建议网络环境较差时使用）': 'Enabling this will disable the blur effect (not recommended for poor network environments)',
     
     //about.vue
     '起点': 'Start',

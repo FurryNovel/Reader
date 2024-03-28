@@ -328,6 +328,9 @@ onServerData((res) => {
     data.items = filterNovels(res.data);
     data.page = res.page;
     data.maxPage = res.maxPage;
+    if (configProvider?.filter?.strictMode){
+        return Promise.reject();
+    }
 }).catch(() => {
     data.loading = true;
     return loadData().then((res) => {
@@ -377,7 +380,7 @@ function loadData() {
         ids: props.ids,
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
-        hate_tags: null,
+        hate_tags: (props.applyFilter && configProvider?.filter?.strictMode && !import.meta.env.SSR) ? hateTags.value : null,
         limit: props.limit,
     };
     return loadNovels({
@@ -385,7 +388,9 @@ function loadData() {
         ignoreReq: import.meta.env.SSR,
         lang: locale(),
     }).then((res) => {
-        data.loading = false;
+        nextTick(() =>{
+            data.loading = false;
+        });
         return {
             data: res.data,
             page: res.page,
@@ -463,7 +468,7 @@ defineExpose({
 
 function filterNovels(items) {
     return items.map(item => {
-        item.local_status = configProvider.checkTagsHideStatus(item.tags);
+        item.local_status = configProvider.checkTagsHideStatus(item.tags, t);
         return item;
     });
 }

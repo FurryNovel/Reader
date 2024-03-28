@@ -34,11 +34,6 @@ export function useI18n(router = null) {
         router = useRouter();
     }
     return {
-        /**
-         * @param key {string}
-         * @param args
-         * @returns {string}
-         */
         t(key, ...args) {
             const locale = getLocale(router);
             return sprintf(supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key, ...args);

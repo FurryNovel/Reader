@@ -30,6 +30,22 @@
 								</div>
 								<div class="flex flex-col">
 									<div class="flex flex-wrap items-center justify-between pl-2">
+										<div @click="config.filter.strictMode = !config.filter.strictMode"
+										     class="cursor-pointer">
+											<div class="text-lg font-bold">
+												{{ t('严格模式') }}
+											</div>
+											<span class="text-sm text-gray-500">
+												{{ t('开启后将禁用模糊效果（不建议网络环境较差时使用）') }}
+											</span>
+										</div>
+										<div>
+											<InputSwitch v-model="config.filter.strictMode"/>
+										</div>
+									</div>
+								</div>
+								<div class="flex flex-col">
+									<div class="flex flex-wrap items-center justify-between pl-2">
 										<div class="cursor-pointer">
 											<div class="text-lg font-bold">
 												{{ t('主题模式') }}
@@ -171,10 +187,10 @@ const data = reactive({})
 
 function showTagInput() {
     dialog.input({
-        title: '添加标签',
-        content: '请输入标签名称',
-        confirmBtn: '添加',
-        cancelBtn: '取消',
+        title: t('添加标签'),
+        content: t('请输入标签名称'),
+        confirmBtn: t('添加'),
+        cancelBtn: t('取消'),
     }).then(data => {
         if (data.input) {
             config.global.hideTags.push(data.input);
