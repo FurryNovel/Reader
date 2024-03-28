@@ -484,13 +484,13 @@ const themeButton = computed(() => {
 
 onRouteChange(to => {
     if (data.chapter.id !== to.params.cid) {
-        const needLoad = data.novel.id !== 0;
+        //const needLoad = data.novel.id !== 0;
         data.novel.id = to.params.id;
         data.chapter.id = to.params.cid;
-        if (needLoad) {
-            data.loading = true;
-            loadData();
-        }
+        // if (needLoad) {
+        //     data.loading = true;
+        //     loadData();
+        // }
     }
 });
 
@@ -506,7 +506,7 @@ watchEffect(() => {
             image: data.novel.cover,
         });
         if (!import.meta.env.SSR) {
-            historyStore.save(data.novel.id, data.chapter.id);
+            nextTick(() => historyStore.save(data.novel.id, data.chapter.id));
         }
     }
 });
