@@ -1,12 +1,13 @@
 import ZH from './zh';
 import EN from './en';
+import JA from './ja';
 import {sprintf} from 'sprintf-js';
 
 export const supportedLocales = {
     'zh': {
         id: 'zh',
         name: '简体中文',
-        shortName: '中文',
+        shortName: '简',
         translation: ZH,
     },
     'en': {
@@ -14,6 +15,12 @@ export const supportedLocales = {
         name: 'English',
         shortName: 'EN',
         translation: EN,
+    },
+    'ja': {
+        id: 'ja',
+        name: '日本语',
+        shortName: '日',
+        translation: JA,
     },
 }
 
