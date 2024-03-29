@@ -307,6 +307,7 @@ import {canTranslate, detectedLanguage, useTranslate} from "@/utils/translate.js
 import {useConfigProvider} from "@/provider/config.js";
 import PageComments from "@/components/global/PageComments.vue";
 import {useI18n} from "@/i18n/index.js";
+import {isThirdReader} from "@/utils/third.js";
 
 const {t, locale} = useI18n();
 
@@ -525,6 +526,11 @@ function toggleBookmark() {
             bookmarkStore.remove(data.id);
         } else {
             bookmarkStore.save(data.id, true);
+        }
+        if (!bookmark) {
+            if (isThirdReader()){
+	            window.open(`legado://import/addToBookshelf?src=${window.location.href}`,'_blank');
+            }
         }
     });
 }

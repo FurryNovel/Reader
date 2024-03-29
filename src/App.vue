@@ -20,6 +20,7 @@ import {initRouterEvent, onRouteChange} from "@/utils/router-event.js";
 import {initThemeManager, onThemeChange} from "@/utils/theme.js";
 import {initServiceWorker} from "@/pwa.js";
 import eventbus from "@/utils/eventbus.js";
+import {initThirdEvent} from "@/utils/third.js";
 
 const keepAlive = ref(true);
 const router = useRouter();
@@ -31,6 +32,7 @@ onBeforeMount(() => {
     initCookieManager();
     initThemeManager();
     initServiceWorker();
+    initThirdEvent();
 });
 
 onThemeChange(({theme}) => {
