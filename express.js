@@ -22,6 +22,7 @@ app.get('*', async (req, res) => {
         });
         res.status(200).send(
             template
+                .replace(`lang="zh"`, `lang="${renderRes.locale}"`)
                 .replace(`<!--app-html-->`, renderRes.html)
                 .replace(`<!--preload-links-->`, renderRes.preloadLinks)
                 .replace(`<!--head-tags-->`, renderRes.headTags)

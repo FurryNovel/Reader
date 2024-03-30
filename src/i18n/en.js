@@ -1,4 +1,4 @@
-import config from "@/config.js";
+import config from '@/config.js';
 
 export default {
     [config.title]: 'FurryNovel',
@@ -12,30 +12,23 @@ export default {
     '章节': 'Chapter',
     '小说详情': 'Novel Details',
     '页面未找到': 'Page Not Found',
-    
     '兽人控, 兽人小说, 兽人同人, 兽人文学, 兽人同人小说, 兽人同人站, 福瑞控, 福瑞控小说, 福瑞控文学, 虎兽人小说, 龙兽人小说, 狼兽人小说, 熊兽人小说': 'furry, furry fiction, furry fanwork, furry literature, furry fan fiction, furry fansite, furry, furry fiction, furry literature, tiger furry fiction, dragon furry fiction, wolf furry fiction, bear furry fiction, fanwork, fan fiction, fansite',
     '兽人控小说站是一个专为兽人控打造的聚合在线阅读平台。在这里，你可以找到各种平台各种兽人相关的小说，从兽人与人类的爱恨情仇，到兽人之间的种族斗争，从兽人的历史文化，到兽人的奇幻冒险，应有尽有。你可以随时随地享受阅读的乐趣，无需下载或安装任何软件。还可以自由切换翻译，选择你喜欢的阅读模式。': 'FurryNovel is a specially created online reading platform for furry lovers. Here, you can find all kinds of furry-related novels from various platforms, including love and hate between furries and humans, racial struggles between furries, furry history and culture, and furry fantasy adventures. You can enjoy the fun of reading anytime, anywhere, without downloading or installing any software. You can also freely switch translations and choose your preferred reading mode.',
-    
     '确定': 'OK',
     '清除': 'Clear',
-    
     '标签': 'Tags',
     '友情链接': 'Links',
-    
     '原文': 'Original Text',
     '翻译': 'Translation',
     '夜间': 'Night',
     '明亮': 'Bright',
     '自动': 'Automatic',
-    
     '中文': 'Chinese',
     '英语': 'English',
     '日语': 'Japanese',
     '韩语': 'Korean',
-    
     '添加': 'Add',
     '删除': 'Delete',
-    
     //index.vue
     '热门精选': 'Popular Novels',
     '查看更多': 'View More',
@@ -44,8 +37,7 @@ export default {
     '刷新一下': 'Refresh',
     '最新小说': 'Latest Novels',
     '种族': 'Race',
-    
-    // Default Tags
+    //默认Tags
     '兽人': 'Furry',
     'AI生成': 'AI Generated',
     '冒险': 'Adventure',
@@ -67,12 +59,10 @@ export default {
     'en': 'en',
     'ja': 'ja',
     'ko': 'ko',
-    
-    // bookmark.vue
+    //bookmark.vue
     '书架为空': 'Bookshelf is empty',
     '书架为空，快去添加一些小说吧！': 'Bookshelf is empty, go add some novels!',
-    
-    // chapter.vue
+    //chapter.vue
     '加载中...': 'Loading...',
     '上一章': 'Previous Chapter',
     '下一章': 'Next Chapter',
@@ -89,14 +79,12 @@ export default {
     '宋体': 'Songti',
     '楷体': 'Kaiti',
     '仿宋': 'FangSong',
-    
-    // error.vue
+    //error.vue
     '我们可能遇到了一些问题，无法找到这个页面。': 'We may have encountered some problems and cannot find this page.',
-    '请再试一次或': 'Please try again or',
+    '请再试一次或': 'Please try again',
     '返回主页': 'Return to the homepage',
     '猜你喜欢': 'Guess you like',
-    
-    // info.vue
+    //info.vue
     '来源': 'Source',
     '%d章': '%d Chapters',
     '%d浏览': '%d Views',
@@ -116,8 +104,8 @@ export default {
     '同步成功': 'Sync Success',
     '同步失败': 'Sync Failed',
     '同步中': 'Syncing',
-    
-    // list.vue
+    '%s是由%s创作的%s小说。小说简介：%s': '%1$s is an %3$s novel created by %2$s. Novel synopsis: %4$s.',
+    //list.vue
     '热门小说': 'Popular Novels',
     '最新': 'Latest',
     '热门': 'Popular',
@@ -125,8 +113,7 @@ export default {
     '请输入关键字：小说名、作者名、简介等': 'Please enter keywords: novel name, author name, introduction, etc.',
     '请输入标签': 'Please enter tags',
     '关键字': 'Keywords',
-    
-    // settings.vue
+    //settings.vue
     '偏好设置': 'Preference Settings',
     '基本设置': 'Basic Settings',
     '安全模式': 'Safe Mode',
@@ -147,7 +134,6 @@ export default {
     '请输入标签名称': 'Please enter the tag name',
     '严格模式': 'Strict Mode',
     '开启后将禁用模糊效果（不建议网络环境较差时使用）': 'Enabling this will disable the blur effect (not recommended for poor network environments)',
-    
     //about.vue
     '起点': 'Start',
     '使用域名': 'Use Domain',
@@ -155,33 +141,27 @@ export default {
     'Q&A': 'Q&A',
     '发送邮件': 'Send Email',
     '媒体资源': 'Media Resources',
-    
-    // AppInfo.vue
+    //AppInfo.vue
     '发现新的版本，点击更新': 'Found a new version, click to update',
     '当前处于离线状态': 'Currently offline',
     'PWA版本现已可用': 'PWA version is now available',
     '立即安装': 'Install Now',
     '不再提示': 'No Longer Prompt',
-    
-    // Footer.vue
+    //Footer.vue
     '关于我们': 'About Us',
     '网站状态': 'Website Status',
     '联系我们': 'Contact Us',
     '站点地图': 'SiteMap',
-    
-    // NovelList.vue
+    //NovelList.vue
     '无': 'None',
     '最新章节：%s': 'Latest Chapter: %s',
-    
-    // Slogan.vue
+    //Slogan.vue
     '最新最全的小说网站': 'The latest and most complete novel website',
-    
     //TagSelect.vue
     '选择标签': 'Select Tags',
-    
     //Tooltips
     '已根据您的语言设置隐藏该内容。': 'According to your language settings, this content has been hidden.',
     '已根据您的偏好设置隐藏该内容。': 'According to your preference settings, this content has been hidden.',
     '已根据您的安全模式设置隐藏该内容。': 'According to your safe mode settings, this content has been hidden.',
-    '您可以在设置中修改内容过滤。': 'You can modify content filtering in the settings.',
-}
+    '您可以在设置中修改内容过滤。': 'You can modify content filtering in the settings.'
+};
