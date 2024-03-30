@@ -12,7 +12,7 @@ import {
     initCloudflareEnv as _initCloudflareEnv,
     useCloudflareEnv as _useCloudflareEnv
 } from "@/utils/cloudflare-env.js";
-import {getFallbackLocale, supportedLocales} from "@/i18n/index.js";
+import {getFallbackLocale, supportedLocales, useI18n} from "@/i18n/index.js";
 import parser from 'accept-language-parser';
 
 export async function render(url, manifest = {}, request = {cookies: {}}) {
@@ -21,6 +21,7 @@ export async function render(url, manifest = {}, request = {cookies: {}}) {
     // noinspection ES6MissingAwait
     router.push(url);
     await router.isReady();
+    const {locale} = useI18n(router);
     const ctx = {
         ...request,
         pinia,
@@ -28,7 +29,7 @@ export async function render(url, manifest = {}, request = {cookies: {}}) {
     const html = await renderToString(app, ctx);
     const preloadLinks = renderPreloadLinks(ctx.modules, manifest);
     const {headTags} = await renderSSRHead(head);
-    return {html, preloadLinks, headTags, state: devalue(ssrStore.$state)};
+    return {html, preloadLinks, headTags, state: devalue(ssrStore.$state), locale: locale()};
 }
 
 function renderPreloadLinks(modules, manifest) {
@@ -108,6 +109,7 @@ export async function handleRequest(request, env = null) {
         });
         return new Response(
             template
+                .replace(`lang="zh"`, `lang="${renderRes.locale}"`)
                 .replace(`<!--app-html-->`, renderRes.html)
                 .replace(`<!--preload-links-->`, renderRes.preloadLinks)
                 .replace(`<!--head-tags-->`, renderRes.headTags)

@@ -45,6 +45,7 @@ app.use('*', async (req, res) => {
         });
         
         const html = template
+            .replace(`lang="zh"`, `lang="${renderRes.locale}"`)
             .replace(`<!--app-html-->`, renderRes.html)
             .replace(`<!--preload-links-->`, renderRes.preloadLinks)
             .replace(`<!--head-tags-->`, renderRes.headTags)
