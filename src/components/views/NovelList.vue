@@ -18,7 +18,7 @@
                             'group-hover:ml-[128px]':(idx + 1) % perLineCount < dialogRightPerLineCount && (idx ) % perLineCount < dialogRightPerLineCount,
                             'group-hover:-ml-[256px]':(idx + 1) % perLineCount >= dialogRightPerLineCount || (idx) % perLineCount >= dialogRightPerLineCount,
 						}" :data-idx="idx">
-									<p class="text-center text-xs text-gray-700"
+									<p class="text-center text-xs text-gray-700 dark:text-white"
 									   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 									<div class="flex items-center justify-center px-5 py-3">
 										<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
@@ -105,7 +105,7 @@
 							<div v-if="item.local_status && item.local_status !== true"
 							     class="absolute top-0 right-0 bottom-0 left-0 m-2 flex flex-1 rounded-xl bg-transparent/5 z-[41]">
 								<div class="z-30 flex h-full flex-1 flex-col items-center justify-center gap-3 rounded-lg backdrop-blur">
-									<p class="text-center text-xs text-gray-700"
+									<p class="text-center text-xs text-gray-700 dark:text-white"
 									   v-html="convertLocalStatusToMessage(item?.local_status)"></p>
 									<Button class="w-32 font-bold text-primary-500 dark:text-white" size="small"
 									        @click="item.local_status = true;">
@@ -328,7 +328,7 @@ onServerData((res) => {
     data.items = filterNovels(res.data);
     data.page = res.page;
     data.maxPage = res.maxPage;
-    if (configProvider?.filter?.strictMode){
+    if (configProvider?.filter?.strictMode) {
         return Promise.reject();
     }
 }).catch(() => {
@@ -388,7 +388,7 @@ function loadData() {
         ignoreReq: import.meta.env.SSR,
         lang: locale(),
     }).then((res) => {
-        nextTick(() =>{
+        nextTick(() => {
             data.loading = false;
         });
         return {
