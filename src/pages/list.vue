@@ -22,12 +22,12 @@
 						</template>
 					</div>
 					<div class="mr-2 flex gap-3">
-						<SelectButton v-model="data.type" :allowEmpty="false"
+						<SelectButton :allowEmpty="false" :model-value="data.type"
 						              :options="[{ name: t('最新'), value: 'latest'},{ name: t('热门'), value: 'popular'}]"
 						              aria-labelledby="basic"
 						              optionLabel="name"
 						              optionValue="value" size="small"
-						              @change="reloadNovels"/>
+						              @change="onChangeType"/>
 						<Button class="text-sm font-bold text-primary-500 dark:text-white" label="条件筛选" size="small"
 						        @click="showFilter">
 							<i class="mr-2 fa-regular fa-filter"></i>
@@ -65,7 +65,8 @@
 								</InputGroup>
 								<div class="hidden w-full flex-col items-center justify-center duration-200 max-sm:flex">
 									<InputGroup class="flex w-full flex-row py-10">
-										<InputGroupAddon class="bg-white !border-r-0 group-hover:border-primary-500 flex">
+										<InputGroupAddon
+												class="bg-white !border-r-0 group-hover:border-primary-500 flex">
 											<i class="fa-regular fa-magnifying-glass text-surface-400 dark:text-surface-600"></i>
 										</InputGroupAddon>
 										<InputText id="keyword" v-model="data.preKeyword"
@@ -166,7 +167,7 @@ watchEffect(() => {
     data.mode = next.mode;
 });
 
-function updateRoute(){
+function updateRoute() {
     router.replace({
         query: next,
     });
@@ -210,6 +211,11 @@ onInit();
 //         onInit();
 //     }
 // });
+
+function onChangeType(event) {
+    next.type = event.value;
+    updateRoute();
+}
 
 function showFilter(event) {
     filtersPanel.value.toggle(event);
