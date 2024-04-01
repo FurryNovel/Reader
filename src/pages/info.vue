@@ -101,9 +101,9 @@
 				</div>
 				<TabView>
 					<TabPanel :header="t('最新章节')">
-						<router-link
-								:to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
-								class="flex">
+						<router-link v-if="data.chapters.length > 0"
+						             :to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
+						             class="flex">
 							
 							<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
 								{{ data.chapters.length }}
@@ -112,6 +112,9 @@
 								<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
 							</div>
 						</router-link>
+						<div v-else>
+							-
+						</div>
 					</TabPanel>
 				</TabView>
 				<div class="hidden z-50 max-sm:flex max-sm:fixed bottom-0 left-0 w-full h-16 backdrop-blur-sm bg-white/70 dark:bg-surface-700/70 text-black max-sm:text-white">
@@ -454,7 +457,7 @@ watchEffect(() => {
             title: `${data.novel.name} - ${data.novel.author?.nickname || '铁名'}`,
             description: t(
                 '%s是由%s创作的%s小说。小说简介：%s',
-	            data.novel.name,
+                data.novel.name,
                 data.novel.author?.nickname || '铁名',
                 data.novel.tags?.[0] || t('兽人'),
                 data.novel.desc
@@ -463,13 +466,13 @@ watchEffect(() => {
             image: data.novel.cover,
             append: {
                 'og:type': 'article',
-	            'og:title': `${data.novel.name}`,
-	            'og:description': `${data.novel.desc}`,
-				'article:author': data.novel.author?.nickname || '铁名',
-				'article:published_time': data.novel.created_at,
-				'article:modified_time': data.novel.updated_at,
-				'article:section': data.novel.tags?.join(', ') || '',
-				'article:tag': data.novel.tags?.join(', ') || '',
+                'og:title': `${data.novel.name}`,
+                'og:description': `${data.novel.desc}`,
+                'article:author': data.novel.author?.nickname || '铁名',
+                'article:published_time': data.novel.created_at,
+                'article:modified_time': data.novel.updated_at,
+                'article:section': data.novel.tags?.join(', ') || '',
+                'article:tag': data.novel.tags?.join(', ') || '',
             },
         });
     }
@@ -528,8 +531,8 @@ function toggleBookmark() {
             bookmarkStore.save(data.id, true);
         }
         if (!bookmark) {
-            if (isThirdReader()){
-	            window.open(`legado://import/addToBookshelf?src=${window.location.href}`,'_blank');
+            if (isThirdReader()) {
+                window.open(`legado://import/addToBookshelf?src=${window.location.href}`, '_blank');
             }
         }
     });
