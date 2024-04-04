@@ -115,7 +115,7 @@ export async function handleRequest(request, env = null) {
                 .replace(`<!--head-tags-->`, renderRes.headTags)
                 .replace(`null;//'<!--ssr-state-->'`, renderRes.state),
             {
-                status: 200,
+                status: renderRes.html.indexOf('404') === -1 ? 200 : 404,
                 headers: {
                     'Content-Type': 'text/html',
                 }
