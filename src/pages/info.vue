@@ -186,11 +186,11 @@
 							<div class="flex items-center gap-3">
 								<Skeleton class="text-2xl font-bold"
 								          height="32px"
-								          width="300px"></Skeleton>
+								          width="200px"></Skeleton>
 							</div>
 							<Skeleton class="text-sm text-gray-500 dark:text-white"
 							          height="20px"
-							          width="250px"></Skeleton>
+							          width="150px"></Skeleton>
 						</div>
 						<div>
 							<Skeleton class="text-sm text-black dark:text-white"
