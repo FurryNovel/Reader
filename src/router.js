@@ -32,7 +32,7 @@ const items = [
         },
     },
     {
-        path: '/:lang',
+        path: '/:lang/',
         name: 'index',
         component: Index,
         meta: {
