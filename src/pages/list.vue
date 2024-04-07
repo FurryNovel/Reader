@@ -228,33 +228,21 @@ function applyFilters() {
     } else {
         tags = [];
     }
-    data.keyword = data.preKeyword;
-    data.tags = tags;
+    next.keyword = data.preKeyword;
+    next.tags = tags;
     nextTick(() => {
-        reloadNovels();
+        updateRoute();
         filtersPanel.value.hide();
     });
 }
 
 function clearFilters() {
-    data.preKeyword = '';
-    data.preTags = [];
-    data.keyword = '';
-    data.tags = [];
-    
     next.keyword = '';
     next.tags = '';
     
     nextTick(() => {
-        reloadNovels();
+        updateRoute();
         filtersPanel.value.hide();
-    });
-}
-
-function reloadNovels() {
-    updateRoute();
-    nextTick(() => {
-        novelList.value?.reload();
     });
 }
 </script>
