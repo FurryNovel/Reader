@@ -32,7 +32,7 @@ const items = [
         },
     },
     {
-        path: '/:lang',
+        path: '/:lang/',
         name: 'index',
         component: Index,
         meta: {
@@ -158,7 +158,8 @@ const items = [
         ],
     },
     {
-        path: '/:pathMatch(.*)',
+        name: '404',
+        path: '/:lang/:pathMatch(.*)',
         component: Error,
         meta: {
             title: '页面未找到',

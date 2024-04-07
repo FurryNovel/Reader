@@ -103,13 +103,17 @@
 					<TabPanel :header="t('最新章节')">
 						<router-link v-if="data.chapters.length > 0"
 						             :to="{name: 'chapter' ,params: {id: data.novel.id, cid: data.chapters[data.chapters.length - 1].id}}"
-						             class="flex">
-							
-							<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
-								{{ data.chapters.length }}
+						             class="flex flex-wrap gap-2">
+							<div class="flex sm:mr-5">
+								<div class="mr-1 h-min w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
+									{{ data.chapters.length }}
+								</div>
+								<div class="flex flex-1 flex-col gap-2">
+									<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
+								</div>
 							</div>
-							<div class="flex flex-1 flex-col gap-2">
-								<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
+							<div class="flex items-center">
+								<span>{{ data.chapters[data.chapters.length - 1].updated_at }}</span>
 							</div>
 						</router-link>
 						<div v-else>
@@ -182,11 +186,11 @@
 							<div class="flex items-center gap-3">
 								<Skeleton class="text-2xl font-bold"
 								          height="32px"
-								          width="300px"></Skeleton>
+								          width="200px"></Skeleton>
 							</div>
 							<Skeleton class="text-sm text-gray-500 dark:text-white"
 							          height="20px"
-							          width="250px"></Skeleton>
+							          width="150px"></Skeleton>
 						</div>
 						<div>
 							<Skeleton class="text-sm text-black dark:text-white"
