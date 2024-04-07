@@ -380,7 +380,7 @@ function loadData() {
         ids: props.ids,
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
-        hate_tags: (props.applyFilter && (!configProvider?.filter?.strictMode || !import.meta.env.SSR)) ? hateTags.value : null,
+        hate_tags: (props.applyFilter && !import.meta.env.SSR) ? hateTags.value : null,
         limit: props.limit,
     };
     return loadNovels({
