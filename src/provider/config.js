@@ -2,7 +2,7 @@ import {useSettingStore} from "@/stores/settings.js";
 import {useCookieManager} from "@/utils/cookie.js";
 import {useSSRContext} from "vue";
 import {merge} from 'lodash-es';
-import {useI18n} from "@/i18n/index.js";
+import {supportedLocales, useI18n} from "@/i18n/index.js";
 
 export const baseConfig = {
     guildVersion: 0,
@@ -60,19 +60,14 @@ export const baseConfig = {
     },
     getHateTags() {
         let tags = [];
-        let showLanguages = this.getAcceptedLanguages().filter((lang) => {
-            return !this.global.hideLanguages.includes(lang.value);
-        });
         if (this.global.safeMode) {
             tags.push('r-18');
             tags.push('R18');
         }
-        if (showLanguages.length > 1 || showLanguages.length === 0) {
-            if (this.global.hideLanguages.length > 0) {
-                tags = tags.concat(this.global.hideLanguages.map((lang) => {
-                    return lang;
-                }));
-            }
+        if (this.global.hideLanguages.length > 0) {
+            tags = tags.concat(this.global.hideLanguages.map((lang) => {
+                return lang;
+            }));
         }
         if (this.global.hideTags.length > 0) {
             tags = tags.concat(this.global.hideTags);
@@ -80,23 +75,18 @@ export const baseConfig = {
         return tags;
     },
     getTags() {
-        let tags = [];
-        let showLanguages = this.getAcceptedLanguages().filter((lang) => {
-            return !this.global.hideLanguages.includes(lang.value);
-        });
-        if (showLanguages.length === 1) {
-            tags.push(showLanguages[0].value);
-        }
-        return tags;
+        return [];
     },
     checkTagsHideStatus(targetTags, i18nFn = null) {
         if (!i18nFn) {
             const i18n = useI18n();
-            i18nFn = i18n.t;
+            i18nFn = i18n._t;
         }
         const rules = [
             {
-                tags: this.global.hideLanguages.map(lang => i18nFn(lang)),
+                tags: this.global.hideLanguages.map(lang => {
+                    return Object.keys(supportedLocales).map(locale => i18nFn(locale, lang));
+                }),
                 reason: 'language',
             },
             {
