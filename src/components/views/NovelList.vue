@@ -225,7 +225,7 @@ import {useI18n} from "@/i18n/index.js";
 import {isMobile} from "@/utils/device.js";
 import dialog from "@/utils/dialog.js";
 
-const {t, locale} = useI18n();
+const {t, locale, _t} = useI18n();
 const ssrId = useId();
 const parent = ref(null);
 
@@ -380,7 +380,7 @@ function loadData() {
         ids: props.ids,
         with_chapters: props.withChapters,
         tags: props.applyFilter ? tags.value : props.tags,
-        hate_tags: (props.applyFilter && configProvider?.filter?.strictMode && !import.meta.env.SSR) ? hateTags.value : null,
+        hate_tags: (props.applyFilter && (!configProvider?.filter?.strictMode || !import.meta.env.SSR)) ? hateTags.value : null,
         limit: props.limit,
     };
     return loadNovels({
@@ -468,7 +468,7 @@ defineExpose({
 
 function filterNovels(items) {
     return items.map(item => {
-        item.local_status = configProvider.checkTagsHideStatus(item.tags, t);
+        item.local_status = configProvider.checkTagsHideStatus(item.tags, _t);
         return item;
     });
 }
