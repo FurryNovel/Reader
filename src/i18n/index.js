@@ -45,6 +45,9 @@ export function useI18n(router = null) {
             const locale = getLocale(router);
             return sprintf(supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key, ...args);
         },
+        _t(locale, key, ...args) {
+            return sprintf(supportedLocales[locale]?.translation[key] ?? ZH[key] ?? key, ...args);
+        },
         locale() {
             return getLocale(router);
         },
