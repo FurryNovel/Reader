@@ -343,7 +343,7 @@ const currentReadChapterId = computedAsync(async () => {
     if (!isMounted.value) {
         return false;
     }
-    return await historyStore.find(data.id);
+    return Number(await historyStore.find(data.id));
 }, null, {lazy: true});
 
 const currentReadChapter = computed(() => {
@@ -353,7 +353,7 @@ const currentReadChapter = computed(() => {
     if (!currentReadChapterId.value) {
         return data.chapters[0] ?? false;
     }
-    return data.chapters.find(chapter => chapter.id === currentReadChapterId.value);
+    return data.chapters.find(chapter => Number(chapter.id) === Number(currentReadChapterId.value));
 });
 
 
