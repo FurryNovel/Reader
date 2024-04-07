@@ -86,7 +86,7 @@ export const baseConfig = {
             {
                 tags: this.global.hideLanguages.map(lang => {
                     return Object.keys(supportedLocales).map(locale => i18nFn(locale, lang));
-                }),
+                }).flat(),
                 reason: 'language',
             },
             {
