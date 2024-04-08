@@ -96,11 +96,30 @@
 					</div>
 				</div>
 			</div>
+			<div id="dmca" class="mt-5 flex flex-col gap-3">
+				<div class="text-xl font-bold"><a href="#dmca"># {{ t('版权争议') }}</a></div>
+				<div class="flex flex-col gap-3 p-5">
+					<p>
+						📝 当作者对作品是否可以被转载有不同意见时，我们会尊重每位作者的决定。但处理下架请求时，我们遇到了冒名行为的挑战，这令我们备受困扰。
+					</p>
+					<p>
+						🛠️ 为此，我们提出以下解决方案：若作者不愿作品被转载，可在作品简介或作品标签处注明“禁止转载”，我们将不予转载。
+					</p>
+					<p>
+						👨‍💼 若不认同此方式，可通过
+						<a href="mailto:dmca@furrynovel.com">dmca@furrynovel.com</a>
+						邮箱联系我们，我们将指派专人处理。
+					</p>
+					<p>
+						🌟 希望得到大家的理解，我们也将继续致力于为大家提供更好的阅读体验而不懈努力。
+					</p>
+				</div>
+			</div>
 			<div id="联系我们" class="mt-5 flex flex-col gap-3">
 				<div class="text-xl font-bold"><a href="#联系我们"># {{ t('联系我们') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>您可以给我们
-						<a class="px-2" href="mailto:me@tigerkk.me">
+						<a class="px-2" href="mailto:admin@furrynovel.com">
 							<i class="fa-regular fa-envelope"></i>&nbsp;{{ t('发送邮件') }}
 						</a>
 						、
@@ -145,6 +164,10 @@ const menus = ref([
     {
         label: t('Q&A'),
         href: '#QA',
+    },
+    {
+        label: t('DMCA'),
+        href: '#dmca',
     },
     {
         label: t('联系我们'),
