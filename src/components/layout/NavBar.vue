@@ -103,6 +103,7 @@ import {useDeviceInfo} from "@/utils/device.js";
 import {toggleTheme, useTheme} from "@/utils/theme.js";
 import {supportedLocales, useI18n} from "@/i18n/index.js";
 import eventbus from "@/utils/eventbus.js";
+import {isOfficialReader} from "@/utils/third.js";
 
 const {t, locale} = useI18n();
 
@@ -163,7 +164,9 @@ const wrapperClass = computed(() => {
         'sticky': true,
         'z-50': true,
         'top-0': true,
-        'h-[64px]': true,
+        'h-[64px]': !isOfficialReader(),
+        'h-auto': isOfficialReader(),
+        'pt-[40px]': isOfficialReader(),
     };
 });
 
@@ -224,7 +227,7 @@ function toggleLocaleMenu(event) {
     localeMenu.value.toggle(event);
 }
 
-function changeKeepAlive(){
+function changeKeepAlive() {
     eventbus.emit('onKeepAliveStatus', false);
 }
 

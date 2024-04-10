@@ -26,3 +26,10 @@ export function isThirdReader() {
     }
     return /Reader/i.test(headers['User-Agent']);
 }
+
+export function isOfficialReader() {
+    if (!headers['User-Agent']) {
+        return false;
+    }
+    return /FurryNovelApp\//i.test(headers['User-Agent']);
+}
