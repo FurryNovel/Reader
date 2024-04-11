@@ -19,7 +19,7 @@ const items = [
         path: '/',
         redirect: to => {
             if (!import.meta.env.SSR) {
-                const locale = navigator.language.split('-')[0] ?? '';
+                const locale = navigator.language.split('-')?.[0] ?? '';
                 if (supportedLocales.hasOwnProperty(locale)) {
                     return `/${locale}`;
                 }
