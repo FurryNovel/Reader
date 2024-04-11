@@ -18,12 +18,13 @@ const items = [
     {
         path: '/',
         redirect: to => {
-            // const [locale] =  navigator.language.split('-');
-            // if(supportedLocales.hasOwnProperty(locale)){
-            //     return `/${locale}`;
-            // }
-            const locale = getFallbackLocale();
-            return `/${locale}`;
+            if (!import.meta.env.SSR) {
+                const [_locale] = navigator.language.split('-');
+                if(supportedLocales.hasOwnProperty(locale)){
+                    return `/${_locale}`;
+                }
+            }
+            return `/${getFallbackLocale()}`;
         },
         meta: {
             layout: {

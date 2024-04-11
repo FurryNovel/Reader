@@ -27,7 +27,7 @@ const serviceWorker = ref({
 export async function initServiceWorker() {
     if (import.meta.env.SSR) return;
     // noinspection JSValidateTypes
-    serviceWorker.value.registration = await navigator.serviceWorker.getRegistration();
+    serviceWorker.value.registration = await navigator?.serviceWorker?.getRegistration();
     if (serviceWorker.value.registration) {
         registerServerWorker();
     }
@@ -51,7 +51,7 @@ export function registerServerWorker() {
 }
 
 export async function getServerWorkerRegistration() {
-    return !import.meta.env.SSR ? await navigator.serviceWorker.getRegistration() : null;
+    return !import.meta.env.SSR ? await navigator?.serviceWorker?.getRegistration() : null;
 }
 
 
