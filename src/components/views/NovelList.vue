@@ -8,7 +8,7 @@
 							<div v-if="item.local_status && item.local_status !== true"
 							     @click="onClickBlurContent(item, isMobile)"
 							     class="absolute top-0 left-0 z-40 m-2 flex select-none flex-col justify-center rounded-lg bg-transparent/5 transition duration-300 max-h-[242px] min-h-[242px] align-items-center sm:group-hover:-translate-y-2 sm:group-hover:scale-110 sm:group-hover:shadow-2xl sm:group-hover:z-50">
-								<div class="z-30 w-full flex-1 rounded-lg backdrop-blur">
+								<div class="z-30 flex-1 rounded-lg backdrop-blur w-[128px]">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
