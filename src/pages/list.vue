@@ -145,9 +145,9 @@ const wrapperClass = computed(() => {
     return {
         'm-2 flex flex-wrap items-center justify-between gap-3 pl-2': true,
         'backdrop-blur-sm': true,
-        'bg-white/70 dark:bg-surface-700/70': true,
-        'sticky': isOfficialReader(),
-        'z-50': isOfficialReader(),
+        'bg-white/70 dark:bg-surface-600/70': true,
+        'max-sm:sticky': true,
+        'max-sm:z-50': true,
         'top-0': true,
         'h-[64px]': !isOfficialReader(),
         'h-auto': isOfficialReader(),
