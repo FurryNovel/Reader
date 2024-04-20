@@ -4,7 +4,7 @@
 		        :hide-buttons="['icon']" :show-in="['mobile']"/>
 		<div class="flex flex-1 flex-col rounded bg-white text-black sm:p-10 dark:bg-surface-600 dark:text-white">
 			<template v-if="data.mode === 'list' || data.keyword !== ''">
-				<div class="m-2 flex flex-wrap items-center justify-between gap-3 pl-2">
+				<div :class="wrapperClass">
 					<div class="flex gap-3 text-2xl font-bold">
 						<Button v-if="data.mode === 'search'" class="text-sm text-primary-500" label="返回" outlined
 						        severity="secondary" size="small"
@@ -21,7 +21,7 @@
 							{{ t('热门小说') }}
 						</template>
 					</div>
-					<div class="mr-2 flex gap-3">
+					<div class="flex gap-3">
 						<SelectButton :allowEmpty="false" :model-value="data.type"
 						              :options="[{ name: t('最新'), value: 'latest'},{ name: t('热门'), value: 'popular'}]"
 						              aria-labelledby="basic"
@@ -113,6 +113,8 @@ import OverlayPanel from 'primevue/overlaypanel';
 import SelectButton from "primevue/selectbutton";
 import TagSelect from "@/components/views/TagSelect.vue";
 import {useI18n} from "@/i18n/index.js";
+import {isOfficialReader} from "@/utils/third.js";
+import {isMobile} from "@/utils/device.js";
 
 const {t} = useI18n();
 const filtersPanel = ref(null);
@@ -137,6 +139,20 @@ const data = reactive({
     type: 'popular',
     order: 'desc',
     mode: 'list',
+});
+
+const wrapperClass = computed(() => {
+    return {
+        'm-2 flex flex-wrap items-center justify-between gap-3 pl-2': true,
+        'backdrop-blur-sm': true,
+        'bg-white/70 dark:bg-surface-700/70': true,
+        'sticky': isOfficialReader(),
+        'z-50': isOfficialReader(),
+        'top-0': true,
+        'h-[64px]': !isOfficialReader(),
+        'h-auto': isOfficialReader(),
+        'pt-[40px]': isOfficialReader(),
+    };
 });
 
 const props = defineProps({
