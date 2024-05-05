@@ -22,8 +22,9 @@
 			</NavBar>
 		</div>
 		<div class="flex items-center lg:justify-center max-lg:justify-start" @click="toggleMobile">
-			<div :style="readerStyle" class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white">
-				<div v-for="line in lines" :draggable="false" class="select-none" v-html="line"></div>
+			<div :style="readerStyle" :draggable="false"
+			     class="h-full w-full max-w-3xl dark:!bg-surface-600 dark:!text-white select-none text-wrap break-words">
+				<div v-for="line in lines" v-html="line"></div>
 				
 				<div class="m-10 flex items-center justify-center gap-3 max-sm:flex-col max-sm:mx-0">
 					<router-link v-if="pervChapter"
