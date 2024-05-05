@@ -110,7 +110,9 @@
 										{{ data.chapters.length }}
 									</div>
 									<div class="flex flex-1 flex-col gap-2">
-										<span class="font-bold">{{ data.chapters[data.chapters.length - 1].name }}</span>
+										<span class="font-bold">{{
+												data.chapters[data.chapters.length - 1].name
+											}}</span>
 									</div>
 								</div>
 								<div class="flex items-center">
@@ -244,10 +246,12 @@
 								<div class="">
 									<div class="mb-2 text-xl font-bold">{{ t('标签') }}</div>
 									<div class="flex flex-wrap overflow-hidden max-h-[65px]">
-										<div v-for="tag in data.novel.tags"
-										     class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white">
+										<router-link v-for="tag in data.novel.tags"
+										             class="mr-1 mb-1 w-min whitespace-nowrap rounded-lg bg-slate-100 px-2 text-xs leading-6 text-slate-700 py-0.5 dark:bg-surface-500 dark:text-white"
+										             :to="{name:'list',query:{type:'popular',tags:tag}}"
+										             :draggable="false">
 											{{ tag }}
-										</div>
+										</router-link>
 									</div>
 								</div>
 							</template>
