@@ -43,9 +43,6 @@
 				<div class="text-xl font-bold"><a href="#使用域名"># {{ t('使用域名') }}</a></div>
 				<div class="flex flex-col gap-3 p-5">
 					<p>FurryNovel.com</p>
-					<p>曾用域名
-						<del>Novel.TigerKK.me</del>
-					</p>
 				</div>
 			</div>
 			<div id="免责申明" class="mt-5 flex flex-col gap-3">
